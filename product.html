@@ -9,7 +9,7 @@
     <link rel="stylesheet" href="./styles/style.css">
 </head>
 
-<body data-page-style="big-page" data-auth="">
+<body data-page-style="big-page" data-auth="" class="mobile_product">
     <header class="header">
         <div class="header-container wrapper-container">
             <div class="header__top">
@@ -484,36 +484,1310 @@
             </div>
         </section>
         <section class="product_page">
-            <div class="product_page__img">
-                <img src="./images/card/1.png" alt="">
-                <img src="./images/card/2.png" alt="">
-                <img src="./images/card/3.png" alt="">
-            </div>
-            <div class="product_page__info scrollbar-hidden">
-                <div class="product_page__info__top">
-                    <div class="product-card__article" data-btn="copy-span">
-                        <span class="copy_span">Арт. 112233BC-DRRGDDEFGR</span>
+            <div class="swiper product_page__img">
+                <div class="swiper-wrapper product_page__img__wrapper">
+                    <div class="swiper-slide">
+                        <img src="./images/card/1.png" alt="">
+                        <div class="btn btn-download" data-btn="load-photo" data-url-photo="./images/card/1.png">Скачать
+                            фото</div>
                     </div>
-                    <div class="share_btn">Поделиться</div>
-                    <div class="product-card__btn-like">
+                    <div class="swiper-slide">
+                        <img src="./images/card/2.png" alt="">
+                        <div class="btn btn-download" data-btn="load-photo" data-url-photo="./images/card/2.png">Скачать
+                            фото</div>
+
+                    </div>
+                    <div class="swiper-slide">
+                        <img src="./images/card/3.png" alt="">
+                        <div class="btn btn-download" data-btn="load-photo" data-url-photo="./images/card/3.png">Скачать
+                            фото</div>
+
+                    </div>
+                    <div class="swiper-slide">
+                        <img src="./images/card/4.png" alt="">
+                        <div class="btn btn-download" data-btn="load-photo" data-url-photo="./images/card/4.png">Скачать
+                            фото</div>
+
                     </div>
                 </div>
-                <div class="product_page__desc">
-                    <h1 class="product_page__title">
-                        ТЕРМОФУТБОЛКА ЖЕНСКАЯ С КРУГЛЫМ
-                        ВЫРЕЗОМ OEMEN
-                    </h1>
+                <div class="product-card-paginaton"></div>
 
-                    <div class="product_page__container-count">
-                        <div class="product_page__structure">80% хлопок, 17% полиамид, 3% лайкра</div>
-                        <div class="product_page__count">
-                            12 шт.
+            </div>
+            <div class="product_page__info scrollbar-hidden">
+                <div class="product_page__info__content">
+                    <div class="product_page__info__top">
+                        <div class="product-card__article" data-btn="copy-span">
+                            <span class="copy_span">Арт. 112233BC-DRRGDDEFGR</span>
+                        </div>
+                        <div class="share_btn">
+                            <span>Поделиться</span>
+                        </div>
+                        <div class="product-card__btn-like">
+                        </div>
+                    </div>
+                    <div class="product_page__desc">
+                        <h1 class="product_page__title">
+                            ТЕРМОФУТБОЛКА ЖЕНСКАЯ С КРУГЛЫМ
+                            ВЫРЕЗОМ OEMEN
+                        </h1>
+
+                        <div class="product_page__container-count">
+                            <div class="product_page__structure">80% хлопок, 17% полиамид, 3% лайкра</div>
+                            <div class="product_page__count">
+                                12 шт.
+                            </div>
+                        </div>
+                        <div class="product_page__price">
+                            <div class="product_card__price">
+                                <div class="product_card__price_old">
+                                    839,90 ₽
+                                </div>
+                                <div class="product_card__price_new">
+                                    340,90 ₽
+                                </div>
+                                <div class="product_card__price_discount">
+                                    -53%
+                                </div>
+                            </div>
+                            <div class="client-wrapper" data-modal-btn="client">
+                                <span class="client-value">
+                                    Базовая цена
+                                </span>
+                            </div>
+                        </div>
+                        <div class="product_page__btns">
+                            <div class="product-card__count-btns" data-tabs-container="">
+                                <div class=" btn product-card__count-btn">
+                                    1 пара
+                                </div>
+                                <div class=" btn product-card__count-btn is-active">
+                                    2 пары
+                                </div>
+                                <div class=" btn product-card__count-btn">
+                                    3 пары
+                                </div>
+                                <div class=" btn product-card__count-btn">
+                                    4 пары
+                                </div>
+                            </div>
+                            <div class="btn btn_product-card "></div>
+                        </div>
+
+                    </div>
+                    <div class="product_page__colors">
+                        <div class="product_page__colors_title">
+                            Цвет: <span class="color">бежевый</span>
+                        </div>
+                        <div class="swiper-product-color__container">
+                            <div class="swiper swiper-product-color">
+                                <div class="swiper-wrapper">
+                                    <div class="swiper-slide color-product-item" data-color="черный">
+                                        <img src="./images/card/3.png" alt="">
+                                        <p>
+                                            10 084 шт.
+                                        </p>
+                                    </div>
+                                    <div class="swiper-slide color-product-item --is-active" data-color="бежевый">
+                                        <img src="./images/card/3.png" alt="">
+                                        <p>
+                                            10 084 шт.
+                                        </p>
+                                    </div>
+                                    <div class="swiper-slide color-product-item --disabled" data-color="алмаз">
+                                        <img src="./images/card/3.png" alt="">
+                                        <p>
+                                            0
+                                        </p>
+                                    </div>
+                                    <div class="swiper-slide color-product-item" data-color="бежевый">
+                                        <img src="./images/card/3.png" alt="">
+                                        <p>
+                                            10 084 шт.
+                                        </p>
+                                    </div>
+                                    <div class="swiper-slide color-product-item" data-color="черный">
+                                        <img src="./images/card/3.png" alt="">
+                                        <p>
+                                            10 084 шт.
+                                        </p>
+                                    </div>
+                                    <div class="swiper-slide color-product-item" data-color="черный">
+                                        <img src="./images/card/3.png" alt="">
+                                        <p>
+                                            10 084 шт.
+                                        </p>
+                                    </div>
+                                    <div class="swiper-slide color-product-item" data-color="черный">
+                                        <img src="./images/card/3.png" alt="">
+                                        <p>
+                                            10 084 шт.
+                                        </p>
+                                    </div>
+                                    <div class="swiper-slide color-product-item" data-color="черный">
+                                        <img src="./images/card/3.png" alt="">
+                                        <p>
+                                            10 084 шт.
+                                        </p>
+                                    </div>
+                                    <div class="swiper-slide color-product-item" data-color="черный">
+                                        <img src="./images/card/3.png" alt="">
+                                        <p>
+                                            10 084 шт.
+                                        </p>
+                                    </div>
+                                    <div class="swiper-slide color-product-item" data-color="черный">
+                                        <img src="./images/card/3.png" alt="">
+                                        <p>
+                                            10 084 шт.
+                                        </p>
+                                    </div>
+
+
+                                    <div class="swiper-slide color-product-item" data-color="черный">
+                                        <img src="./images/card/3.png" alt="">
+                                        <p>
+                                            10 084 шт.
+                                        </p>
+                                    </div>
+
+                                </div>
+
+                            </div>
+                            <div class="swiper-product-color__nav">
+                                <div class="swiper-product-color__prev"></div>
+                                <div class="swiper-product-color__next"></div>
+
+                            </div>
+                        </div>
+
+                    </div>
+                    <div class="product_page__size">
+                        <div class="product_page__size-title">Таблица размеров</div>
+                        <div class="product_page__size_container">
+                            <div class="product_page__size_item">
+                                <span>
+                                    42-44 (S)
+                                </span>
+                                <span>
+                                    10 084 шт.
+                                </span>
+                            </div>
+                            <div class="product_page__size_item --is-active">
+                                <span>
+                                    46-48 (M)
+                                </span>
+                                <span>
+                                    10 084 шт.
+                                </span>
+                            </div>
+                            <div class="product_page__size_item --disabled">
+                                <span>
+                                    50-52 (L)
+                                </span>
+                                <span>
+                                    0 шт.
+                                </span>
+                            </div>
+                            <div class="product_page__size_item">
+                                <span>
+                                    52-54 (L)
+                                </span>
+                                <span>
+                                    10 084 шт.
+                                </span>
+                            </div>
+                            <div class="product_page__size_item">
+                                <span>
+                                    56-58 (L)
+                                </span>
+                                <span>
+                                    10 084 шт.
+                                </span>
+                            </div>
+                            <div class="product_page__size_item">
+                                <span>
+                                    42-44 (S)
+                                </span>
+                                <span>
+                                    10 084 шт.
+                                </span>
+                            </div>
+                            <div class="product_page__size_item">
+                                <span>
+                                    46-48 (M)
+                                </span>
+                                <span>
+                                    10 084 шт.
+                                </span>
+                            </div>
+                            <div class="product_page__size_item">
+                                <span>
+                                    50-52 (L)
+                                </span>
+                                <span>
+                                    10 084 шт.
+                                </span>
+                            </div>
+                            <div class="product_page__size_item">
+                                <span>
+                                    52-54 (L)
+                                </span>
+                                <span>
+                                    10 084 шт.
+                                </span>
+                            </div>
+                            <div class="product_page__size_item">
+                                <span>
+                                    56-58 (L)
+                                </span>
+                                <span>
+                                    10 084 шт.
+                                </span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="product_page__accard">
+                        <div class="product-card__table">
+                            <div class="product-card__table__top">
+                                <div class="product-card__table__first-column ">
+                                    Наличие
+                                </div>
+                                <div class="product-card__table__columns">
+                                    <div class="table_item">
+                                        <span> 2400 шт.</span>
+
+                                    </div>
+                                    <div class="table_item product-card__table_bold">
+                                        <span>Москва</span>
+                                    </div>
+                                    <div class="table_item product-card__table_doshed">
+                                        <span>Китай</span>
+
+                                    </div>
+                                    <div class="table_item product-card__table_doshed">
+                                        <span> В пути</span>
+
+                                    </div>
+                                    <div class="table_item product-card__table_doshed">
+                                        <span>Бронь</span>
+
+                                    </div>
+                                    <div class="product-card__table__plus"></div>
+                                </div>
+                            </div>
+                            <div class="product-card__table__content">
+                                <div class="product-card__table__row product_table_two">
+                                    <div class="product-card__table__row__top">
+                                        <div class="product-card__table__first-column" data-column="Наличие">
+                                            Красный
+                                        </div>
+                                        <div class="product-card__table__columns">
+                                            <div class="table_item  product-card__table_bold product-card__table_red"
+                                                data-column="2400 шт.">
+                                                <span>-700</span>
+                                            </div>
+                                            <div class="table_item  product-card__table_red" data-column="Москва">
+                                                <span>-700</span>
+                                            </div>
+                                            <div class="table_item " data-column="Китай">
+                                                <span>0</span>
+
+                                            </div>
+                                            <div class="table_item " data-column="В пути">
+                                                <span>0</span>
+
+                                            </div>
+                                            <div class="table_item " data-column="Бронь">
+                                                <span>0</span>
+
+                                            </div>
+                                            <div class="btn product-card__table_btn_add"></div>
+                                            <div class="table_item table_item__btn_more ">
+                                                <div class="btn_more_table_product"></div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="product-card__table__product-content">
+                                        <div class="product-card__table__product-row">
+                                            <div class="product-card__table__first-column" data-column="Красный">
+                                                <img src="./images/card/1.png" class="product-card__table__img">
+                                            </div>
+                                            <div class="product-card__table__columns">
+                                                <div class="table_item" data-column="-700" data-column-color="red">
+                                                    <span>36-38</span>
+                                                </div>
+                                                <div class="table_item" data-column="-700" data-column-color="red">
+                                                    <span>
+                                                        200
+                                                    </span>
+                                                </div>
+                                                <div class="table_item" data-column="0">
+                                                    <span>200 000</span>
+                                                </div>
+                                                <div class="table_item" data-column="0">
+                                                    <span>0</span>
+                                                </div>
+                                                <div class="table_item" data-column="0">
+                                                    <span>0</span>
+                                                </div>
+                                                <div class="table_item table_item__input">
+
+                                                </div>
+                                                <div class="table_item btn_reserve_wrapper">
+                                                    <span>Нет в наличии</span>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="product-card__table__product-row">
+                                            <div class="product-card__table__first-column" data-column="Красный">
+                                                <img src="./images/card/1.png" class="product-card__table__img">
+                                            </div>
+                                            <div class="product-card__table__columns">
+                                                <div class="table_item" data-column="-700" data-column-color="red">
+                                                    <span>36-38</span>
+                                                </div>
+                                                <div class="table_item" data-column="-700" data-column-color="red">
+                                                    <span>
+                                                        200
+                                                    </span>
+                                                </div>
+                                                <div class="table_item" data-column="0">
+                                                    <span>200 000</span>
+                                                </div>
+                                                <div class="table_item" data-column="0">
+                                                    <span>0</span>
+                                                </div>
+                                                <div class="table_item" data-column="0">
+                                                    <div class="tooltip">
+                                                        <span>122</span>
+                                                        <div class="tooltip_icon" data-modal-btn="reserve"></div>
+                                                    </div>
+                                                </div>
+                                                <div class="table_item table_item__input">
+                                                    <form>
+                                                        <input type="text" name="count_product" placeholder="Кол-во"
+                                                            class="product-card__table_input">
+                                                    </form>
+                                                </div>
+                                                <div class="table_item btn_reserve_wrapper">
+                                                    <button class="btn_reserve"
+                                                        data-btn="set-reserv">Забронировать</button>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="product-card__table__product-row">
+                                            <div class="product-card__table__first-column" data-column="Красный">
+                                                <img src="./images/card/1.png" class="product-card__table__img">
+                                            </div>
+                                            <div class="product-card__table__columns">
+                                                <div class="table_item" data-column="-700" data-column-color="red">
+                                                    <span>36-38</span>
+                                                </div>
+                                                <div class="table_item" data-column="-700" data-column-color="red">
+                                                    <span>
+                                                        200
+                                                    </span>
+                                                </div>
+                                                <div class="table_item" data-column="0">
+                                                    <span>200 000</span>
+                                                </div>
+                                                <div class="table_item" data-column="0">
+                                                    <span>0</span>
+                                                </div>
+                                                <div class="table_item" data-column="0">
+                                                    <div class="tooltip">
+                                                        <span>33</span>
+                                                        <div class="tooltip_icon" data-modal-btn="reserve"></div>
+                                                    </div>
+                                                </div>
+                                                <div class="table_item table_item__input">
+                                                    <form>
+                                                        <input type="text" name="count_product" placeholder="Кол-во"
+                                                            class="product-card__table_input">
+                                                    </form>
+                                                </div>
+                                                <div class="table_item btn_reserve_wrapper">
+                                                    <button class="btn_reserve"
+                                                        data-btn="set-reserv">Забронировать</button>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="product-card__table__product-row">
+                                            <div class="product-card__table__first-column" data-column="Красный">
+                                                <img src="./images/card/1.png" class="product-card__table__img">
+                                            </div>
+                                            <div class="product-card__table__columns">
+                                                <div class="table_item" data-column="-700" data-column-color="red">
+                                                    <span>36-38</span>
+                                                </div>
+                                                <div class="table_item" data-column="-700" data-column-color="red">
+                                                    <span>
+                                                        200
+                                                    </span>
+                                                </div>
+                                                <div class="table_item" data-column="0">
+                                                    <span>200 000</span>
+                                                </div>
+                                                <div class="table_item" data-column="0">
+                                                    <span>0</span>
+                                                </div>
+                                                <div class="table_item" data-column="0">
+                                                    <div class="tooltip">
+                                                        <span>11</span>
+                                                        <div class="tooltip_icon" data-modal-btn="reserve"></div>
+                                                    </div>
+                                                </div>
+                                                <div class="table_item table_item__input">
+                                                    <form>
+                                                        <input type="text" name="count_product" placeholder="Кол-во"
+                                                            class="product-card__table_input">
+                                                    </form>
+                                                </div>
+                                                <div class="table_item btn_reserve_wrapper">
+                                                    <button class="btn_reserve"
+                                                        data-btn="set-reserv">Забронировать</button>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                    </div>
+                                </div>
+                                <div class="product-card__table__row product_table_two">
+                                    <div class="product-card__table__row__top">
+                                        <div class="product-card__table__first-column" data-column="Наличие">
+                                            Желтый 2
+                                        </div>
+                                        <div class="product-card__table__columns">
+                                            <div class="table_item  product-card__table_bold " data-column="2400 шт.">
+                                                <span>800</span>
+                                            </div>
+                                            <div class="table_item  " data-column="Москва">
+                                                <span>800</span>
+                                            </div>
+                                            <div class="table_item " data-column="Китай">
+                                                <span>0</span>
+
+                                            </div>
+                                            <div class="table_item " data-column="В пути">
+                                                <span>0</span>
+
+                                            </div>
+                                            <div class="table_item " data-column="Бронь">
+                                                <span>533</span>
+
+                                            </div>
+                                            <div class="btn product-card__table_btn_add"></div>
+                                            <div class="table_item table_item__btn_more ">
+                                                <div class="btn_more_table_product"></div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="product-card__table__product-content">
+                                        <div class="product-card__table__product-row">
+                                            <div class="product-card__table__first-column" data-column="Желтый 2">
+                                                <img src="./images/card/1.png" class="product-card__table__img">
+                                            </div>
+                                            <div class="product-card__table__columns">
+                                                <div class="table_item" data-column="800">
+                                                    <span>36-38</span>
+                                                </div>
+                                                <div class="table_item" data-column="800">
+                                                    <span>
+                                                        200
+                                                    </span>
+                                                </div>
+                                                <div class="table_item" data-column="0">
+                                                    <span>200 000</span>
+                                                </div>
+                                                <div class="table_item" data-column="0">
+                                                    <span>0</span>
+                                                </div>
+                                                <div class="table_item" data-column="533">
+                                                    <span>0</span>
+                                                </div>
+                                                <div class="table_item table_item__input">
+
+                                                </div>
+                                                <div class="table_item btn_reserve_wrapper">
+                                                    <span>Нет в наличии</span>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="product-card__table__product-row">
+                                            <div class="product-card__table__first-column" data-column="Желтый 2">
+                                                <img src="./images/card/1.png" class="product-card__table__img">
+                                            </div>
+                                            <div class="product-card__table__columns">
+                                                <div class="table_item" data-column="800">
+                                                    <span>36-38</span>
+                                                </div>
+                                                <div class="table_item" data-column="800">
+                                                    <span>
+                                                        200
+                                                    </span>
+                                                </div>
+                                                <div class="table_item" data-column="0">
+                                                    <span>200 000</span>
+                                                </div>
+                                                <div class="table_item" data-column="0">
+                                                    <span>0</span>
+                                                </div>
+                                                <div class="table_item" data-column="533">
+                                                    <div class="tooltip">
+                                                        <span>122</span>
+                                                        <div class="tooltip_icon" data-modal-btn="reserve"></div>
+                                                    </div>
+                                                </div>
+                                                <div class="table_item table_item__input">
+                                                    <form>
+                                                        <input type="text" name="count_product" placeholder="Кол-во"
+                                                            class="product-card__table_input">
+                                                    </form>
+                                                </div>
+                                                <div class="table_item btn_reserve_wrapper">
+                                                    <button class="btn_reserve"
+                                                        data-btn="set-reserv">Забронировать</button>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="product-card__table__product-row">
+                                            <div class="product-card__table__first-column" data-column="Желтый 2">
+                                                <img src="./images/card/1.png" class="product-card__table__img">
+                                            </div>
+                                            <div class="product-card__table__columns">
+                                                <div class="table_item" data-column="800">
+                                                    <span>36-38</span>
+                                                </div>
+                                                <div class="table_item" data-column="800">
+                                                    <span>
+                                                        200
+                                                    </span>
+                                                </div>
+                                                <div class="table_item" data-column="0">
+                                                    <span>200 000</span>
+                                                </div>
+                                                <div class="table_item" data-column="0">
+                                                    <span>0</span>
+                                                </div>
+                                                <div class="table_item" data-column="533">
+                                                    <div class="tooltip">
+                                                        <span>33</span>
+                                                        <div class="tooltip_icon" data-modal-btn="reserve"></div>
+                                                    </div>
+                                                </div>
+                                                <div class="table_item table_item__input">
+                                                    <form>
+                                                        <input type="text" name="count_product" placeholder="Кол-во"
+                                                            class="product-card__table_input">
+                                                    </form>
+                                                </div>
+                                                <div class="table_item btn_reserve_wrapper">
+                                                    <button class="btn_reserve"
+                                                        data-btn="set-reserv">Забронировать</button>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="product-card__table__product-row">
+                                            <div class="product-card__table__first-column" data-column="Желтый 2">
+                                                <img src="./images/card/1.png" class="product-card__table__img">
+                                            </div>
+                                            <div class="product-card__table__columns">
+                                                <div class="table_item" data-column="800">
+                                                    <span>36-38</span>
+                                                </div>
+                                                <div class="table_item" data-column="800">
+                                                    <span>
+                                                        200
+                                                    </span>
+                                                </div>
+                                                <div class="table_item" data-column="0">
+                                                    <span>200 000</span>
+                                                </div>
+                                                <div class="table_item" data-column="0">
+                                                    <span>0</span>
+                                                </div>
+                                                <div class="table_item" data-column="0">
+                                                    <div class="tooltip">
+                                                        <span>11</span>
+                                                        <div class="tooltip_icon" data-modal-btn="reserve"></div>
+                                                    </div>
+                                                </div>
+                                                <div class="table_item table_item__input">
+                                                    <form>
+                                                        <input type="text" name="count_product" placeholder="Кол-во"
+                                                            class="product-card__table_input">
+                                                    </form>
+                                                </div>
+                                                <div class="table_item btn_reserve_wrapper">
+                                                    <button class="btn_reserve"
+                                                        data-btn="set-reserv">Забронировать</button>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                    </div>
+                                </div>
+                                <div class="product-card__table__row product_table_two">
+                                    <div class="product-card__table__row__top">
+                                        <div class="product-card__table__first-column" data-column="Наличие">
+                                            Оливковый самый 13
+                                        </div>
+                                        <div class="product-card__table__columns">
+                                            <div class="table_item  product-card__table_bold product-card__table_red"
+                                                data-column="2400 шт.">
+                                                <span>-700</span>
+                                            </div>
+                                            <div class="table_item  product-card__table_red" data-column="Москва">
+                                                <span>-700</span>
+                                            </div>
+                                            <div class="table_item " data-column="Китай">
+                                                <span>0</span>
+
+                                            </div>
+                                            <div class="table_item " data-column="В пути">
+                                                <span>0</span>
+
+                                            </div>
+                                            <div class="table_item " data-column="Бронь">
+                                                <span>0</span>
+
+                                            </div>
+                                            <div class="btn product-card__table_btn_add"></div>
+                                            <div class="table_item table_item__btn_more ">
+                                                <div class="btn_more_table_product"></div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="product-card__table__product-content">
+                                        <div class="product-card__table__product-row">
+                                            <div class="product-card__table__first-column"
+                                                data-column="Оливковый самый 13">
+                                                <img src="./images/card/1.png" class="product-card__table__img">
+                                            </div>
+                                            <div class="product-card__table__columns">
+                                                <div class="table_item" data-column="-700" data-column-color="red">
+                                                    <span>36-38</span>
+                                                </div>
+                                                <div class="table_item" data-column="-700" data-column-color="red">
+                                                    <span>
+                                                        200
+                                                    </span>
+                                                </div>
+                                                <div class="table_item" data-column="0">
+                                                    <span>200 000</span>
+                                                </div>
+                                                <div class="table_item" data-column="0">
+                                                    <span>0</span>
+                                                </div>
+                                                <div class="table_item" data-column="0">
+                                                    <span>0</span>
+                                                </div>
+                                                <div class="table_item table_item__input">
+
+                                                </div>
+                                                <div class="table_item btn_reserve_wrapper">
+                                                    <span>Нет в наличии</span>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="product-card__table__product-row">
+                                            <div class="product-card__table__first-column"
+                                                data-column="Оливковый самый 13">
+                                                <img src="./images/card/1.png" class="product-card__table__img">
+                                            </div>
+                                            <div class="product-card__table__columns">
+                                                <div class="table_item" data-column="-700" data-column-color="red">
+                                                    <span>36-38</span>
+                                                </div>
+                                                <div class="table_item" data-column="-700" data-column-color="red">
+                                                    <span>
+                                                        200
+                                                    </span>
+                                                </div>
+                                                <div class="table_item" data-column="0">
+                                                    <span>200 000</span>
+                                                </div>
+                                                <div class="table_item" data-column="0">
+                                                    <span>0</span>
+                                                </div>
+                                                <div class="table_item" data-column="0">
+                                                    <div class="tooltip">
+                                                        <span>122</span>
+                                                        <div class="tooltip_icon" data-modal-btn="reserve"></div>
+                                                    </div>
+                                                </div>
+                                                <div class="table_item table_item__input">
+                                                    <form>
+                                                        <input type="text" name="count_product" placeholder="Кол-во"
+                                                            class="product-card__table_input">
+                                                    </form>
+                                                </div>
+                                                <div class="table_item btn_reserve_wrapper">
+                                                    <button class="btn_reserve"
+                                                        data-btn="set-reserv">Забронировать</button>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="product-card__table__product-row">
+                                            <div class="product-card__table__first-column"
+                                                data-column="Оливковый самый 13">
+                                                <img src="./images/card/1.png" class="product-card__table__img">
+                                            </div>
+                                            <div class="product-card__table__columns">
+                                                <div class="table_item" data-column="-700" data-column-color="red">
+                                                    <span>36-38</span>
+                                                </div>
+                                                <div class="table_item" data-column="-700" data-column-color="red">
+                                                    <span>
+                                                        200
+                                                    </span>
+                                                </div>
+                                                <div class="table_item" data-column="0">
+                                                    <span>200 000</span>
+                                                </div>
+                                                <div class="table_item" data-column="0">
+                                                    <span>0</span>
+                                                </div>
+                                                <div class="table_item" data-column="0">
+                                                    <div class="tooltip">
+                                                        <span>33</span>
+                                                        <div class="tooltip_icon" data-modal-btn="reserve"></div>
+                                                    </div>
+                                                </div>
+                                                <div class="table_item table_item__input">
+                                                    <form>
+                                                        <input type="text" name="count_product" placeholder="Кол-во"
+                                                            class="product-card__table_input">
+                                                    </form>
+                                                </div>
+                                                <div class="table_item btn_reserve_wrapper">
+                                                    <button class="btn_reserve"
+                                                        data-btn="set-reserv">Забронировать</button>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="product-card__table__product-row">
+                                            <div class="product-card__table__first-column"
+                                                data-column="Оливковый самый 13">
+                                                <img src="./images/card/1.png" class="product-card__table__img">
+                                            </div>
+                                            <div class="product-card__table__columns">
+                                                <div class="table_item" data-column="-700" data-column-color="red">
+                                                    <span>36-38</span>
+                                                </div>
+                                                <div class="table_item" data-column="-700" data-column-color="red">
+                                                    <span>
+                                                        200
+                                                    </span>
+                                                </div>
+                                                <div class="table_item" data-column="0">
+                                                    <span>200 000</span>
+                                                </div>
+                                                <div class="table_item" data-column="0">
+                                                    <span>0</span>
+                                                </div>
+                                                <div class="table_item" data-column="0">
+                                                    <div class="tooltip">
+                                                        <span>11</span>
+                                                        <div class="tooltip_icon" data-modal-btn="reserve"></div>
+                                                    </div>
+                                                </div>
+                                                <div class="table_item table_item__input">
+                                                    <form>
+                                                        <input type="text" name="count_product" placeholder="Кол-во"
+                                                            class="product-card__table_input">
+                                                    </form>
+                                                </div>
+                                                <div class="table_item btn_reserve_wrapper">
+                                                    <button class="btn_reserve"
+                                                        data-btn="set-reserv">Забронировать</button>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                    </div>
+                                </div>
+                                <div class="product-card__table__row product_table_two">
+                                    <div class="product-card__table__row__top">
+                                        <div class="product-card__table__first-column" data-column="Наличие">
+                                            Электрик 11
+                                        </div>
+                                        <div class="product-card__table__columns">
+                                            <div class="table_item  product-card__table_bold product-card__table_red"
+                                                data-column="2400 шт.">
+                                                <span>-700</span>
+                                            </div>
+                                            <div class="table_item  product-card__table_red" data-column="Москва">
+                                                <span>-700</span>
+                                            </div>
+                                            <div class="table_item " data-column="Китай">
+                                                <span>0</span>
+
+                                            </div>
+                                            <div class="table_item " data-column="В пути">
+                                                <span>0</span>
+
+                                            </div>
+                                            <div class="table_item " data-column="Бронь">
+                                                <span>0</span>
+
+                                            </div>
+                                            <div class="btn product-card__table_btn_add"></div>
+                                            <div class="table_item table_item__btn_more ">
+                                                <div class="btn_more_table_product"></div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="product-card__table__product-content">
+                                        <div class="product-card__table__product-row">
+                                            <div class="product-card__table__first-column" data-column="Электрик 11">
+                                                <img src="./images/card/1.png" class="product-card__table__img">
+                                            </div>
+                                            <div class="product-card__table__columns">
+                                                <div class="table_item" data-column="-700" data-column-color="red">
+                                                    <span>36-38</span>
+                                                </div>
+                                                <div class="table_item" data-column="-700" data-column-color="red">
+                                                    <span>
+                                                        200
+                                                    </span>
+                                                </div>
+                                                <div class="table_item" data-column="0">
+                                                    <span>200 000</span>
+                                                </div>
+                                                <div class="table_item" data-column="0">
+                                                    <span>0</span>
+                                                </div>
+                                                <div class="table_item" data-column="0">
+                                                    <span>0</span>
+                                                </div>
+                                                <div class="table_item table_item__input">
+
+                                                </div>
+                                                <div class="table_item btn_reserve_wrapper">
+                                                    <span>Нет в наличии</span>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="product-card__table__product-row">
+                                            <div class="product-card__table__first-column" data-column="Электрик 11">
+                                                <img src="./images/card/1.png" class="product-card__table__img">
+                                            </div>
+                                            <div class="product-card__table__columns">
+                                                <div class="table_item" data-column="-700" data-column-color="red">
+                                                    <span>36-38</span>
+                                                </div>
+                                                <div class="table_item" data-column="-700" data-column-color="red">
+                                                    <span>
+                                                        200
+                                                    </span>
+                                                </div>
+                                                <div class="table_item" data-column="0">
+                                                    <span>200 000</span>
+                                                </div>
+                                                <div class="table_item" data-column="0">
+                                                    <span>0</span>
+                                                </div>
+                                                <div class="table_item" data-column="0">
+                                                    <div class="tooltip">
+                                                        <span>122</span>
+                                                        <div class="tooltip_icon" data-modal-btn="reserve"></div>
+                                                    </div>
+                                                </div>
+                                                <div class="table_item table_item__input">
+                                                    <form>
+                                                        <input type="text" name="count_product" placeholder="Кол-во"
+                                                            class="product-card__table_input">
+                                                    </form>
+                                                </div>
+                                                <div class="table_item btn_reserve_wrapper">
+                                                    <button class="btn_reserve"
+                                                        data-btn="set-reserv">Забронировать</button>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="product-card__table__product-row">
+                                            <div class="product-card__table__first-column" data-column="Электрик 11">
+                                                <img src="./images/card/1.png" class="product-card__table__img">
+                                            </div>
+                                            <div class="product-card__table__columns">
+                                                <div class="table_item" data-column="-700" data-column-color="red">
+                                                    <span>36-38</span>
+                                                </div>
+                                                <div class="table_item" data-column="-700" data-column-color="red">
+                                                    <span>
+                                                        200
+                                                    </span>
+                                                </div>
+                                                <div class="table_item" data-column="0">
+                                                    <span>200 000</span>
+                                                </div>
+                                                <div class="table_item" data-column="0">
+                                                    <span>0</span>
+                                                </div>
+                                                <div class="table_item" data-column="0">
+                                                    <div class="tooltip">
+                                                        <span>33</span>
+                                                        <div class="tooltip_icon" data-modal-btn="reserve"></div>
+                                                    </div>
+                                                </div>
+                                                <div class="table_item table_item__input">
+                                                    <form>
+                                                        <input type="text" name="count_product" placeholder="Кол-во"
+                                                            class="product-card__table_input">
+                                                    </form>
+                                                </div>
+                                                <div class="table_item btn_reserve_wrapper">
+                                                    <button class="btn_reserve"
+                                                        data-btn="set-reserv">Забронировать</button>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="product-card__table__product-row">
+                                            <div class="product-card__table__first-column" data-column="Электрик 11">
+                                                <img src="./images/card/1.png" class="product-card__table__img">
+                                            </div>
+                                            <div class="product-card__table__columns">
+                                                <div class="table_item" data-column="-700" data-column-color="red">
+                                                    <span>36-38</span>
+                                                </div>
+                                                <div class="table_item" data-column="-700" data-column-color="red">
+                                                    <span>
+                                                        200
+                                                    </span>
+                                                </div>
+                                                <div class="table_item" data-column="0">
+                                                    <span>200 000</span>
+                                                </div>
+                                                <div class="table_item" data-column="0">
+                                                    <span>0</span>
+                                                </div>
+                                                <div class="table_item" data-column="0">
+                                                    <div class="tooltip">
+                                                        <span>11</span>
+                                                        <div class="tooltip_icon" data-modal-btn="reserve"></div>
+                                                    </div>
+                                                </div>
+                                                <div class="table_item table_item__input">
+                                                    <form>
+                                                        <input type="text" name="count_product" placeholder="Кол-во"
+                                                            class="product-card__table_input">
+                                                    </form>
+                                                </div>
+                                                <div class="table_item btn_reserve_wrapper">
+                                                    <button class="btn_reserve"
+                                                        data-btn="set-reserv">Забронировать</button>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                    </div>
+                                </div>
+                                <div class="product-card__table__row product_table_two">
+                                    <div class="product-card__table__row__top">
+                                        <div class="product-card__table__first-column" data-column="Наличие">
+                                            Хаки 3
+                                        </div>
+                                        <div class="product-card__table__columns">
+                                            <div class="table_item  product-card__table_bold product-card__table_red"
+                                                data-column="2400 шт.">
+                                                <span>-700</span>
+                                            </div>
+                                            <div class="table_item  product-card__table_red" data-column="Москва">
+                                                <span>-700</span>
+                                            </div>
+                                            <div class="table_item " data-column="Китай">
+                                                <span>0</span>
+
+                                            </div>
+                                            <div class="table_item " data-column="В пути">
+                                                <span>0</span>
+
+                                            </div>
+                                            <div class="table_item " data-column="Бронь">
+                                                <span>0</span>
+
+                                            </div>
+                                            <div class="btn product-card__table_btn_add"></div>
+                                            <div class="table_item table_item__btn_more ">
+                                                <div class="btn_more_table_product"></div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="product-card__table__product-content">
+                                        <div class="product-card__table__product-row">
+                                            <div class="product-card__table__first-column" data-column="Хаки 3">
+                                                <img src="./images/card/1.png" class="product-card__table__img">
+                                            </div>
+                                            <div class="product-card__table__columns">
+                                                <div class="table_item" data-column="-700" data-column-color="red">
+                                                    <span>36-38</span>
+                                                </div>
+                                                <div class="table_item" data-column="-700" data-column-color="red">
+                                                    <span>
+                                                        200
+                                                    </span>
+                                                </div>
+                                                <div class="table_item" data-column="0">
+                                                    <span>200 000</span>
+                                                </div>
+                                                <div class="table_item" data-column="0">
+                                                    <span>0</span>
+                                                </div>
+                                                <div class="table_item" data-column="0">
+                                                    <span>0</span>
+                                                </div>
+                                                <div class="table_item table_item__input">
+
+                                                </div>
+                                                <div class="table_item btn_reserve_wrapper">
+                                                    <span>Нет в наличии</span>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="product-card__table__product-row">
+                                            <div class="product-card__table__first-column" data-column="Хаки 3">
+                                                <img src="./images/card/1.png" class="product-card__table__img">
+                                            </div>
+                                            <div class="product-card__table__columns">
+                                                <div class="table_item" data-column="-700" data-column-color="red">
+                                                    <span>36-38</span>
+                                                </div>
+                                                <div class="table_item" data-column="-700" data-column-color="red">
+                                                    <span>
+                                                        200
+                                                    </span>
+                                                </div>
+                                                <div class="table_item" data-column="0">
+                                                    <span>200 000</span>
+                                                </div>
+                                                <div class="table_item" data-column="0">
+                                                    <span>0</span>
+                                                </div>
+                                                <div class="table_item" data-column="0">
+                                                    <div class="tooltip">
+                                                        <span>122</span>
+                                                        <div class="tooltip_icon" data-modal-btn="reserve"></div>
+                                                    </div>
+                                                </div>
+                                                <div class="table_item table_item__input">
+                                                    <form>
+                                                        <input type="text" name="count_product" placeholder="Кол-во"
+                                                            class="product-card__table_input">
+                                                    </form>
+                                                </div>
+                                                <div class="table_item btn_reserve_wrapper">
+                                                    <button class="btn_reserve"
+                                                        data-btn="set-reserv">Забронировать</button>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="product-card__table__product-row">
+                                            <div class="product-card__table__first-column" data-column="Хаки 3">
+                                                <img src="./images/card/1.png" class="product-card__table__img">
+                                            </div>
+                                            <div class="product-card__table__columns">
+                                                <div class="table_item" data-column="-700" data-column-color="red">
+                                                    <span>36-38</span>
+                                                </div>
+                                                <div class="table_item" data-column="-700" data-column-color="red">
+                                                    <span>
+                                                        200
+                                                    </span>
+                                                </div>
+                                                <div class="table_item" data-column="0">
+                                                    <span>200 000</span>
+                                                </div>
+                                                <div class="table_item" data-column="0">
+                                                    <span>0</span>
+                                                </div>
+                                                <div class="table_item" data-column="0">
+                                                    <div class="tooltip">
+                                                        <span>33</span>
+                                                        <div class="tooltip_icon" data-modal-btn="reserve"></div>
+                                                    </div>
+                                                </div>
+                                                <div class="table_item table_item__input">
+                                                    <form>
+                                                        <input type="text" name="count_product" placeholder="Кол-во"
+                                                            class="product-card__table_input">
+                                                    </form>
+                                                </div>
+                                                <div class="table_item btn_reserve_wrapper">
+                                                    <button class="btn_reserve"
+                                                        data-btn="set-reserv">Забронировать</button>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="product-card__table__product-row">
+                                            <div class="product-card__table__first-column" data-column="Хаки 3">
+                                                <img src="./images/card/1.png" class="product-card__table__img">
+                                            </div>
+                                            <div class="product-card__table__columns">
+                                                <div class="table_item" data-column="-700" data-column-color="red">
+                                                    <span>36-38</span>
+                                                </div>
+                                                <div class="table_item" data-column="-700" data-column-color="red">
+                                                    <span>
+                                                        200
+                                                    </span>
+                                                </div>
+                                                <div class="table_item" data-column="0">
+                                                    <span>200 000</span>
+                                                </div>
+                                                <div class="table_item" data-column="0">
+                                                    <span>0</span>
+                                                </div>
+                                                <div class="table_item" data-column="0">
+                                                    <div class="tooltip">
+                                                        <span>11</span>
+                                                        <div class="tooltip_icon" data-modal-btn="reserve"></div>
+                                                    </div>
+                                                </div>
+                                                <div class="table_item table_item__input">
+                                                    <form>
+                                                        <input type="text" name="count_product" placeholder="Кол-во"
+                                                            class="product-card__table_input">
+                                                    </form>
+                                                </div>
+                                                <div class="table_item btn_reserve_wrapper">
+                                                    <button class="btn_reserve"
+                                                        data-btn="set-reserv">Забронировать</button>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="product-card__table">
+                            <div class="product-card__table__top">
+                                <div class="product-card__table__first-column --no-fixed-width">
+                                    Характеристики товара
+                                </div>
+                                <div class="product-card__table__columns">
+
+                                    <div class="product-card__table__plus"></div>
+                                </div>
+                            </div>
+                            <div class="product-card__table__content">
+                                <div class="product-features">
+                                    <div class="product-features__item">
+                                        <div class="product-features__item__title">
+                                            Артикул
+                                        </div>
+
+                                        <div class="product-features__item__content" data-btn="copy-span">
+                                            <span class="copy_span">Арт. 112233BC-DRRGDDEFGR</span>
+                                        </div>
+
+                                    </div>
+                                    <div class="product-features__item">
+                                        <div class="product-features__item__title">
+                                            Состав
+                                        </div>
+
+                                        <div class="product-features__item__content">
+                                            80% хлопок, 17% полиамид, 3% лайкра
+                                        </div>
+
+                                    </div>
+                                    <div class="product-features__item">
+                                        <div class="product-features__item__title">
+                                            Состав
+                                        </div>
+
+                                        <div class="product-features__item__content">
+                                            80% хлопок, 17% полиамид, 3% лайкра
+                                        </div>
+
+                                    </div>
+                                </div>
+
+                            </div>
+                        </div>
+                        <div class="product-card__table">
+                            <div class="product-card__table__top">
+                                <div class="product-card__table__first-column --no-fixed-width">
+                                    Теги
+                                </div>
+                                <div class="product-card__table__columns">
+
+                                    <div class="product-card__table__plus"></div>
+                                </div>
+                            </div>
+                            <div class="product-card__table__content">
+                                <div class="tags-container">
+                                    <div class="tags-item">
+                                        бесшовное
+                                    </div>
+                                    <div class="tags-item">
+                                        нижнее белье
+                                    </div>
+                                    <div class="tags-item">
+                                        женщины
+                                    </div>
+                                    <div class="tags-item">
+                                        трусы
+                                    </div>
+                                    <div class="tags-item">
+                                        хит продаж
+                                    </div>
+                                    <div class="tags-item">
+                                        хит продаж
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="product-card__table">
+                            <div class="product-card__table__top">
+                                <div class="product-card__table__first-column --no-fixed-width">
+                                    Прайсы
+                                </div>
+                                <div class="product-card__table__columns">
+
+                                    <div class="product-card__table__plus"></div>
+                                </div>
+                            </div>
+                            <div class="product-card__table__content">
+                                <div class="tags-container">
+                                    <div class="tags-item">
+                                        бесшовное
+                                    </div>
+                                    <div class="tags-item">
+                                        нижнее белье
+                                    </div>
+                                    <div class="tags-item">
+                                        женщины
+                                    </div>
+                                    <div class="tags-item">
+                                        трусы
+                                    </div>
+                                    <div class="tags-item">
+                                        хит продаж
+                                    </div>
+                                    <div class="tags-item">
+                                        хит продаж
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="product__rich-content">
+                        <div class="product__rich-content_title">
+                            О товарЕ
+                        </div>
+                        <div class="product__rich_item">
+                            <img src="./images/rich/1.png" alt="" class="rich_img_prev">
+                            <div class="btn btn_rich" data-btn="rich" data-rich="['./images/rich/1.png', './images/rich/2.png']">Смотреть полностью</div>
+                        </div>
+                        <div class="product__rich_item">
+                            <img src="./images/rich/2.png" alt="" class="rich_img_prev">
+                            <div class="btn btn_rich" data-btn="rich" data-rich="['./images/rich/2.png', './images/rich/1.png']">Смотреть полностью</div>
                         </div>
                     </div>
                 </div>
-
-
-            </div>
         </section>
         <section class="our_product">
 
@@ -9054,11 +10328,12 @@
                             Менеджер: <span>Иванов М.</span>
                         </div>
                     </div>
-                    <div class="reserve_item__count">1000 шт.</div>
+                    <div class="reserve_item__count">1000 шт. </div>
                 </div>
             </div>
         </div>
     </div>
+
     <div class="modal_overlay ios-scrollbar" data-modal-id="modal-set-reserv">
         <div class="modal_content">
             <div class="modal_close"></div>
@@ -9123,12 +10398,46 @@
             </form>
         </div>
     </div>
+    <div class="modal_overlay ios-scrollbar" data-modal-id="modal-load-photo">
+        <div class="modal_content">
+            <div class="modal_close"></div>
+            <div class="modal_title">
+                Скачать фото
+            </div>
+            <div class="load_photo-content">
+                <div class="load-photo">
+                    <img src="./images/card/1.png" class="prev_load-img">
+                    <div class="load-photo__links">
+                        <a href="./images/card/1.png" download="">Скачать оптимизированное фото</a>
+                        <a href="./images/card/1.png" download="">Скачать оригинальное фото</a>
+                    </div>
+                </div>
+                <div class="btn_load_all">
+                    <a href="./images/card/card.rar" download="" class="btn btn_primary">Скачать все оптимизированные фото по артикулу</a>
+                    <a href="./images/card/card.rar" download="" class="btn btn_primary">Скачать все оригинальные фото по артикулу</a>
+
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="modal_overlay modal_overlay_rich ios-scrollbar" data-modal-id="modal-rich">
+        <div class="modal_content modal_content__rich ">
+            <div class="modal_close"></div>
+            <div class="rich__wrapper scrollbar-hidden">
+            <img src="./images/rich/1.png" alt="">
+            <img src="./images/rich/2.png" alt="">
+
+            </div>
+        </div>
+    </div>
     <script src="./scripts/swiper-bundle.min.js"></script>
     <script src="./scripts/utils.js"></script>
     <script src="./scripts/modals/modal-client.js"></script>
     <script src="./scripts/modals/modal-auth.js"></script>
     <script src="./scripts/modals/modal-reserv.js"></script>
     <script src="./scripts/modals/modal-set-reserv.js"></script>
+    <script src="./scripts/modals/modal-load-photo.js"></script>
+    <script src="./scripts/modals/modal-rich.js"></script>
     <script src="./scripts/products.js"></script>
     <script src="./scripts/filters.js"></script>
     <script src="./scripts/main.js"></script>

@@ -59,9 +59,20 @@ function closeAllModals() {
         searchModalEl.classList.remove('is-open');
     }
     
+    // Закрываем состояние поиска в хедере
+    const headerMiddleEl = document.querySelector('.header__middle');
+    if (headerMiddleEl && headerMiddleEl.classList.contains('header__middle--search')) {
+        headerMiddleEl.classList.remove('header__middle--search');
+    }
+    
     // Сбрасываем счетчик открытых модалок и разблокируем скролл
     openedModals = 0;
     setScrolled(true);
+    
+    // Обновляем класс хедера
+    if (typeof updateHeaderMenuOpenClass === 'function') {
+        updateHeaderMenuOpenClass();
+    }
 }
 
 // Экспорт функций для использования в других модулях
@@ -77,11 +88,32 @@ const headerMiddle = document.querySelector('.header__middle');
 const searchInput = document.getElementById('search-input');
 const searchModal = document.querySelector('.search_modal');
 const searchBtnClose = document.querySelector('.search-btn-close');
+const header = document.querySelector('.header');
+
+// Меню
+const menuModal = document.querySelector('.menu_modal');
+const btnMenuModal = document.querySelector('.btn-burger');
+
+// Функция для обновления класса --menu-open на хедере
+function updateHeaderMenuOpenClass() {
+    if (!header) return;
+    
+    const isMenuOpen = menuModal && menuModal.classList.contains('is-open');
+    const isSearchOpen = (searchModal && searchModal.classList.contains('is-open')) || 
+                         (headerMiddle && headerMiddle.classList.contains('header__middle--search'));
+    
+    if (isMenuOpen || isSearchOpen) {
+        header.classList.add('--menu-open');
+    } else {
+        header.classList.remove('--menu-open');
+    }
+}
 
 if (searchBtnClose && headerMiddle) {
     searchBtnClose.addEventListener('click', () => {
         closeSearchModal();
         headerMiddle.classList.remove('header__middle--search');
+        updateHeaderMenuOpenClass();
     });
 }
 
@@ -89,6 +121,7 @@ function openSearchModal() {
     if (searchModal) {
         searchModal.classList.add('is-open');
         lockScroll();
+        updateHeaderMenuOpenClass();
     }
 }
 
@@ -100,6 +133,7 @@ function closeSearchModal() {
     if (searchInput) {
         searchInput.value = '';
     }
+    updateHeaderMenuOpenClass();
 }
 
 if (searchContainer && headerMiddle && searchInput) {
@@ -107,6 +141,7 @@ if (searchContainer && headerMiddle && searchInput) {
         if (!headerMiddle.classList.contains('header__middle--search')) {
             headerMiddle.classList.add('header__middle--search');
             searchInput.focus();
+            updateHeaderMenuOpenClass();
         }
     });
 
@@ -136,19 +171,17 @@ if (searchContainer && headerMiddle && searchInput) {
     searchInput.addEventListener('blur', () => {
         if (searchModal && headerMiddle && !searchModal.classList.contains('is-open')) {
             headerMiddle.classList.remove('header__middle--search');
+            updateHeaderMenuOpenClass();
         }
     });
 }
-
-// Меню
-const menuModal = document.querySelector('.menu_modal');
-const btnMenuModal = document.querySelector('.btn-burger');
 
 function openMenuModal() {
     if (menuModal && btnMenuModal) {
         menuModal.classList.add('is-open');
         btnMenuModal.classList.add('btn-close');
         lockScroll();
+        updateHeaderMenuOpenClass();
     }
 }
 
@@ -158,6 +191,7 @@ function closeMenuModal() {
         btnMenuModal.classList.remove('btn-close');
     }
     unlockScroll();
+    updateHeaderMenuOpenClass();
 }
 
 // Экспорт функций меню
