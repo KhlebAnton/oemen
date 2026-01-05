@@ -1,0 +1,1151 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="./styles/swiper-bundle.min.css" />
+    <link rel="stylesheet" href="./styles/style.css">
+</head>
+
+<body data-page-style="list-page" data-auth="">
+    <header class="header">
+        <div class="header-container wrapper-container">
+            <div class="header__top">
+                <div class="client-wrapper" data-modal-btn="client">
+                    <div class="client-text">
+                        <span>Клиент:</span>
+                        <span class="client-value">
+                            Не выбран
+                        </span>
+                    </div>
+
+                </div>
+
+            </div>
+            <div class="header__middle ">
+                <div class="header_nav-container">
+                    <div class="btn-burger">
+                    </div>
+                    <nav class="header-nav">
+                        <a href="#" class="header-nav-item">
+                            Каталог
+                        </a>
+                        <a href="#" class="header-nav-item">
+                            Прайсы
+                        </a>
+                        <a href="#" class="header-nav-item icon-lightning">
+                            Акции
+                        </a>
+                    </nav>
+                </div>
+                <a href="#" class="logo"></a>
+                <div class="header-btn-container">
+                    <label class="btn-search-container">
+                        <input type="search" class="search-input" placeholder="Введите наименование товара или артикул"
+                            id="search-input">
+                        <button type="submit" class="header-btn btn-search" id="btn-search">
+
+                        </button>
+                    </label>
+
+                    <a href="#" class="header-btn btn-user" data-btn="auth">
+
+                    </a>
+                    <a href="#" class="header-btn btn-heart">
+                        <div class="header-btn__value">5</div>
+                    </a>
+                    <a href="#" class="header-btn btn-eye">
+
+                    </a>
+                    <a href="#" class="header-btn btn-basket">
+                        <div class="header-btn__value">99</div>
+                    </a>
+                    <div class="header-btn search-btn-close"></div>
+                </div>
+            </div>
+            <div class="client-popup" style="display: none;">
+                <p>
+                    Укажите для какого клиента <br>
+                    вы составляете подборку
+                </p>
+                <div class="btn btn_primary" data-modal-btn="client">Выбрать клиента</div>
+            </div>
+        </div>
+
+    </header>
+    <div class="header-modal menu_modal">
+        <div class="header-modal-content menu__content ios-scrollbar">
+            <div class="header-modal-container menu_modal__container">
+                <div class="menu-nav">
+                    <div class="menu-nav__container">
+                        <div class="menu-nav__column">
+                            <a href="#" class="menu-nav__column-title">Мужская одежда</a>
+                            <ol class="menu-nav__column-list">
+                                <li>
+                                    <a href="#" class="menu-nav__column-link">
+                                        Носки <span class="menu-nav__column-link_count">45</span>
+                                    </a>
+                                </li>
+                                <li>
+                                    <a href="#" class="menu-nav__column-link">
+                                        Футболки <span class="menu-nav__column-link_count">988</span>
+                                    </a>
+                                </li>
+                                <li>
+                                    <a href="#" class="menu-nav__column-link">
+                                        Нижнее белье <span class="menu-nav__column-link_count">2</span>
+                                    </a>
+                                </li>
+                                <li>
+                                    <a href="#" class="menu-nav__column-link">
+                                        Термобелье <span class="menu-nav__column-link_count">11</span>
+                                    </a>
+                                </li>
+                                <li>
+                                    <a href="#" class="menu-nav__column-link">
+                                        Рубашки <span class="menu-nav__column-link_count">45</span>
+                                    </a>
+                                </li>
+                            </ol>
+                        </div>
+                        <div class="menu-nav__column">
+                            <a href="#" class="menu-nav__column-title">Женская одежда</a>
+                            <ol class="menu-nav__column-list">
+                                <li>
+                                    <a href="#" class="menu-nav__column-link">
+                                        Носки <span class="menu-nav__column-link_count">45</span>
+                                    </a>
+                                </li>
+                                <li>
+                                    <a href="#" class="menu-nav__column-link">
+                                        Футболки <span class="menu-nav__column-link_count">988</span>
+                                    </a>
+                                </li>
+                                <li>
+                                    <a href="#" class="menu-nav__column-link">
+                                        Нижнее белье <span class="menu-nav__column-link_count">2</span>
+                                    </a>
+                                </li>
+                                <li>
+                                    <a href="#" class="menu-nav__column-link">
+                                        Термобелье <span class="menu-nav__column-link_count">11</span>
+                                    </a>
+                                </li>
+                                <li>
+                                    <a href="#" class="menu-nav__column-link">
+                                        Рубашки <span class="menu-nav__column-link_count">45</span>
+                                    </a>
+                                </li>
+                            </ol>
+                        </div>
+                        <div class="menu-nav__column">
+                            <a href="#" class="menu-nav__column-title">Детская одежда</a>
+                            <ol class="menu-nav__column-list">
+                                <li>
+                                    <a href="#" class="menu-nav__column-link">
+                                        Носки <span class="menu-nav__column-link_count">45</span>
+                                    </a>
+                                </li>
+                                <li>
+                                    <a href="#" class="menu-nav__column-link">
+                                        Футболки <span class="menu-nav__column-link_count">988</span>
+                                    </a>
+                                </li>
+                                <li>
+                                    <a href="#" class="menu-nav__column-link">
+                                        Нижнее белье <span class="menu-nav__column-link_count">2</span>
+                                    </a>
+                                </li>
+
+                                <li>
+                                    <a href="#" class="menu-nav__column-link">
+                                        Рубашки <span class="menu-nav__column-link_count">45</span>
+                                    </a>
+                                </li>
+                            </ol>
+                        </div>
+                    </div>
+                </div>
+                <div class="mobile-menu">
+                    <div class="mobile_menu_dropdown">
+                        <div class="mobile_menu_dropdown__title">
+                            <span>Каталог</span>
+                            <div class="mobile_menu_dropdown__icon"></div>
+                        </div>
+                        <div class="mobile_menu_dropdown__hidden">
+                            <a href="#">
+                                Cсылка
+                            </a>
+                            <a href="#">
+                                Cсылка вторая
+                            </a>
+                            <a href="#">
+                                Cсылка и тпп
+                            </a>
+                        </div>
+                    </div>
+                    <div class="mobile_menu_dropdown">
+                        <div class="mobile_menu_dropdown__title">
+                            <span>Прайсы</span>
+                            <div class="mobile_menu_dropdown__icon"></div>
+                        </div>
+                        <div class="mobile_menu_dropdown__hidden">
+                            <a href="#">
+                                Cсылка
+                            </a>
+                            <a href="#">
+                                Cсылка вторая
+                            </a>
+                            <a href="#">
+                                Cсылка и тпп
+                            </a>
+                        </div>
+                    </div>
+                    <div class="mobile_menu_dropdown">
+                        <div class="mobile_menu_dropdown__title">
+                            <span>Акции</span>
+                            <div class="mobile_menu_dropdown__icon"></div>
+                        </div>
+                        <div class="mobile_menu_dropdown__hidden">
+                            <a href="#">
+                                Cсылка
+                            </a>
+                            <a href="#">
+                                Cсылка вторая
+                            </a>
+                            <a href="#">
+                                Cсылка и тпп
+                            </a>
+                        </div>
+                    </div>
+                    <div class="mobile_menu_dropdown">
+                        <div class="mobile_menu_dropdown__title">
+                            <span>Клиенту</span>
+                            <div class="mobile_menu_dropdown__icon"></div>
+                        </div>
+                        <div class="mobile_menu_dropdown__hidden">
+                            <a href="#">
+                                Cсылка
+                            </a>
+                            <a href="#">
+                                Cсылка вторая
+                            </a>
+                            <a href="#">
+                                Cсылка и тпп
+                            </a>
+                        </div>
+                    </div>
+                    <div class="mobile_menu_dropdown">
+                        <div class="mobile_menu_dropdown__title">
+                            <span>Менеджеру</span>
+                            <div class="mobile_menu_dropdown__icon"></div>
+                        </div>
+                        <div class="mobile_menu_dropdown__hidden">
+                            <a href="#" data-btn="auth">
+                                Личный кабинет
+                            </a>
+                            <a href="#">
+                                Подборки
+                            </a>
+                            <a href="#">
+                                Избранное
+                            </a>
+                            <a href="#">Просмотренное</a>
+                            <a href="#">Сохраненные подборки</a>
+                            <a href="#">Прайсы</a>
+                            <a href="#">Клиенты</a>
+                            <a href="#">История выгруженных прайсов</a>
+                            <a href="#">Резервы</a>
+                        </div>
+                    </div>
+                    <div class="client-wrapper" data-modal-btn="client">
+                        <div class="client-text">
+                            <span>Клиент:</span>
+                            <span class="client-value">
+                                Не выбран
+                            </span>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="header-modal search_modal ">
+        <div class="header-modal-content search__content ios-scrollbar">
+            <div class="header-modal-container search__container">
+                <div class="menu-nav">
+                    <div class="menu-nav__container">
+                        <div class="menu-nav__column">
+                            <a href="#" class="menu-nav__column-title">Мужская одежда</a>
+                            <ol class="menu-nav__column-list">
+                                <li>
+                                    <a href="#" class="menu-nav__column-link">
+                                        Носки <span class="menu-nav__column-link_count">45</span>
+                                    </a>
+                                </li>
+                                <li>
+                                    <a href="#" class="menu-nav__column-link">
+                                        Футболки <span class="menu-nav__column-link_count">988</span>
+                                    </a>
+                                </li>
+                                <li>
+                                    <a href="#" class="menu-nav__column-link">
+                                        Нижнее белье <span class="menu-nav__column-link_count">2</span>
+                                    </a>
+                                </li>
+                                <li>
+                                    <a href="#" class="menu-nav__column-link">
+                                        Термобелье <span class="menu-nav__column-link_count">11</span>
+                                    </a>
+                                </li>
+                                <li>
+                                    <a href="#" class="menu-nav__column-link">
+                                        Рубашки <span class="menu-nav__column-link_count">45</span>
+                                    </a>
+                                </li>
+                            </ol>
+                        </div>
+                        <div class="menu-nav__column">
+                            <a href="#" class="menu-nav__column-title">Женская одежда</a>
+                            <ol class="menu-nav__column-list">
+                                <li>
+                                    <a href="#" class="menu-nav__column-link">
+                                        Носки <span class="menu-nav__column-link_count">45</span>
+                                    </a>
+                                </li>
+                                <li>
+                                    <a href="#" class="menu-nav__column-link">
+                                        Футболки <span class="menu-nav__column-link_count">988</span>
+                                    </a>
+                                </li>
+                                <li>
+                                    <a href="#" class="menu-nav__column-link">
+                                        Нижнее белье <span class="menu-nav__column-link_count">2</span>
+                                    </a>
+                                </li>
+                                <li>
+                                    <a href="#" class="menu-nav__column-link">
+                                        Термобелье <span class="menu-nav__column-link_count">11</span>
+                                    </a>
+                                </li>
+                                <li>
+                                    <a href="#" class="menu-nav__column-link">
+                                        Рубашки <span class="menu-nav__column-link_count">45</span>
+                                    </a>
+                                </li>
+                            </ol>
+                        </div>
+                        <div class="menu-nav__column">
+                            <a href="#" class="menu-nav__column-title">Детская одежда</a>
+                            <ol class="menu-nav__column-list">
+                                <li>
+                                    <a href="#" class="menu-nav__column-link">
+                                        Носки <span class="menu-nav__column-link_count">45</span>
+                                    </a>
+                                </li>
+                                <li>
+                                    <a href="#" class="menu-nav__column-link">
+                                        Футболки <span class="menu-nav__column-link_count">988</span>
+                                    </a>
+                                </li>
+                                <li>
+                                    <a href="#" class="menu-nav__column-link">
+                                        Нижнее белье <span class="menu-nav__column-link_count">2</span>
+                                    </a>
+                                </li>
+
+                                <li>
+                                    <a href="#" class="menu-nav__column-link">
+                                        Рубашки <span class="menu-nav__column-link_count">45</span>
+                                    </a>
+                                </li>
+                            </ol>
+                        </div>
+                    </div>
+                </div>
+                <div class="search-card-container ios-scrollbar">
+                    <div class="search-card__item">
+                        <div class="search-card__item-info">
+                            <a href="#">
+                                <img src="./images/card/1.png" alt="">
+                            </a>
+
+                        </div>
+                        <div class="search-card__desc">
+                            <div class="search-card__article">
+                                Арт. 112233BC-DRRGDDEFGR
+                            </div>
+                            <a href="#" class="search-card__title">
+                                Термофутболка женская с круглым вырезом OEMEN
+                            </a>
+                        </div>
+                        <div class="search_card__price">
+                            <div class="product_card__price_old">
+                                839,90 ₽
+                            </div>
+                            <div class="product_card__price_new">
+                                340,90 ₽
+                            </div>
+
+                        </div>
+                        <div class="search-card__item_btns">
+                            <div class="product-card__btn-like "></div>
+                            <div class="btn btn_product-card "></div>
+                        </div>
+                    </div>
+                    <div class="search-card__item">
+                        <div class="search-card__item-info">
+                            <a href="#">
+                                <img src="./images/card/1.png" alt="">
+                            </a>
+
+                        </div>
+                        <div class="search-card__desc">
+                            <div class="search-card__article">
+                                Арт. 112233BC-DRRGDDEFGR
+                            </div>
+                            <a href="#" class="search-card__title">
+                                Термофутболка женская с круглым вырезом OEMEN
+                            </a>
+                        </div>
+                        <div class="search_card__price">
+                            <div class="product_card__price_old">
+                                839,90 ₽
+                            </div>
+                            <div class="product_card__price_new">
+                                340,90 ₽
+                            </div>
+
+                        </div>
+                        <div class="search-card__item_btns">
+                            <div class="product-card__btn-like "></div>
+                            <div class="btn btn_product-card "></div>
+                        </div>
+                    </div>
+                    <div class="search-card__item">
+                        <div class="search-card__item-info">
+                            <a href="#">
+                                <img src="./images/card/1.png" alt="">
+                            </a>
+
+                        </div>
+                        <div class="search-card__desc">
+                            <div class="search-card__article">
+                                Арт. 112233BC-DRRGDDEFGR
+                            </div>
+                            <a href="#" class="search-card__title">
+                                Термофутболка женская с круглым вырезом OEMEN
+                            </a>
+                        </div>
+                        <div class="search_card__price">
+                            <div class="product_card__price_old">
+                                839,90 ₽
+                            </div>
+                            <div class="product_card__price_new">
+                                340,90 ₽
+                            </div>
+
+                        </div>
+                        <div class="search-card__item_btns">
+                            <div class="product-card__btn-like "></div>
+                            <div class="btn btn_product-card "></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+    <main class="main">
+        <section class="section_breadcrumbs ios-scrollbar">
+            <div class="wrapper-container padding-container ">
+                <div class="breadcrumbs ">
+                    <a href="#" class="breadcrumbs_item">
+                        Главная
+                    </a>
+                    <a href="#" class="breadcrumbs_item">
+                        Политика обработки персональных данных
+                    </a>
+
+                </div>
+
+            </div>
+        </section>
+        <section class="section__title">
+            <div class="wrapper-container padding-container">
+                <h1 class="hero_title title_big">Политика обработки персональных данных</h1>
+
+            </div>
+        </section>
+        <section class="politic">
+            <div class="wrapper-container padding-container">
+                <div class="text-container">
+                    <h2>
+                        . .....  «23» 01 2019 г.
+                    </h2>
+                    <p>
+                        Настоящая Политика конфиденциальности персональных данных (далее – Политика конфиденциальности)
+                        действует в отношении всей информации, которую Интернет-магазин «Название», расположенный на
+                        доменном имени cvray.ru, может получить о Пользователе во время использования сайта
+                        Интернет-магазина, программ и продуктов Интернет-магазина.
+                    </p>
+                    <h2>
+                        1. ОПРЕДЕЛЕНИЕ ТЕРМИНОВ
+                    </h2>
+                    <p>
+                        1.1. В настоящей Политике конфиденциальности используются следующие термины:
+                    </p>
+                    <p>
+                        1.1.1. «Администрация сайта Интернет-магазина (далее – Администрация сайта) » – уполномоченные сотрудники на управления сайтом, действующие от имени ИП ... , которые организуют и (или) осуществляет обработку персональных данных, а также определяет цели обработки персональных данных, состав персональных данных, подлежащих обработке, действия (операции), совершаемые с персональными данными.
+                    </p>
+                    <p>
+                        1.1.2. «Персональные данные» - любая информация, относящаяся к прямо или косвенно определенному или определяемому физическому лицу (субъекту персональных данных).
+                    </p>
+                    <p>
+                        1.1.3. «Обработка персональных данных» - любое действие (операция) или совокупность действий (операций), совершаемых с использованием средств автоматизации или без использования таких средств с персональными данными, включая сбор, запись, систематизацию, накопление, хранение, уточнение (обновление, изменение), извлечение, использование, передачу (распространение, предоставление, доступ), обезличивание, блокирование, удаление, уничтожение персональных данных.
+                    </p>
+                    <p>
+                        1.1.4. «Конфиденциальность персональных данных» - обязательное для соблюдения Оператором или иным получившим доступ к персональным данным лицом требование не допускать их распространения без согласия субъекта персональных данных или наличия иного законного основания.
+                    </p>
+                    <p>
+                        1.1.5. «Пользователь сайта Интернет-магазина (далее ‑ Пользователь)» – лицо, имеющее доступ к Сайту, посредством сети Интернет и использующее Сайт интернет-магазина.
+                    </p>
+                    <p>
+                        1.1.6. «Cookies» — небольшой фрагмент данных, отправленный веб-сервером и хранимый на компьютере пользователя, который веб-клиент или веб-браузер каждый раз пересылает веб-серверу в HTTP-запросе при попытке открыть страницу соответствующего сайта.
+                    </p>
+                    <p>
+                        1.1.7. «IP-адрес» — уникальный сетевой адрес узла в компьютерной сети, построенной по протоколу IP.
+                    </p>
+                    <h2>
+                        2. ОБЩИЕ ПОЛОЖЕНИЯ
+                    </h2>
+                    <p>
+                        Использование Пользователем сайта Интернет-магазина означает согласие с настоящей Политикой конфиденциальности и условиями обработки персональных данных Пользователя.
+                    </p>
+                    <p>
+                        2.2. В случае несогласия с условиями Политики конфиденциальности Пользователь должен прекратить использование сайта Интернет-магазина.
+                    </p>
+                    <p>
+                        2.3. Настоящая Политика конфиденциальности применяется только к сайту Интернет-магазина «Цветочный Рай». Интернет-магазин не контролирует и не несет ответственность за сайты третьих лиц, на которые Пользователь может перейти по ссылкам, доступным на сайте Интернет-магазина.
+                    </p>
+                    <p>
+                        2.4. Администрация сайта не проверяет достоверность персональных данных, предоставляемых Пользователем сайта Интернет-магазина.
+                    </p>
+                </div>
+               
+            </div>
+        </section>
+    </main>
+    <footer class="footer">
+        <div class="wrapper-container padding-container">
+            <div class="footer__content">
+                <div class="footer__top">
+                    <div class="footer__social">
+                        <a href="#" class="logo"></a>
+                        <div class="footer__links_content">
+                            <div class="footer__contact_links">
+                                <a href="mailto:sale@oemen.ru" class="footer__contact_link --mail">sale@oemen.ru</a>
+                                <a href="tel:+79896788798" class="footer__contact_link --tel">+7 (989) 678-87-98</a>
+                            </div>
+                            <div class="footer__social_links">
+                                <a href="#" class="footer__social_link --whatsup"></a>
+                                <a href="#" class="footer__social_link --telegram"></a>
+                                <a href="#" class="footer__social_link --vk"></a>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="footer_nav-container">
+                        <div class="footer_nav__column">
+                            <div class="footer_nav__column-title">Каталог</div>
+                            <div class="footer_nav__column-links">
+                                <a href="#">
+                                    Мужская одежда
+                                </a>
+                                <a href="#">
+                                    Женская одежда
+                                </a>
+                                <a href="#">
+                                    Детская одежда
+                                </a>
+                                <a href="#">
+                                    Подборки
+                                </a>
+                                <a href="#">
+                                    Акции
+                                </a>
+                            </div>
+                        </div>
+                        <div class="footer_nav__column">
+                            <div class="footer_nav__column-title">Клиенту</div>
+                            <div class="footer_nav__column-links">
+                                <a href="#">
+                                    Личный кабинет
+                                </a>
+                                <a href="#">
+                                    Подборки
+                                </a>
+                                <a href="#">
+                                    Избранное
+                                </a>
+                                <a href="#">
+                                    Просмотренное
+                                </a>
+                                <a href="#">
+                                    История выгруженных прайсов
+                                </a>
+                            </div>
+                        </div>
+                        <div class="footer_nav__column">
+                            <div class="footer_nav__column-title">Каталог</div>
+                            <div class="footer_nav__column-links">
+                                <a href="#">
+                                    Личный кабинет
+                                </a>
+                                <a href="#">
+                                    Подборки
+                                </a>
+                                <a href="#">
+                                    Избранное
+                                </a>
+                                <a href="#">
+                                    Просмотренное
+                                </a>
+                                <a href="#">
+                                    Сохраненные подборки
+                                </a>
+                                <a href="#">
+                                    Прайсы
+                                </a>
+                                <a href="#">
+                                    Клиенты
+                                </a>
+                                <a href="#">
+                                    История выгруженных прайсов
+                                </a>
+                                <a href="#">
+                                    Резервы
+                                </a>
+
+
+                            </div>
+                        </div>
+                    </div>
+                    <div class="footer_politiks">
+                        <a href="#">
+                            Политика обработки данных
+                        </a>
+                        <a href="#">
+                            Условия соглашения
+                        </a>
+                    </div>
+                </div>
+                <div class="footer__bottom">
+                    <div class="footer__about">
+                        <div class="footer__about_top">
+                            <span>
+                                © 2025 Все права защищены
+                            </span>
+                            <span>
+                                ООО «ОЙМАН»
+                            </span>
+                            <span>
+                                ИНН: 48392004832103
+                            </span>
+                            <span>
+                                ОГРНИП: 0929202018332
+                            </span>
+                        </div>
+                        <div class="footer__about_bottom">
+                            Продолжая использование сайта, вы соглашаетесь с условиями использования. В ином случае вам
+                            необходимо покинуть сайт. Сайт использует файлы cookies для взаимодействия с вами. Вы можете
+                            согласиться на использование cookies или заблокировать их использование, изменив настройки
+                            вашего интернет-браузера, следуя инструкции.
+                        </div>
+                    </div>
+                    <div class="footer_developer">
+                        <span>
+                            Техподдержка и разработка сайта
+                        </span>
+                        <img src="./images/deve.png" alt="Разработчики">
+                    </div>
+                </div>
+            </div>
+    </footer>
+
+    <div class="modal_overlay ios-scrollbar" data-modal-id="modal-filter">
+        <div class="modal_filter ios-scrollbar">
+            <div class="modal_close"></div>
+            <div class="modal_title">Фильтр</div>
+            <div class="filter_item ">
+                <div class="filter_item__title">
+                    Тип одежды
+                </div>
+                <div class="filter_item__hidden ios-scrollbar">
+                    <label class="checkbox-label">
+                        <input type="checkbox" name="type">
+                        <div class="checkbox-marker"></div>
+                        <span>
+                            ЧНИ
+                        </span>
+                    </label>
+                    <label class="checkbox-label">
+                        <input type="checkbox" name="type">
+                        <div class="checkbox-marker"></div>
+                        <span>
+                            Нижнее белье
+                        </span>
+                    </label>
+                    <label class="checkbox-label">
+                        <input type="checkbox" name="type">
+                        <div class="checkbox-marker"></div>
+                        <span>
+                            Термобелье
+                        </span>
+                    </label>
+                    <label class="checkbox-label">
+                        <input type="checkbox" name="type">
+                        <div class="checkbox-marker"></div>
+                        <span>
+                            Брюки
+                        </span>
+                    </label>
+                    <label class="checkbox-label">
+                        <input type="checkbox" name="type">
+                        <div class="checkbox-marker"></div>
+                        <span>
+                            Спортивная одежда
+                        </span>
+                    </label>
+                </div>
+            </div>
+            <div class="filter_item">
+                <div class="filter_item__title">
+                    Пол
+                </div>
+                <div class="filter_item__hidden ios-scrollbar">
+                    <label class="checkbox-label">
+                        <input type="checkbox" name="type">
+                        <div class="checkbox-marker"></div>
+                        <span>
+                            Муж
+                        </span>
+                    </label>
+                    <label class="checkbox-label">
+                        <input type="checkbox" name="type">
+                        <div class="checkbox-marker"></div>
+                        <span>
+                            Жен
+                        </span>
+                    </label>
+
+                </div>
+            </div>
+            <div class="filter_item">
+                <div class="filter_item__title">
+                    Размер
+                </div>
+                <div class="filter_item__hidden ios-scrollbar">
+                    <label class="checkbox-label">
+                        <input type="checkbox" name="type">
+                        <div class="checkbox-marker"></div>
+                        <span>
+                            1
+                        </span>
+                    </label>
+                    <label class="checkbox-label">
+                        <input type="checkbox" name="type">
+                        <div class="checkbox-marker"></div>
+                        <span>
+                            2
+                        </span>
+                    </label>
+
+                </div>
+            </div>
+            <div class="filter_item">
+                <div class="filter_item__title">
+                    Цвет
+                </div>
+                <div class="filter_item__hidden ios-scrollbar">
+                    <label class="checkbox-label">
+                        <input type="checkbox" name="type">
+                        <div class="checkbox-marker"></div>
+                        <span>
+                            1
+                        </span>
+                    </label>
+                    <label class="checkbox-label">
+                        <input type="checkbox" name="type">
+                        <div class="checkbox-marker"></div>
+                        <span>
+                            2
+                        </span>
+                    </label>
+                    <label class="checkbox-label">
+                        <input type="checkbox" name="type">
+                        <div class="checkbox-marker"></div>
+                        <span>
+                            2
+                        </span>
+                    </label>
+                    <label class="checkbox-label">
+                        <input type="checkbox" name="type">
+                        <div class="checkbox-marker"></div>
+                        <span>
+                            2
+                        </span>
+                    </label>
+                    <label class="checkbox-label">
+                        <input type="checkbox" name="type">
+                        <div class="checkbox-marker"></div>
+                        <span>
+                            2
+                        </span>
+                    </label>
+                    <label class="checkbox-label">
+                        <input type="checkbox" name="type">
+                        <div class="checkbox-marker"></div>
+                        <span>
+                            2
+                        </span>
+                    </label>
+                    <label class="checkbox-label">
+                        <input type="checkbox" name="type">
+                        <div class="checkbox-marker"></div>
+                        <span>
+                            2
+                        </span>
+                    </label>
+                    <label class="checkbox-label">
+                        <input type="checkbox" name="type">
+                        <div class="checkbox-marker"></div>
+                        <span>
+                            2
+                        </span>
+                    </label>
+                    <label class="checkbox-label">
+                        <input type="checkbox" name="type">
+                        <div class="checkbox-marker"></div>
+                        <span>
+                            2
+                        </span>
+                    </label>
+                    <label class="checkbox-label">
+                        <input type="checkbox" name="type">
+                        <div class="checkbox-marker"></div>
+                        <span>
+                            2
+                        </span>
+                    </label>
+
+                </div>
+            </div>
+            <div class="filter_item">
+                <div class="filter_item__title">
+                    Сезон
+                </div>
+                <div class="filter_item__hidden ios-scrollbar">
+                    <label class="checkbox-label">
+                        <input type="checkbox" name="type">
+                        <div class="checkbox-marker"></div>
+                        <span>
+                            1
+                        </span>
+                    </label>
+                    <label class="checkbox-label">
+                        <input type="checkbox" name="type">
+                        <div class="checkbox-marker"></div>
+                        <span>
+                            2
+                        </span>
+                    </label>
+
+                </div>
+            </div>
+            <div class="filter_item">
+                <div class="filter_item__title">
+                    Новинки
+                </div>
+                <div class="filter_item__hidden ios-scrollbar">
+                    <label class="checkbox-label">
+                        <input type="checkbox" name="type">
+                        <div class="checkbox-marker"></div>
+                        <span>
+                            1
+                        </span>
+                    </label>
+                    <label class="checkbox-label">
+                        <input type="checkbox" name="type">
+                        <div class="checkbox-marker"></div>
+                        <span>
+                            2
+                        </span>
+                    </label>
+
+                </div>
+            </div>
+            <div class="filter_item">
+                <div class="filter_item__title">
+                    Скидки (акции)
+                </div>
+                <div class="filter_item__hidden ios-scrollbar">
+                    <label class="checkbox-label">
+                        <input type="checkbox" name="type">
+                        <div class="checkbox-marker"></div>
+                        <span>
+                            1
+                        </span>
+                    </label>
+                    <label class="checkbox-label">
+                        <input type="checkbox" name="type">
+                        <div class="checkbox-marker"></div>
+                        <span>
+                            2
+                        </span>
+                    </label>
+
+                </div>
+            </div>
+            <div class="filter_item">
+                <div class="filter_item__title">
+                    Бренд
+                </div>
+                <div class="filter_item__hidden ios-scrollbar">
+                    <label class="checkbox-label">
+                        <input type="checkbox" name="type">
+                        <div class="checkbox-marker"></div>
+                        <span>
+                            1
+                        </span>
+                    </label>
+                    <label class="checkbox-label">
+                        <input type="checkbox" name="type">
+                        <div class="checkbox-marker"></div>
+                        <span>
+                            2
+                        </span>
+                    </label>
+
+                </div>
+            </div>
+            <div class="filter-price">
+                <span class="filter-item_title">Цена</span>
+                <div class="price-slider">
+                    <div class="slider-track"></div>
+                    <input type="range" class="slider-min" min="0" max="50000" value="2500" step="10">
+                    <input type="range" class="slider-max" min="0" max="50000" value="23500" step="10">
+
+                    <input type="hidden" name="price_min" value="2500">
+                    <input type="hidden" name="price_max" value="23500">
+                </div>
+                <div class="price-values">
+                    <div class="price-min">
+                        <input name="price-min" type="text" class="price-input-min" value="2500">
+                    </div>
+                    <div class="price-max">
+                        <input name="price-max" type="text" class="price-input-max" value="23500">
+                    </div>
+                </div>
+
+            </div>
+            <div class="modal-filter-btns">
+                <button class="btn btn_primary">Применить </button>
+                <button class="btn btn_second">Сбросить </button>
+            </div>
+        </div>
+    </div>
+    <div class="modal_overlay ios-scrollbar" data-modal-id="modal-client">
+        <div class="modal_content">
+            <div class="modal_close"></div>
+            <div class="modal_title">
+                Выбрать клиента
+            </div>
+            <div class="modal_serach-container">
+                <input type="search" name="search-client" class="search_client"
+                    placeholder="Введите ваш запрос, например розы">
+                <button class="btn btn_primary">Искать</button>
+            </div>
+            <div class="modal_serach-client__container ios-scrollbar">
+                <div class="modal_serach-client__item">
+                    <span>
+                        Базовая цена
+                    </span>
+                    <div class="modal_serach-client__item-btn">Выбрать</div>
+                </div>
+                <div class="modal_serach-client__item">
+                    <span>
+                        ИП Иванов Иван Иванович
+                    </span>
+                    <div class="modal_serach-client__item-btn">Выбрать</div>
+                </div>
+                <div class="modal_serach-client__item">
+                    <span>
+                        Пример
+                    </span>
+                    <div class="modal_serach-client__item-btn">Выбрать</div>
+                </div>
+                <div class="modal_serach-client__item">
+                    <span>
+                        Компания
+                    </span>
+                    <div class="modal_serach-client__item-btn">Выбрать</div>
+                </div>
+                <div class="modal_serach-client__item">
+                    <span>
+                        Компания 2
+                    </span>
+                    <div class="modal_serach-client__item-btn">Выбрать</div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="modal_overlay ios-scrollbar" data-modal-id="modal-reserv-list">
+        <div class="modal_content">
+            <div class="modal_close"></div>
+            <div class="modal_title">
+                Бронирования
+            </div>
+            <div class="modal_serach-container">
+                <input type="search" name="search-reserv" class="search_reserv"
+                    placeholder="Введите ваш запрос, например розы">
+                <button class="btn btn_primary">Искать</button>
+            </div>
+            <div class="modal_serach-reserv__container ios-scrollbar">
+                <div class="modal_serach-reserv__item">
+                    <div class="reserve_item__info">
+                        <div class="reserve_item__title">
+                            Компания
+                        </div>
+                        <div class="reserve_item__desc">
+                            Менеджер: <span>Иванов М.</span>
+                        </div>
+                    </div>
+                    <div class="reserve_item__count">1000 шт.</div>
+                </div>
+                <div class="modal_serach-reserv__item">
+                    <div class="reserve_item__info">
+                        <div class="reserve_item__title">
+                            Петров
+                        </div>
+                        <div class="reserve_item__desc">
+                            Менеджер: <span>Иванов М.</span>
+                        </div>
+                    </div>
+                    <div class="reserve_item__count">1000 шт.</div>
+                </div>
+                <div class="modal_serach-reserv__item">
+                    <div class="reserve_item__info">
+                        <div class="reserve_item__title">
+                            Зара менеджеры
+                        </div>
+                        <div class="reserve_item__desc">
+                            Менеджер: <span>Иванов М.</span>
+                        </div>
+                    </div>
+                    <div class="reserve_item__count">1000 шт.</div>
+                </div>
+                <div class="modal_serach-reserv__item">
+                    <div class="reserve_item__info">
+                        <div class="reserve_item__title">
+                            Озон
+                        </div>
+                        <div class="reserve_item__desc">
+                            Менеджер: <span>Иванов М.</span>
+                        </div>
+                    </div>
+                    <div class="reserve_item__count">1000 шт.</div>
+                </div>
+                <div class="modal_serach-reserv__item">
+                    <div class="reserve_item__info">
+                        <div class="reserve_item__title">
+                            Озон
+                        </div>
+                        <div class="reserve_item__desc">
+                            Менеджер: <span>Иванов М.</span>
+                        </div>
+                    </div>
+                    <div class="reserve_item__count">1000 шт.</div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="modal_overlay ios-scrollbar" data-modal-id="modal-set-reserv">
+        <div class="modal_content">
+            <div class="modal_close"></div>
+            <div class="modal_title">
+                Забронировать
+            </div>
+            <form class="reserv_form">
+                <div class="reserv_form__info">
+                    <label>
+                        <span>
+                            Клиент:
+                        </span>
+                        <input type="text" readonly name="client" value="Петров">
+                    </label>
+                    <label>
+                        <span>
+                            Менеджер:
+                        </span>
+                        <input type="text" readonly name="manager" value="Иванов М.">
+                    </label>
+                </div>
+                <input type="number" class="reserv_input" name="count-product" required placeholder="Количество товара">
+                <input type="number" name="count-days" class="reserv_input" required
+                    placeholder="Срок бронирования в днях">
+                <textarea name="msg" placeholder="Комментарий"></textarea>
+                <button class="btn btn_primary">Применить</button>
+            </form>
+        </div>
+    </div>
+    <div class="modal_overlay ios-scrollbar" data-modal-id="modal-set-reserv__ok">
+        <div class="modal_content">
+            <div class="modal_close"></div>
+            <div class="msg-modal">
+                Забронировано
+            </div>
+        </div>
+    </div>
+    <div class="modal_overlay ios-scrollbar" data-modal-id="modal-auth">
+        <div class="modal_content">
+            <div class="modal_close"></div>
+            <div class="modal_title">
+                Авторизация
+            </div>
+            <form class="auth__content_number">
+                <input type="text" name="phone" placeholder="+7 900 000-00-00">
+                <button class="btn btn_primary">Войти</button>
+            </form>
+            <form class="auth__content_code">
+                <label class="label_code">
+                    <input type="text" name="code" placeholder="Код из смс" class="">
+                    <div class="err-msg">Введите корректный код</div>
+                </label>
+                <div class="more_sms-code">
+                    <span class="more_sms-btn">
+                        Отправить повторно
+                    </span>
+                    <p class="timer_sms">
+                        Повторная отправка будет доступна через <span class="time-sms">03:00</span>
+                    </p>
+                </div>
+                <button class="btn btn_primary">Подтвердить</button>
+            </form>
+        </div>
+    </div>
+    <script src="./scripts/swiper-bundle.min.js"></script>
+    <script src="./scripts/utils.js"></script>
+    <script src="./scripts/modals/modal-client.js"></script>
+    <script src="./scripts/modals/modal-auth.js"></script>
+    <script src="./scripts/modals/modal-reserv.js"></script>
+    <script src="./scripts/modals/modal-set-reserv.js"></script>
+    <script src="./scripts/products.js"></script>
+    <script src="./scripts/filters.js"></script>
+    <script src="./scripts/main.js"></script>
+</body>
+
+</html>
