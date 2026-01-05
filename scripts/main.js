@@ -273,14 +273,23 @@ function initPageStyle() {
     if (typeof getCookie === 'function') {
         const savedStyle = getCookie('page-style') || '';
         if (savedStyle) {
-            document.body.setAttribute('data-page-style', savedStyle);
-        }
-        pageBtns.forEach(btn => {
-            if (btn.getAttribute('data-page') === savedStyle) {
-                pageBtns.forEach(btn => btn.classList.remove('is-active'));
-                btn.classList.add('is-active');
+            // Проверяем, есть ли кнопка с таким значением на странице
+            const hasButtonForStyle = Array.from(pageBtns).some(btn => 
+                btn.getAttribute('data-page') === savedStyle
+            );
+            
+            // Если кнопка есть, устанавливаем стиль из куки
+            if (hasButtonForStyle) {
+                document.body.setAttribute('data-page-style', savedStyle);
+                pageBtns.forEach(btn => {
+                    if (btn.getAttribute('data-page') === savedStyle) {
+                        pageBtns.forEach(btn => btn.classList.remove('is-active'));
+                        btn.classList.add('is-active');
+                    }
+                });
             }
-        });
+            // Если кнопки нет, оставляем изначальное значение в body без изменений
+        }
     }
 }
 
