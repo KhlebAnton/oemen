@@ -163,7 +163,8 @@
             positionColumn.innerHTML = `
                 <div class="promo-banner__position">
                     <input type="number" placeholder="Позиция" name="position" required readonly value="${position}">
-                    <button class="btn btn_primary promo-banner__position-btn">Удалить</button>
+                    <button class="btn btn_primary promo-banner__position-btn promo-banner__position-btn--add" style="display: none;">Добавить</button>
+                    <button class="btn btn_primary promo-banner__position-btn promo-banner__position-btn--delete">Удалить</button>
                 </div>
             `;
             
@@ -196,6 +197,69 @@
             updateRowState(row);
         }
         
+        // Удаление только позиции (очистка input и показ кнопки "Добавить")
+        function removePositionOnly(row) {
+            const positionColumn = row.querySelector('[data-coloumn="Позиция"]');
+            
+            if (!positionColumn) return;
+            
+            const positionInput = positionColumn.querySelector('input[name="position"]');
+            const addBtn = positionColumn.querySelector('.promo-banner__position-btn--add');
+            const deleteBtn = positionColumn.querySelector('.promo-banner__position-btn--delete');
+            
+            if (positionInput && addBtn && deleteBtn) {
+                // Очищаем значение позиции
+                positionInput.value = '';
+                
+                // Убеждаемся, что input полностью редактируемый
+                // Удаляем атрибут readonly если есть
+                if (positionInput.hasAttribute('readonly')) {
+                    positionInput.removeAttribute('readonly');
+                }
+                // Явно устанавливаем свойство readOnly в false
+                positionInput.readOnly = false;
+                
+                // Убираем все возможные блокировки
+                positionInput.removeAttribute('disabled');
+                positionInput.disabled = false;
+                
+                // Убираем класс ошибки если был
+                positionInput.classList.remove('is-err');
+                addBtn.classList.remove('is-err');
+                deleteBtn.classList.remove('is-err');
+                
+                // Показываем кнопку "Добавить", скрываем "Удалить"
+                addBtn.style.display = '';
+                addBtn.disabled = false;
+                addBtn.removeAttribute('disabled');
+                deleteBtn.style.display = 'none';
+                
+                // Удаляем атрибут позиции
+                row.removeAttribute('data-banner-position');
+                
+                // Устанавливаем required в зависимости от наличия баннера
+                const bannerName = row.getAttribute('data-banner-name');
+                if (bannerName) {
+                    positionInput.required = true;
+                } else {
+                    positionInput.required = false;
+                }
+                
+                // Устанавливаем флаг, что позиция была удалена (для защиты от сброса)
+                positionInput.setAttribute('data-position-cleared', 'true');
+                
+                // Убеждаемся, что инпут фокусируется для удобства пользователя
+                setTimeout(() => {
+                    // Дополнительная проверка, что инпут редактируемый
+                    if (positionInput.hasAttribute('readonly')) {
+                        positionInput.removeAttribute('readonly');
+                    }
+                    positionInput.readOnly = false;
+                    positionInput.focus();
+                }, 10);
+            }
+        }
+        
         // Удаление строки с баннером (превращение обратно в форму добавления)
         function removeBannerRow(row) {
             const bannerColumn = row.querySelector('[data-coloumn="Баннер"]');
@@ -226,12 +290,18 @@
             positionInput.value = '';
             
             const addBtn = document.createElement('button');
-            addBtn.className = 'btn btn_primary promo-banner__position-btn';
+            addBtn.className = 'btn btn_primary promo-banner__position-btn promo-banner__position-btn--add';
             addBtn.textContent = 'Добавить';
-            addBtn.disabled = true;
+            addBtn.disabled = false; // Кнопка всегда активна
+            
+            const deleteBtn = document.createElement('button');
+            deleteBtn.className = 'btn btn_primary promo-banner__position-btn promo-banner__position-btn--delete';
+            deleteBtn.textContent = 'Удалить';
+            deleteBtn.style.display = 'none';
             
             positionDiv.appendChild(positionInput);
             positionDiv.appendChild(addBtn);
+            positionDiv.appendChild(deleteBtn);
             positionColumn.appendChild(positionDiv);
             
             // Удаляем данные
@@ -251,42 +321,75 @@
             if (!positionColumn) return;
             
             const positionInput = positionColumn.querySelector('input[name="position"]');
-            const addBtn = positionColumn.querySelector('.promo-banner__position-btn');
+            const addBtn = positionColumn.querySelector('.promo-banner__position-btn--add');
+            
+            // Кнопка "Добавить" всегда активна (можно добавлять позицию без баннера)
+            if (addBtn) {
+                addBtn.disabled = false;
+                addBtn.removeAttribute('disabled');
+            }
             
             if (bannerName) {
-                // Баннер выбран - инпут обязателен, кнопка активна
-                if (positionInput) {
+                // Баннер выбран - инпут обязателен
+                if (positionInput && !positionInput.hasAttribute('readonly')) {
                     positionInput.required = true;
                     positionInput.removeAttribute('readonly');
+                    positionInput.readOnly = false;
                     // Убираем класс ошибки при обновлении состояния
                     positionInput.classList.remove('is-err');
                 }
-                if (addBtn && addBtn.textContent.trim() === 'Добавить') {
-                    addBtn.disabled = false;
-                }
             } else {
-                // Баннер не выбран - инпут не обязателен, кнопка disabled
+                // Баннер не выбран - инпут не обязателен
                 if (positionInput && !positionInput.hasAttribute('readonly')) {
                     positionInput.required = false;
-                    positionInput.value = '';
                     // Убираем класс ошибки
                     positionInput.classList.remove('is-err');
-                }
-                if (addBtn && addBtn.textContent.trim() === 'Добавить') {
-                    addBtn.disabled = true;
                 }
             }
         }
         
-        // Обработка ввода в поле позиции (убираем класс ошибки при вводе)
+        // Обработка ввода в поле позиции (убираем класс ошибки при вводе и активируем кнопку)
         if (bannerContainer) {
             bannerContainer.addEventListener('input', (e) => {
                 const positionInput = e.target;
                 if (positionInput && positionInput.name === 'position') {
                     // Убираем класс ошибки при вводе
                     positionInput.classList.remove('is-err');
+                    
+                    // Убеждаемся, что инпут редактируемый (если позиция была очищена)
+                    if (positionInput.hasAttribute('data-position-cleared')) {
+                        if (positionInput.hasAttribute('readonly')) {
+                            positionInput.removeAttribute('readonly');
+                        }
+                        positionInput.readOnly = false;
+                    }
+                    
+                    // Убираем класс ошибки с кнопки если был
+                    const row = positionInput.closest('.promo-banner__row');
+                    if (row) {
+                        const addBtn = row.querySelector('.promo-banner__position-btn--add');
+                        if (addBtn) {
+                            addBtn.classList.remove('is-err');
+                            // Активируем кнопку при вводе значения
+                            addBtn.disabled = false;
+                            addBtn.removeAttribute('disabled');
+                        }
+                    }
                 }
             });
+            
+            // Защита от сброса значения при фокусе
+            bannerContainer.addEventListener('focus', (e) => {
+                const positionInput = e.target;
+                if (positionInput && positionInput.name === 'position') {
+                    if (positionInput.hasAttribute('data-position-cleared')) {
+                        if (positionInput.hasAttribute('readonly')) {
+                            positionInput.removeAttribute('readonly');
+                        }
+                        positionInput.readOnly = false;
+                    }
+                }
+            }, true);
         }
         
         // Функция для обновления обработчиков после изменения DOM
@@ -297,19 +400,10 @@
                 allRows.forEach(row => {
                     if (row.classList.contains('promo-banner__top-row')) return;
                     
-                    const deleteBtn = row.querySelector('.promo-banner__position-btn');
+                    const deleteBtn = row.querySelector('.promo-banner__position-btn--delete');
                     const deleteFileBtn = row.querySelector('.promo-banner__file_del');
                     
-                    if (deleteBtn && deleteBtn.textContent.trim() === 'Удалить') {
-                        // Удаляем старые обработчики и добавляем новые
-                        const newDeleteBtn = deleteBtn.cloneNode(true);
-                        deleteBtn.parentNode.replaceChild(newDeleteBtn, deleteBtn);
-                        newDeleteBtn.addEventListener('click', (e) => {
-                            e.preventDefault();
-                            e.stopPropagation();
-                            removeBannerRow(row);
-                        });
-                    }
+                    // Обработчики уже установлены через делегирование событий, не нужно переинициализировать
                     
                     if (deleteFileBtn) {
                         const newDeleteFileBtn = deleteFileBtn.cloneNode(true);
@@ -317,18 +411,32 @@
                         newDeleteFileBtn.addEventListener('click', (e) => {
                             e.preventDefault();
                             e.stopPropagation();
-                            removeBannerRow(row);
+                            removeBannerOnly(row);
                         });
                     }
                 });
             }
         }
         
-        // Обработка кнопок "Добавить"
+        // Обработка кнопок "Добавить" и "Удалить" позиции (отдельные кнопки)
         if (bannerContainer) {
             bannerContainer.addEventListener('click', (e) => {
-                const addBtn = e.target.closest('.promo-banner__position-btn');
-                if (addBtn && addBtn.textContent.trim() === 'Добавить') {
+                // Обработка кнопки "Удалить" позиции
+                const deleteBtn = e.target.closest('.promo-banner__position-btn--delete');
+                if (deleteBtn) {
+                    e.preventDefault();
+                    e.stopPropagation(); // Предотвращаем закрытие модалки
+                    const row = deleteBtn.closest('.promo-banner__row');
+                    if (row) {
+                        // Удаляем только позицию
+                        removePositionOnly(row);
+                        return;
+                    }
+                }
+                
+                // Обработка кнопки "Добавить" позиции
+                const addBtn = e.target.closest('.promo-banner__position-btn--add');
+                if (addBtn && !addBtn.disabled) {
                     e.preventDefault();
                     e.stopPropagation(); // Предотвращаем закрытие модалки
                     const row = addBtn.closest('.promo-banner__row');
@@ -336,57 +444,61 @@
                         const positionInput = row.querySelector('input[name="position"]');
                         const bannerName = row.getAttribute('data-banner-name');
                         
-                        if (positionInput && bannerName) {
+                        if (positionInput) {
+                            // Проверяем, что инпут не readonly
+                            if (positionInput.hasAttribute('readonly') || positionInput.readOnly) {
+                                return;
+                            }
+                            
                             const position = positionInput.value.trim();
                             
                             if (position && !isNaN(position)) {
                                 // Убираем класс ошибки, если он был
                                 positionInput.classList.remove('is-err');
-                                convertRowToBannerState(row, bannerName, position);
+                                addBtn.classList.remove('is-err');
+                                
+                                // Удаляем флаг очистки позиции
+                                positionInput.removeAttribute('data-position-cleared');
+                                
+                                // Если есть баннер, используем convertRowToBannerState
+                                if (bannerName) {
+                                    convertRowToBannerState(row, bannerName, position);
+                                } else {
+                                    // Если баннера нет, просто добавляем позицию
+                                    // Делаем инпут readonly и показываем кнопку "Удалить"
+                                    positionInput.setAttribute('readonly', 'true');
+                                    positionInput.readOnly = true;
+                                    addBtn.style.display = 'none';
+                                    const deleteBtn = row.querySelector('.promo-banner__position-btn--delete');
+                                    if (deleteBtn) {
+                                        deleteBtn.style.display = '';
+                                    }
+                                    row.setAttribute('data-banner-position', position);
+                                }
+                                
                                 // Обновляем обработчики после изменения DOM
                                 setTimeout(() => {
                                     reinitBannerHandlers();
                                 }, 0);
                             } else {
-                                // Добавляем класс ошибки к инпуту
+                                // Добавляем класс ошибки к инпуту и кнопке
                                 positionInput.classList.add('is-err');
+                                addBtn.classList.add('is-err');
                             }
-                        } else {
-                            alert('Сначала выберите баннер');
                         }
-                    }
-                }
-            });
-        }
-        
-        // Обработка кнопок "Удалить"
-        if (bannerContainer) {
-            bannerContainer.addEventListener('click', (e) => {
-                const deleteBtn = e.target.closest('.promo-banner__position-btn');
-                if (deleteBtn && deleteBtn.textContent.trim() === 'Удалить') {
-                    e.preventDefault();
-                    e.stopPropagation(); // Предотвращаем закрытие модалки
-                    const row = deleteBtn.closest('.promo-banner__row');
-                    if (row) {
-                        removeBannerRow(row);
+                        return;
                     }
                 }
                 
+                // Обработка кнопки удаления баннера
                 const deleteFileBtn = e.target.closest('.promo-banner__file_del');
                 if (deleteFileBtn) {
                     e.preventDefault();
                     e.stopPropagation(); // Предотвращаем закрытие модалки
                     const row = deleteFileBtn.closest('.promo-banner__row');
                     if (row) {
-                        // Проверяем, есть ли уже добавленная позиция
-                        const positionBtn = row.querySelector('.promo-banner__position-btn');
-                        if (positionBtn && positionBtn.textContent.trim() === 'Удалить') {
-                            // Если позиция уже добавлена, удаляем всю строку
-                            removeBannerRow(row);
-                        } else {
-                            // Если позиция не добавлена, удаляем только баннер
-                            removeBannerOnly(row);
-                        }
+                        // Удаляем только баннер
+                        removeBannerOnly(row);
                     }
                 }
             });
@@ -402,31 +514,25 @@
                 const deleteBtn = row.querySelector('.promo-banner__position-btn');
                 const deleteFileBtn = row.querySelector('.promo-banner__file_del');
                 
-                // Если есть кнопка удаления, значит это строка с баннером
-                if (deleteBtn && deleteBtn.textContent.trim() === 'Удалить') {
-                    deleteBtn.addEventListener('click', (e) => {
-                        e.preventDefault();
-                        removeBannerRow(row);
-                    });
-                }
-                
-                if (deleteFileBtn) {
-                    deleteFileBtn.addEventListener('click', (e) => {
-                        e.preventDefault();
-                        // Проверяем, есть ли уже добавленная позиция
-                        const positionBtn = row.querySelector('.promo-banner__position-btn');
-                        if (positionBtn && positionBtn.textContent.trim() === 'Удалить') {
-                            // Если позиция уже добавлена, удаляем всю строку
-                            removeBannerRow(row);
-                        } else {
-                            // Если позиция не добавлена, удаляем только баннер
-                            removeBannerOnly(row);
-                        }
-                    });
-                }
+                // Обработчики уже установлены через делегирование событий, не нужно добавлять здесь
                 
                 // Инициализируем состояние строки
                 updateRowState(row);
+                
+                // Убеждаемся, что кнопка "Добавить" активна и инпут редактируемый
+                const addBtn = row.querySelector('.promo-banner__position-btn--add');
+                const positionInput = row.querySelector('input[name="position"]');
+                
+                if (addBtn) {
+                    addBtn.disabled = false;
+                    addBtn.removeAttribute('disabled');
+                }
+                
+                // Убеждаемся, что инпут редактируемый (если не readonly)
+                if (positionInput && !positionInput.hasAttribute('readonly')) {
+                    positionInput.readOnly = false;
+                    positionInput.removeAttribute('readonly');
+                }
             });
         }
     }
