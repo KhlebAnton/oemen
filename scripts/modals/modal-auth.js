@@ -77,6 +77,14 @@ function applyPhoneMask(input) {
             e.preventDefault();
         }
     });
+    
+    input.addEventListener('blur', function() {
+        let value = this.value.replace(/\D/g, '');
+        // Проверяем, является ли номер полным (11 цифр: 7 + 10 цифр номера)
+        if (value.length < 11 || value[0] !== '7') {
+            this.value = '';
+        }
+    });
 }
 
 // Функция форматирования времени
@@ -253,9 +261,59 @@ document.addEventListener('click', (e) => {
     }
 });
 
-// Инициализация маски телефона
+// Функция применения маски к полю телефона (с проверкой на дублирование)
+function initPhoneMask(input) {
+    if (!input || input.hasAttribute('data-phone-mask-applied')) {
+        return;
+    }
+    applyPhoneMask(input);
+    input.setAttribute('data-phone-mask-applied', 'true');
+}
+
+// Инициализация маски телефона для модального окна авторизации
 if (phoneInput) {
-    applyPhoneMask(phoneInput);
+    initPhoneMask(phoneInput);
+}
+
+// Применение маски ко всем полям телефона на странице
+function initAllPhoneMasks() {
+    const allPhoneInputs = document.querySelectorAll('input[name="phone"]');
+    allPhoneInputs.forEach(input => {
+        initPhoneMask(input);
+    });
+}
+
+// Применяем маску сразу, если DOM уже загружен
+if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', initAllPhoneMasks);
+} else {
+    // DOM уже загружен
+    initAllPhoneMasks();
+}
+
+// Также применяем маску к динамически добавленным полям
+const observer = new MutationObserver(function(mutations) {
+    mutations.forEach(function(mutation) {
+        mutation.addedNodes.forEach(function(node) {
+            if (node.nodeType === 1) { // Element node
+                const phoneInputs = node.querySelectorAll ? node.querySelectorAll('input[name="phone"]') : [];
+                phoneInputs.forEach(input => {
+                    initPhoneMask(input);
+                });
+                // Если сам узел является полем телефона
+                if (node.tagName === 'INPUT' && node.getAttribute('name') === 'phone') {
+                    initPhoneMask(node);
+                }
+            }
+        });
+    });
+});
+
+if (document.body) {
+    observer.observe(document.body, {
+        childList: true,
+        subtree: true
+    });
 }
 
 // Обработчик кнопки пользователя для открытия авторизации

@@ -197,67 +197,20 @@
             updateRowState(row);
         }
         
-        // Удаление только позиции (очистка input и показ кнопки "Добавить")
+        // Удаление строки с позицией (удаляется вся строка целиком)
         function removePositionOnly(row) {
-            const positionColumn = row.querySelector('[data-coloumn="Позиция"]');
+            // ВАЖНО: удаляется ВСЯ строка целиком, а не только позиция
+            if (!row || !row.parentNode) return; // Проверяем, что строка существует
             
-            if (!positionColumn) return;
+            // Не удаляем заголовок
+            if (row.classList.contains('promo-banner__top-row')) return;
             
-            const positionInput = positionColumn.querySelector('input[name="position"]');
-            const addBtn = positionColumn.querySelector('.promo-banner__position-btn--add');
-            const deleteBtn = positionColumn.querySelector('.promo-banner__position-btn--delete');
+            // Удаляем строку из DOM
+            row.remove();
             
-            if (positionInput && addBtn && deleteBtn) {
-                // Очищаем значение позиции
-                positionInput.value = '';
-                
-                // Убеждаемся, что input полностью редактируемый
-                // Удаляем атрибут readonly если есть
-                if (positionInput.hasAttribute('readonly')) {
-                    positionInput.removeAttribute('readonly');
-                }
-                // Явно устанавливаем свойство readOnly в false
-                positionInput.readOnly = false;
-                
-                // Убираем все возможные блокировки
-                positionInput.removeAttribute('disabled');
-                positionInput.disabled = false;
-                
-                // Убираем класс ошибки если был
-                positionInput.classList.remove('is-err');
-                addBtn.classList.remove('is-err');
-                deleteBtn.classList.remove('is-err');
-                
-                // Показываем кнопку "Добавить", скрываем "Удалить"
-                addBtn.style.display = '';
-                addBtn.disabled = false;
-                addBtn.removeAttribute('disabled');
-                deleteBtn.style.display = 'none';
-                
-                // Удаляем атрибут позиции
-                row.removeAttribute('data-banner-position');
-                
-                // Устанавливаем required в зависимости от наличия баннера
-                const bannerName = row.getAttribute('data-banner-name');
-                if (bannerName) {
-                    positionInput.required = true;
-                } else {
-                    positionInput.required = false;
-                }
-                
-                // Устанавливаем флаг, что позиция была удалена (для защиты от сброса)
-                positionInput.setAttribute('data-position-cleared', 'true');
-                
-                // Убеждаемся, что инпут фокусируется для удобства пользователя
-                setTimeout(() => {
-                    // Дополнительная проверка, что инпут редактируемый
-                    if (positionInput.hasAttribute('readonly')) {
-                        positionInput.removeAttribute('readonly');
-                    }
-                    positionInput.readOnly = false;
-                    positionInput.focus();
-                }, 10);
-            }
+            // После удаления строки проверяем наличие пустой строки
+            // Всегда должна быть хотя бы одна пустая строка
+            ensureEmptyRow();
         }
         
         // Удаление строки с баннером (превращение обратно в форму добавления)
@@ -311,6 +264,129 @@
             
             // Обновляем состояние строки
             updateRowState(row);
+        }
+        
+        // Создание новой пустой строки
+        function createNewRow() {
+            if (!bannerContainer) return null;
+            
+            const newRow = document.createElement('div');
+            newRow.className = 'promo-banner__row';
+            
+            const bannerWrapper = document.createElement('div');
+            bannerWrapper.className = 'promo-banner__file_wrapper';
+            bannerWrapper.setAttribute('data-coloumn', 'Баннер');
+            
+            const selectBtn = document.createElement('button');
+            selectBtn.className = 'btn btn_primary promo-banner__file_btn';
+            selectBtn.textContent = 'Выбрать';
+            bannerWrapper.appendChild(selectBtn);
+            
+            const positionWrapper = document.createElement('div');
+            positionWrapper.className = 'promo-banner__position__wrapper';
+            positionWrapper.setAttribute('data-coloumn', 'Позиция');
+            
+            const positionDiv = document.createElement('div');
+            positionDiv.className = 'promo-banner__position';
+            
+            const positionInput = document.createElement('input');
+            positionInput.type = 'number';
+            positionInput.placeholder = 'Позиция';
+            positionInput.name = 'position';
+            
+            const addBtn = document.createElement('button');
+            addBtn.className = 'btn btn_primary promo-banner__position-btn promo-banner__position-btn--add';
+            addBtn.textContent = 'Добавить';
+            
+            const deleteBtn = document.createElement('button');
+            deleteBtn.className = 'btn btn_primary promo-banner__position-btn promo-banner__position-btn--delete';
+            deleteBtn.textContent = 'Удалить';
+            deleteBtn.style.display = 'none';
+            
+            positionDiv.appendChild(positionInput);
+            positionDiv.appendChild(addBtn);
+            positionDiv.appendChild(deleteBtn);
+            positionWrapper.appendChild(positionDiv);
+            
+            newRow.appendChild(bannerWrapper);
+            newRow.appendChild(positionWrapper);
+            
+            // Вставляем новую строку после последней строки (но не после заголовка)
+            const allRows = bannerContainer.querySelectorAll('.promo-banner__row');
+            const lastRow = allRows[allRows.length - 1];
+            if (lastRow) {
+                lastRow.parentNode.insertBefore(newRow, lastRow.nextSibling);
+            } else {
+                bannerContainer.appendChild(newRow);
+            }
+            
+            // Инициализируем состояние новой строки
+            updateRowState(newRow);
+            
+            return newRow;
+        }
+        
+        // Проверка наличия пустой строки и создание при необходимости
+        // ВАЖНО: всегда должна быть ровно ОДНА пустая строка
+        function ensureEmptyRow() {
+            if (!bannerContainer) return;
+            
+            const allRows = bannerContainer.querySelectorAll('.promo-banner__row');
+            let emptyRowCount = 0;
+            
+            // Подсчитываем количество пустых строк
+            allRows.forEach(row => {
+                if (row.classList.contains('promo-banner__top-row')) return;
+                
+                // Пропускаем строки, которые были удалены из DOM
+                if (!row.parentNode) return;
+                
+                const bannerName = row.getAttribute('data-banner-name');
+                const positionInput = row.querySelector('input[name="position"]');
+                const deleteBtn = row.querySelector('.promo-banner__position-btn--delete');
+                
+                // Строка пустая (доступна для редактирования), если:
+                // - нет баннера И нет добавленной позиции (кнопка "Удалить" скрыта)
+                // - ИЛИ есть значение в инпуте, но оно не readonly (можно редактировать)
+                const hasAddedPosition = deleteBtn && deleteBtn.style.display !== 'none';
+                const hasPositionValue = positionInput && positionInput.value && positionInput.value.trim() !== '';
+                const isReadonly = positionInput && (positionInput.hasAttribute('readonly') || positionInput.readOnly);
+                
+                // Строка считается пустой, если можно добавить позицию или баннер
+                if (!bannerName && !hasAddedPosition && (!hasPositionValue || !isReadonly)) {
+                    emptyRowCount++;
+                }
+            });
+            
+            // Если нет пустой строки, создаем одну
+            if (emptyRowCount === 0) {
+                createNewRow();
+            }
+            // Если пустых строк больше одной, удаляем лишние (оставляем только последнюю)
+            else if (emptyRowCount > 1) {
+                const emptyRows = [];
+                allRows.forEach(row => {
+                    if (row.classList.contains('promo-banner__top-row')) return;
+                    if (!row.parentNode) return;
+                    
+                    const bannerName = row.getAttribute('data-banner-name');
+                    const positionInput = row.querySelector('input[name="position"]');
+                    const deleteBtn = row.querySelector('.promo-banner__position-btn--delete');
+                    
+                    const hasAddedPosition = deleteBtn && deleteBtn.style.display !== 'none';
+                    const hasPositionValue = positionInput && positionInput.value && positionInput.value.trim() !== '';
+                    const isReadonly = positionInput && (positionInput.hasAttribute('readonly') || positionInput.readOnly);
+                    
+                    if (!bannerName && !hasAddedPosition && (!hasPositionValue || !isReadonly)) {
+                        emptyRows.push(row);
+                    }
+                });
+                
+                // Удаляем все пустые строки кроме последней
+                for (let i = 0; i < emptyRows.length - 1; i++) {
+                    emptyRows[i].remove();
+                }
+            }
         }
         
         // Обновление состояния строки (disabled кнопки, required инпута)
@@ -427,8 +503,8 @@
                     e.preventDefault();
                     e.stopPropagation(); // Предотвращаем закрытие модалки
                     const row = deleteBtn.closest('.promo-banner__row');
-                    if (row) {
-                        // Удаляем только позицию
+                    if (row && row.parentNode) {
+                        // ВАЖНО: Удаляется ВСЯ строка целиком!
                         removePositionOnly(row);
                         return;
                     }
@@ -475,6 +551,9 @@
                                     }
                                     row.setAttribute('data-banner-position', position);
                                 }
+                                
+                                // После добавления позиции создаем новую пустую строку
+                                createNewRow();
                                 
                                 // Обновляем обработчики после изменения DOM
                                 setTimeout(() => {
@@ -533,6 +612,29 @@
                     positionInput.readOnly = false;
                     positionInput.removeAttribute('readonly');
                 }
+            });
+            
+            // Проверяем наличие пустой строки при инициализации
+            ensureEmptyRow();
+        }
+        
+        // Обработчик открытия модалки xlsx - проверяем наличие пустой строки
+        if (modalXlsx) {
+            // Используем MutationObserver для отслеживания открытия модалки
+            const observer = new MutationObserver((mutations) => {
+                mutations.forEach((mutation) => {
+                    if (mutation.type === 'attributes' && mutation.attributeName === 'class') {
+                        if (modalXlsx.classList.contains('is-open')) {
+                            // Модалка открыта - проверяем наличие пустой строки
+                            ensureEmptyRow();
+                        }
+                    }
+                });
+            });
+            
+            observer.observe(modalXlsx, {
+                attributes: true,
+                attributeFilter: ['class']
             });
         }
     }

@@ -468,7 +468,13 @@
                         Главная
                     </a>
                     <a href="#" class="breadcrumbs_item">
-                        Подборки
+                        Личный кабинет
+                    </a>
+                    <a href="#" class="breadcrumbs_item">
+                        Сохраненные подборки
+                    </a>
+                    <a href="#" class="breadcrumbs_item">
+                        Термобелье женское OEMEN
                     </a>
 
                 </div>
@@ -477,37 +483,38 @@
         </section>
         <section class="section__title">
             <div class="wrapper-container padding-container ">
-                <h1 class="hero_title">Подборки</h1>
-
+                <h1 class="hero_title">Термобелье женское OEMEN</h1>
+                <p class="section__title__text">
+                    Продолжая использование сайта, вы соглашаетесь с условиями использования.
+                </p>
             </div>
         </section>
 
         <section class="cart_section">
             <div class="wrapper-container padding-container cart_section-container">
-                <div class="cart_choose-container">
-                    <div class="cart_top_choose">
-                        <label class="cart_choose_all label_choose">
-                            <input type="checkbox" name="all">
-                            <div class="choose-marker"></div>
-                            <span>
-                                Выбрать все
-                            </span>
-                        </label>
-                        <div class="choose-count-wrapper">
-                            <span>
-                                Выбрано товаров:
-                            </span>
-                            <span class="choose-count">10</span>
-                        </div>
-                    </div>
-                    <div class="trash_cart">
-                        Очистить подборку
-                    </div>
-                </div>
+                
                 <div class="cart_category__container">
                     <div class="cart_category">
                         <div class="cart_category__title">
                             Термобелье
+                        </div>
+                        <div class="cart_choose-container">
+                            <div class="cart_top_choose">
+                                <label class="cart_choose_all label_choose">
+                                    <input type="checkbox" name="all">
+                                    <div class="choose-marker"></div>
+                                    <span>
+                                        Выбрать все
+                                    </span>
+                                </label>
+                                <div class="choose-count-wrapper">
+                                    <span>
+                                        Выбрано товаров:
+                                    </span>
+                                    <span class="choose-count">10</span>
+                                </div>
+                            </div>
+                          
                         </div>
                         <div class="cart_category__items">
                             <div class="cart_category__item__dropdown">
@@ -1159,6 +1166,24 @@
                         <div class="cart_category__title">
                             Трусы
                         </div>
+                        <div class="cart_choose-container">
+                            <div class="cart_top_choose">
+                                <label class="cart_choose_all label_choose">
+                                    <input type="checkbox" name="all">
+                                    <div class="choose-marker"></div>
+                                    <span>
+                                        Выбрать все
+                                    </span>
+                                </label>
+                                <div class="choose-count-wrapper">
+                                    <span>
+                                        Выбрано товаров:
+                                    </span>
+                                    <span class="choose-count">10</span>
+                                </div>
+                            </div>
+                          
+                        </div>
                         <div class="cart_category__items">
                             <div class="cart_category__item__dropdown">
                                 <div class="cart_category__item">
@@ -1807,29 +1832,10 @@
                     </div>
                 </div>
                 <div class="cart-bottom">
-                    <div class="cart_choose-container">
-                        <div class="cart_top_choose">
-                            <label class="cart_choose_all label_choose">
-                                <input type="checkbox" name="all">
-                                <div class="choose-marker"></div>
-                                <span>
-                                    Выбрать все
-                                </span>
-                            </label>
-                            <div class="choose-count-wrapper">
-                                <span>
-                                    Выбрано товаров:
-                                </span>
-                                <span class="choose-count">10</span>
-                            </div>
-                        </div>
-                        <div class="trash_cart">
-                            Очистить подборку
-                        </div>
-                    </div>
+                    
                     <div class="cart-btns">
-                        <div class="btn btn_primary btn--disabled" data-modal-btn="save-cart">
-                            Cохранить подборку
+                        <div class="btn btn_primary btn--disabled" data-modal-btn="modal-add-price-in-cart">
+                            Добавить в подборку
                         </div>
                         <div class="btn btn_second btn--disabled" data-modal-btn="price-xlsx">
                             Скачать прайс (.xlsx)
@@ -2607,6 +2613,30 @@
             <a href="#" class="link-cart-link" download="">Скачать прайс</a>
         </div>
     </div>
+    <div class="modal_overlay ios-scrollbar" data-modal-id="modal-add-price-in-cart">
+        <div class="modal_content">
+            <div class="modal_close"></div>
+
+            <div class="modal_title">
+                Добавить в подборку        
+            </div>
+            <p>
+                Выберите способ добавления:
+            </p>
+            <button class="btn btn_second">Очистить текущую подборку и добавить позиции из прайса</button>
+            <button class="btn btn_primary">Добавить позиции из прайса в текущую подборку</button>
+        </div>
+    </div>
+    <div class="modal_overlay ios-scrollbar" data-modal-id="modal-add-price-in-cart-ok">
+        <div class="modal_content">
+            <div class="modal_close"></div>
+
+            <div class="modal_title">
+                Добавлено    
+            </div>
+            <a href="#" class="btn btn_primary">Перейти в подборку</a>
+        </div>
+    </div>
     <script src="./scripts/swiper-bundle.min.js"></script>
     <script src="./scripts/utils.js"></script>
     <script src="./scripts/modals/modal-client.js"></script>
@@ -2614,6 +2644,7 @@
     <script src="./scripts/modals/modal-reserv.js"></script>
     <script src="./scripts/modals/modal-ok-msg.js"></script>
     <script src="./scripts/modals/modal-set-reserv.js"></script>
+    <script src="./scripts/modals/modal-add-price-in-cart.js"></script>
     <script src="./scripts/modals/modal-save-cart.js"></script>
     <script src="./scripts/modals/modal-price-xlsx.js"></script>
     <script src="./scripts/modals/modal-price-pdf.js"></script>
