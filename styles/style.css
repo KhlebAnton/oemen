@@ -1666,9 +1666,7 @@ input[type="radio"]:checked+.radio-marker::after {
 }
 
 .product-card__table__top {
-    display: flex;
-    align-items: center;
-    gap: 28px;
+    display: grid;
     margin-bottom: 10px;
 }
 
@@ -2681,10 +2679,7 @@ input[type="radio"]:checked+.radio-marker::after {
     color: var(--color-black);
 }
 
-.section__title {
-    margin-top: 20px;
-    margin-bottom: 10px;
-}
+
 .section__title__text {
     margin-top: 20px;
 }
@@ -4542,6 +4537,14 @@ body.is-dragging .cart_category__item__dropdown--dragging {
 [data-table="saved-carts"] .lk_table-row  {
     grid-template-columns: 23fr 8fr  10fr  16fr 13fr;
 }
+[data-table="clients"] .lk_table-row  {
+    grid-template-columns: 14fr 9fr  48fr;
+    padding: 20px 10px;
+}
+[data-table="history_prices"] .lk_table-row  {
+    grid-template-columns: 20fr 14fr 10fr 16fr 10fr;
+    padding: 13px 10px;
+}
 .lk_table-row {
     display: grid;
    
@@ -4568,9 +4571,75 @@ body.is-dragging .cart_category__item__dropdown--dragging {
     gap: 5px;
     font-weight: 300;
 }
-.lk_table__content .lk_table-row:nth-child(2n){
+.lk_table__content .lk_table-row:nth-child(2n){ 
     background: #EBEBEB;
 
+}
+[data-table="clients"] .lk_table__content .lk_table-row {
+    background: inherit;
+    font-size: 16px;
+    align-items: start;
+
+}
+[data-table="clients"] .lk_table__content .lk_table-row:nth-child(2n - 1) {
+    background: #EBEBEB;
+
+}
+[data-table="clients"] .lk_table-row__top {
+    background-color: inherit;
+}
+[data-table="clients"] .lk_table__content .lk_table-row:nth-child(2n) .table_clients__contacts__item { 
+    background: #EBEBEB;
+
+}
+.table_clients__contacts__btn {
+    width: 20px;
+    height: 20px;
+    position: relative;
+    flex-shrink: 0;
+    cursor: pointer;
+
+}
+.table_clients__contacts__btn::before,
+.table_clients__contacts__btn::after {
+    content: '';
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 11px;
+    height: 1px;
+    background-color: #1B1B1B;
+}
+.table_clients__contacts__btn::after {
+    transform: translate(-50%, -50%) rotate(90deg);
+}
+.table_clients__contacts {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+.table_clients__contacts__items {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    gap: 10px;
+    display: none;
+}
+.table_clients__contacts__item {
+    padding: 20px;
+    background: #F5F5F5;
+display: flex;
+flex-direction: column;
+gap: 10px;
+}
+.table_clients__contacts__item span {
+    font-weight: 500;
+}
+.table_clients__contacts.is-open .table_clients__contacts__btn::after{
+ display: none;
+}
+.table_clients__contacts.is-open .table_clients__contacts__items {
+    display: grid;
 }
 .saved_carts__btns {
     display: flex;
@@ -4801,10 +4870,7 @@ body.is-dragging .cart_category__item__dropdown--dragging {
         height: 14px;
     }
 
-    .section__title {
-        margin-top: 10px;
-        margin-bottom: 0;
-    }
+    
 
     .our_product__title {
         font-size: 20px;
@@ -5278,6 +5344,10 @@ body.is-dragging .cart_category__item__dropdown--dragging {
         grid-template-columns: 80px 1fr;
         gap: 10px;
     }
+    [data-table="clients"] .lk_table__column {
+       
+        grid-template-columns: 90px 1fr;
+    }
     .lk_table__column::before {
         content: attr(data-column);
         font-size: 12px;
@@ -5301,6 +5371,26 @@ body.is-dragging .cart_category__item__dropdown--dragging {
     }
     .lk_table__title {
         font-size: 18px;
+    }
+    .lk_clients .padding-container {
+        padding: 0;
+    }
+    .lk_clients .lk_table__content .lk_table-row{
+        position: relative;
+    }
+    .table_clients__contacts__btn {
+        position: absolute;
+        top: 16px;
+        right: 16px;
+    }
+    .lk_clients  .lk_table-row {
+        padding: 16px;
+    }
+    .lk_clients .lk_table__content .lk_table__column:first-child {
+        padding-right: 36px;
+    }
+    .table_clients__contacts__items {
+        grid-template-columns: 1fr 1fr;
     }
 }
 
@@ -6056,5 +6146,11 @@ body.is-dragging .cart_category__item__dropdown--dragging {
         flex-direction: column;
         align-items: start;
         gap: 14px;
+    }
+    .table_clients__contacts__items {
+        grid-template-columns: 1fr ;
+    }
+    .lk_clients .lk_table__column {
+        font-size: 14px;
     }
 }

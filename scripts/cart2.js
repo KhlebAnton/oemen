@@ -1020,8 +1020,13 @@
         
         // Проверяем, не осталась ли категория пустой
         if (category) {
+            // Проверяем наличие dropdown элементов (для cart2.html)
             const remainingDropdowns = category.querySelectorAll('.cart_category__item__dropdown');
-            if (remainingDropdowns.length === 0) {
+            // Проверяем наличие обычных элементов товаров (для saved_cart_detail2.html и history_prices_detail.html)
+            const remainingItems = category.querySelectorAll('.cart_category__item:not(.cart_category__item--placeholder)');
+            
+            // Удаляем категорию только если нет ни dropdown, ни обычных товаров
+            if (remainingDropdowns.length === 0 && remainingItems.length === 0) {
                 // Удаляем всю категорию, если товаров не осталось
                 category.remove();
             }
@@ -1149,56 +1154,64 @@
     }
 
     // Инициализация аккордеона для раскрытия/сворачивания списков
+    let accordionInitialized2 = false;
     function initDropdownAccordion2() {
         const container = document.querySelector('.cart_section-container');
         if (!container) return;
 
         // Используем делегирование событий для кнопок раскрытия
-        container.addEventListener('click', (e) => {
-            const dropButton = e.target.closest('.cart_category__item__drop');
-            if (dropButton) {
-                e.preventDefault();
-                e.stopPropagation();
+        // Добавляем обработчик только один раз
+        if (!accordionInitialized2) {
+            container.addEventListener('click', handleDropdownClick2);
+            accordionInitialized2 = true;
+        }
+    }
+
+    // Обработчик клика для раскрытия/сворачивания dropdown
+    function handleDropdownClick2(e) {
+        const dropButton = e.target.closest('.cart_category__item__drop');
+        if (dropButton) {
+            e.preventDefault();
+            e.stopPropagation();
+            
+            const dropdown = dropButton.closest('.cart_category__item__dropdown');
+            if (!dropdown) return;
+            
+            const content = dropdown.querySelector('.cart_category__item__content');
+            if (!content) return;
+            
+            const isCurrentlyOpen = dropdown.classList.contains('is-open');
+            
+            // Закрываем все другие dropdown
+            closeAllDropdowns2();
+            
+            // Если текущий был закрыт, открываем его
+            if (!isCurrentlyOpen) {
+                dropdown.classList.add('is-open');
                 
-                const dropdown = dropButton.closest('.cart_category__item__dropdown');
-                if (!dropdown) return;
+                // Прокручиваем к верхнему элементу dropdown, чтобы он был вверху экрана
+                const mainItem = dropdown.querySelector('.cart_category__item');
+                if (mainItem) {
+                    // Небольшая задержка для применения класса is-open и начала анимации
+                    setTimeout(() => {
+                        mainItem.scrollIntoView({ 
+                            behavior: 'smooth', 
+                            block: 'start',
+                            inline: 'nearest'
+                        });
+                    }, 50);
+                }
                 
-                const content = dropdown.querySelector('.cart_category__item__content');
-                if (!content) return;
-                
-                const isCurrentlyOpen = dropdown.classList.contains('is-open');
-                
-                // Закрываем все другие dropdown
-                closeAllDropdowns2();
-                
-                // Если текущий был закрыт, открываем его
-                if (!isCurrentlyOpen) {
-                    dropdown.classList.add('is-open');
-                    
-                    // Прокручиваем к верхнему элементу dropdown, чтобы он был вверху экрана
-                    const mainItem = dropdown.querySelector('.cart_category__item');
-                    if (mainItem) {
-                        // Небольшая задержка для применения класса is-open и начала анимации
-                        setTimeout(() => {
-                            mainItem.scrollIntoView({ 
-                                behavior: 'smooth', 
-                                block: 'start',
-                                inline: 'nearest'
-                            });
-                        }, 50);
-                    }
-                    
-                    // Переинициализируем drag-and-drop для вложенных элементов
-                    const itemsContainer = dropdown.closest('.cart_category__items');
-                    if (itemsContainer) {
-                        // Небольшая задержка для анимации открытия
-                        setTimeout(() => {
-                            initNestedDragAndDrop2(itemsContainer);
-                        }, 100);
-                    }
+                // Переинициализируем drag-and-drop для вложенных элементов
+                const itemsContainer = dropdown.closest('.cart_category__items');
+                if (itemsContainer) {
+                    // Небольшая задержка для анимации открытия
+                    setTimeout(() => {
+                        initNestedDragAndDrop2(itemsContainer);
+                    }, 100);
                 }
             }
-        });
+        }
     }
 
     // Инициализация при загрузке страницы
