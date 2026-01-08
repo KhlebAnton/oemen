@@ -5250,8 +5250,8 @@ gap: 10px;
     .filter__container {
         padding: 0;
     }
-
-    .filter_btns {
+    .filter__container .hero_title,
+    .section-filter :not(.padding-container) .filter_btns {
         padding: 0 16px;
     }
 
