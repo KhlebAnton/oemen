@@ -8,20 +8,19 @@
         const categoryItems = document.querySelectorAll('.cart_category__items');
         
         categoryItems.forEach(itemsContainer => {
-            const items = itemsContainer.querySelectorAll('.cart_category__item');
+            // Исключаем placeholders из инициализации
+            const items = itemsContainer.querySelectorAll('.cart_category__item:not(.cart_category__item--placeholder)');
             
             items.forEach(item => {
                 const dragHandle = item.querySelector('.btn__moving');
                 if (!dragHandle) return;
                 
-                // Делаем весь элемент перетаскиваемым через handle
-                dragHandle.addEventListener('mousedown', (e) => {
+                // Удаляем старые обработчики, если они есть (чтобы избежать дублирования)
+                const newMouseHandler = (e) => {
                     e.preventDefault();
                     startDrag(item, itemsContainer, e);
-                });
-                
-                // Для touch устройств
-                dragHandle.addEventListener('touchstart', (e) => {
+                };
+                const newTouchHandler = (e) => {
                     e.preventDefault();
                     const touch = e.touches[0];
                     startDrag(item, itemsContainer, {
@@ -30,8 +29,23 @@
                         pageY: touch.pageY,
                         pageX: touch.pageX
                     });
-                });
+                };
                 
+                // Удаляем старые обработчики, если они были сохранены
+                if (dragHandle._mouseHandler) {
+                    dragHandle.removeEventListener('mousedown', dragHandle._mouseHandler);
+                }
+                if (dragHandle._touchHandler) {
+                    dragHandle.removeEventListener('touchstart', dragHandle._touchHandler);
+                }
+                
+                // Сохраняем ссылки на обработчики
+                dragHandle._mouseHandler = newMouseHandler;
+                dragHandle._touchHandler = newTouchHandler;
+                
+                // Добавляем новые обработчики
+                dragHandle.addEventListener('mousedown', newMouseHandler);
+                dragHandle.addEventListener('touchstart', newTouchHandler);
             });
         });
     }
@@ -196,6 +210,9 @@
         if (placeholder && placeholder.parentNode) {
             placeholder.parentNode.insertBefore(item, placeholder);
             placeholder.remove();
+        } else if (placeholder && !placeholder.parentNode) {
+            // Если placeholder уже удален, просто удаляем ссылку
+            placeholder.remove();
         }
         
         // Убираем класс для визуального эффекта
@@ -227,6 +244,14 @@
         
         draggedElement = null;
         isDragging = false;
+        
+        // Удаляем все оставшиеся placeholders в контейнере (на случай, если они остались)
+        if (container) {
+            const remainingPlaceholders = container.querySelectorAll('.cart_category__item--placeholder');
+            remainingPlaceholders.forEach(ph => {
+                ph.remove();
+            });
+        }
     }
 
     // Работа с чекбоксами
@@ -354,11 +379,33 @@
     function deleteItem(item) {
         if (!item) return;
         
+        // Если элемент находится в процессе drag, завершаем drag
+        if (item.classList.contains('cart_category__item--dragging')) {
+            const container = item.closest('.cart_category__items');
+            if (container) {
+                endDrag(container);
+            }
+        }
+        
+        // Удаляем placeholder, если он существует
+        if (item._placeholder && item._placeholder.parentNode) {
+            item._placeholder.remove();
+        }
+        
         // Сохраняем ссылку на категорию до удаления
         const category = item.closest('.cart_category');
+        const itemsContainer = item.closest('.cart_category__items');
         
         // Удаляем элемент из DOM
         item.remove();
+        
+        // Удаляем все оставшиеся placeholders в контейнере (на случай, если они остались)
+        if (itemsContainer) {
+            const remainingPlaceholders = itemsContainer.querySelectorAll('.cart_category__item--placeholder');
+            remainingPlaceholders.forEach(placeholder => {
+                placeholder.remove();
+            });
+        }
         
         // Обновляем счетчик и состояние чекбоксов
         updateSelectedCount();
@@ -366,7 +413,7 @@
         
         // Проверяем, не осталась ли категория пустой
         if (category) {
-            const remainingItems = category.querySelectorAll('.cart_category__item');
+            const remainingItems = category.querySelectorAll('.cart_category__item:not(.cart_category__item--placeholder)');
             if (remainingItems.length === 0) {
                 // Удаляем всю категорию, если товаров не осталось
                 category.remove();
@@ -380,10 +427,28 @@
     function clearCart(container) {
         if (!container) return;
         
-        // Удаляем все товары
-        const allItems = container.querySelectorAll('.cart_category__item');
+        // Завершаем drag, если он активен
+        if (draggedElement && isDragging) {
+            const itemsContainer = draggedElement.closest('.cart_category__items');
+            if (itemsContainer) {
+                endDrag(itemsContainer);
+            }
+        }
+        
+        // Удаляем все товары (исключаем placeholders из поиска)
+        const allItems = container.querySelectorAll('.cart_category__item:not(.cart_category__item--placeholder)');
         allItems.forEach(item => {
+            // Удаляем placeholder, если он существует
+            if (item._placeholder && item._placeholder.parentNode) {
+                item._placeholder.remove();
+            }
             item.remove();
+        });
+        
+        // Удаляем все оставшиеся placeholders
+        const allPlaceholders = container.querySelectorAll('.cart_category__item--placeholder');
+        allPlaceholders.forEach(placeholder => {
+            placeholder.remove();
         });
         
         // Удаляем все категории

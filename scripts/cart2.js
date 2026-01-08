@@ -1070,19 +1070,19 @@
 
     function handleSelectAll2(e) {
         const isChecked = e.target.checked;
-        // Находим ближайшую категорию для этого чекбокса "Выбрать все"
-        const category = e.target.closest('.cart_category');
-        if (!category) return;
+        // Находим контейнер корзины
+        const container = e.target.closest('.cart_section-container');
+        if (!container) return;
         
-        // Устанавливаем состояние только для чекбокса "Выбрать все" в этой категории
-        const selectAllCheckbox = category.querySelector('.cart_choose_all input[type="checkbox"]');
-        if (selectAllCheckbox) {
-            selectAllCheckbox.checked = isChecked;
-            selectAllCheckbox.indeterminate = false;
-        }
+        // Синхронизируем все чекбоксы "Выбрать все" в контейнере
+        const allSelectAllCheckboxes = container.querySelectorAll('.cart_choose_all input[type="checkbox"]');
+        allSelectAllCheckboxes.forEach(checkbox => {
+            checkbox.checked = isChecked;
+            checkbox.indeterminate = false;
+        });
         
-        // Находим все чекбоксы товаров только в этой категории (включая вложенные)
-        const itemCheckboxes = category.querySelectorAll('.cart_category__item .label_choose input[type="checkbox"]');
+        // Находим все чекбоксы товаров во всех категориях (включая вложенные)
+        const itemCheckboxes = container.querySelectorAll('.cart_category__item .label_choose input[type="checkbox"]');
         itemCheckboxes.forEach(checkbox => {
             checkbox.checked = isChecked;
         });
@@ -1094,18 +1094,14 @@
         const container = document.querySelector('.cart_section-container');
         if (!container) return;
         
-        // Обрабатываем каждую категорию отдельно
-        const categories = container.querySelectorAll('.cart_category');
-        categories.forEach(category => {
-            const selectAllCheckbox = category.querySelector('.cart_choose_all input[type="checkbox"]');
-            if (!selectAllCheckbox) return;
-            
-            // Находим все чекбоксы товаров только в этой категории
-            const itemCheckboxes = category.querySelectorAll('.cart_category__item .label_choose input[type="checkbox"]');
-            const checkedCount = category.querySelectorAll('.cart_category__item .label_choose input[type="checkbox"]:checked').length;
-            const totalCount = itemCheckboxes.length;
-            
-            // Обновляем состояние чекбокса "Выбрать все" только для этой категории
+        // Находим все чекбоксы товаров во всех категориях
+        const itemCheckboxes = container.querySelectorAll('.cart_category__item .label_choose input[type="checkbox"]');
+        const checkedCount = container.querySelectorAll('.cart_category__item .label_choose input[type="checkbox"]:checked').length;
+        const totalCount = itemCheckboxes.length;
+        
+        // Синхронизируем все чекбоксы "Выбрать все" в контейнере
+        const allSelectAllCheckboxes = container.querySelectorAll('.cart_choose_all input[type="checkbox"]');
+        allSelectAllCheckboxes.forEach(selectAllCheckbox => {
             selectAllCheckbox.checked = totalCount > 0 && checkedCount === totalCount;
             selectAllCheckbox.indeterminate = checkedCount > 0 && checkedCount < totalCount;
         });
@@ -1115,19 +1111,13 @@
         const container = document.querySelector('.cart_section-container');
         if (!container) return;
         
-        // Обновляем счетчик для каждой категории отдельно
-        const categories = container.querySelectorAll('.cart_category');
-        let totalCheckedCount = 0;
+        // Подсчитываем общее количество выбранных товаров во всех категориях
+        const totalCheckedCount = container.querySelectorAll('.cart_category__item .label_choose input[type="checkbox"]:checked').length;
         
-        categories.forEach(category => {
-            const checkedCount = category.querySelectorAll('.cart_category__item .label_choose input[type="checkbox"]:checked').length;
-            const countElement = category.querySelector('.choose-count');
-            
-            if (countElement) {
-                countElement.textContent = checkedCount;
-            }
-            
-            totalCheckedCount += checkedCount;
+        // Обновляем все счетчики в контейнере (вверху и внизу)
+        const countElements = container.querySelectorAll('.choose-count');
+        countElements.forEach(countElement => {
+            countElement.textContent = totalCheckedCount;
         });
         
         // Показываем/скрываем кнопки внизу в зависимости от общего количества выбранных товаров
