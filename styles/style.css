@@ -3089,7 +3089,8 @@ input[type="radio"]:checked+.radio-marker::after {
 .swiper-product-color {
     margin: 0;
     max-width: 630px;
-    padding-top: 10px;
+    padding-top: 5px;
+    padding-bottom: 10px;
 
 }
 
