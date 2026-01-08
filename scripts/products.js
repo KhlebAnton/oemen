@@ -553,3 +553,45 @@ copySpanButtons.forEach(button => {
     });
 });
 
+// Функционал копирования URL страницы для кнопок share_btn
+const shareButtons = document.querySelectorAll('.share_btn');
+
+shareButtons.forEach(button => {
+    button.addEventListener('click', async () => {
+        const urlToCopy = window.location.href;
+
+        try {
+            // Копируем URL в буфер обмена
+            await navigator.clipboard.writeText(urlToCopy);
+            
+            // Добавляем класс copy-ok для визуальной обратной связи
+            button.classList.add('copy-ok');
+            
+            // Убираем класс через 2 секунды
+            setTimeout(() => {
+                button.classList.remove('copy-ok');
+            }, 2000);
+        } catch (err) {
+            // Fallback для старых браузеров
+            const textArea = document.createElement('textarea');
+            textArea.value = urlToCopy;
+            textArea.style.position = 'fixed';
+            textArea.style.opacity = '0';
+            document.body.appendChild(textArea);
+            textArea.select();
+            
+            try {
+                document.execCommand('copy');
+                button.classList.add('copy-ok');
+                setTimeout(() => {
+                    button.classList.remove('copy-ok');
+                }, 2000);
+            } catch (err) {
+                console.error('Ошибка копирования:', err);
+            } finally {
+                document.body.removeChild(textArea);
+            }
+        }
+    });
+});
+
