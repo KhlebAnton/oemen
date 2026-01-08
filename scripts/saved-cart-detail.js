@@ -1,17 +1,18 @@
-// Функционал корзины-2: перетаскивание товаров и работа с чекбоксами для cart2.html
+// Функционал для saved_cart_detail.html: перетаскивание товаров и работа с чекбоксами
+// Логика "Выбрать все" работает только внутри своей категории
 
 (function() {
     'use strict';
 
     // Инициализация drag and drop для товаров внутри категории
-    function initDragAndDrop2() {
+    function initDragAndDrop() {
         const categoryItems = document.querySelectorAll('.cart_category__items');
         
         categoryItems.forEach(itemsContainer => {
-            // В cart2.html перемещаем .cart_category__item__dropdown элементы
+            // В saved_cart_detail.html перемещаем .cart_category__item__dropdown элементы
             const dropdowns = itemsContainer.querySelectorAll('.cart_category__item__dropdown');
             
-            // Если есть dropdown элементы (структура cart2.html), работаем с ними
+            // Если есть dropdown элементы, работаем с ними
             if (dropdowns.length > 0) {
                 dropdowns.forEach(dropdown => {
                     // Находим handle в основном товаре внутри dropdown
@@ -25,17 +26,17 @@
                     dragHandle.addEventListener('mousedown', (e) => {
                         e.preventDefault();
                         // Закрываем все раскрытые списки при начале перетаскивания
-                        closeAllDropdowns2();
-                        startDrag2(dropdown, itemsContainer, e);
+                        closeAllDropdowns();
+                        startDrag(dropdown, itemsContainer, e);
                     });
                     
                     // Для touch устройств
                     dragHandle.addEventListener('touchstart', (e) => {
                         e.preventDefault();
                         // Закрываем все раскрытые списки при начале перетаскивания
-                        closeAllDropdowns2();
+                        closeAllDropdowns();
                         const touch = e.touches[0];
-                        startDrag2(dropdown, itemsContainer, {
+                        startDrag(dropdown, itemsContainer, {
                             clientY: touch.clientY,
                             clientX: touch.clientX,
                             pageY: touch.pageY,
@@ -46,54 +47,13 @@
                 });
 
                 // Инициализируем drag-and-drop для вложенных товаров внутри content
-                initNestedDragAndDrop2(itemsContainer);
-            } else {
-                // Если нет dropdown элементов (простая структура как в saved_cart_detail2.html),
-                // работаем напрямую с .cart_category__item элементами
-                const items = itemsContainer.querySelectorAll('.cart_category__item');
-                
-                items.forEach(item => {
-                    const dragHandle = item.querySelector('.btn__moving');
-                    if (!dragHandle) return;
-                    
-                    // Удаляем старые обработчики, если они есть
-                    if (item._simpleDragHandlers2) {
-                        dragHandle.removeEventListener('mousedown', item._simpleDragHandlers2.mousedown);
-                        dragHandle.removeEventListener('touchstart', item._simpleDragHandlers2.touchstart);
-                    }
-                    
-                    // Делаем элемент перетаскиваемым через handle
-                    const mousedownHandler = (e) => {
-                        e.preventDefault();
-                        startSimpleDrag2(item, itemsContainer, e);
-                    };
-                    
-                    const touchstartHandler = (e) => {
-                        e.preventDefault();
-                        const touch = e.touches[0];
-                        startSimpleDrag2(item, itemsContainer, {
-                            clientY: touch.clientY,
-                            clientX: touch.clientX,
-                            pageY: touch.pageY,
-                            pageX: touch.pageX
-                        });
-                    };
-                    
-                    // Сохраняем ссылки на обработчики
-                    item._simpleDragHandlers2 = {
-                        mousedown: mousedownHandler,
-                        touchstart: touchstartHandler
-                    };
-                    
-                    dragHandle.addEventListener('mousedown', mousedownHandler);
-                    dragHandle.addEventListener('touchstart', touchstartHandler);
-                });
+                initNestedDragAndDrop(itemsContainer);
             }
         });
     }
 
     // Инициализация drag-and-drop для вложенных товаров внутри .cart_category__item__content
-    function initNestedDragAndDrop2(container) {
+    function initNestedDragAndDrop(container) {
         const contentContainers = container.querySelectorAll('.cart_category__item__content');
         
         contentContainers.forEach(contentContainer => {
@@ -105,21 +65,21 @@
                 if (!dragHandle) return;
                 
                 // Удаляем старые обработчики, если они есть
-                if (item._nestedDragHandlers2) {
-                    dragHandle.removeEventListener('mousedown', item._nestedDragHandlers2.mousedown);
-                    dragHandle.removeEventListener('touchstart', item._nestedDragHandlers2.touchstart);
+                if (item._nestedDragHandlers) {
+                    dragHandle.removeEventListener('mousedown', item._nestedDragHandlers.mousedown);
+                    dragHandle.removeEventListener('touchstart', item._nestedDragHandlers.touchstart);
                 }
                 
                 // Создаем новые обработчики
                 const mousedownHandler = (e) => {
                     e.preventDefault();
-                    startNestedDrag2(item, contentContainer, e);
+                    startNestedDrag(item, contentContainer, e);
                 };
                 
                 const touchstartHandler = (e) => {
                     e.preventDefault();
                     const touch = e.touches[0];
-                    startNestedDrag2(item, contentContainer, {
+                    startNestedDrag(item, contentContainer, {
                         clientY: touch.clientY,
                         clientX: touch.clientX,
                         pageY: touch.pageY,
@@ -128,7 +88,7 @@
                 };
                 
                 // Сохраняем ссылки на обработчики для последующего удаления
-                item._nestedDragHandlers2 = {
+                item._nestedDragHandlers = {
                     mousedown: mousedownHandler,
                     touchstart: touchstartHandler
                 };
@@ -140,10 +100,10 @@
         });
     }
 
-    let draggedNestedElement2 = null;
-    let isNestedDragging2 = false;
+    let draggedNestedElement = null;
+    let isNestedDragging = false;
 
-    function startNestedDrag2(item, contentContainer, event) {
+    function startNestedDrag(item, contentContainer, event) {
         // Добавляем класс на body для блокировки всех элементов
         document.body.classList.add('is-dragging');
         
@@ -160,12 +120,12 @@
         item._offsetX = clientX - rect.left;
         item._offsetY = clientY - rect.top;
         
-        draggedNestedElement2 = item;
-        isNestedDragging2 = true;
-        initNestedDrag2(item, contentContainer);
+        draggedNestedElement = item;
+        isNestedDragging = true;
+        initNestedDrag(item, contentContainer);
     }
 
-    function initNestedDrag2(item, contentContainer) {
+    function initNestedDrag(item, contentContainer) {
         // Сначала удаляем все старые placeholders в этом контейнере
         const oldPlaceholders = contentContainer.querySelectorAll('.cart_category__item--placeholder, .cart_category_item--placeholder');
         oldPlaceholders.forEach(ph => {
@@ -206,7 +166,7 @@
         
         // Обработчики для перемещения
         const moveHandler = (e) => {
-            if (!isNestedDragging2) return;
+            if (!isNestedDragging) return;
             e.preventDefault();
             e.stopPropagation();
             
@@ -218,14 +178,14 @@
             item.style.top = (clientY - item._offsetY) + 'px';
             
             // Определяем новую позицию
-            handleNestedDragMove2(clientY, contentContainer);
+            handleNestedDragMove(clientY, contentContainer);
         };
         
         const endHandler = (e) => {
-            if (!isNestedDragging2) return;
+            if (!isNestedDragging) return;
             e.preventDefault();
             e.stopPropagation();
-            endNestedDrag2();
+            endNestedDrag();
         };
         
         // Используем passive: false для предотвращения скролла во время drag
@@ -236,15 +196,15 @@
         document.addEventListener('touchcancel', endHandler);
         
         // Сохраняем обработчики для последующего удаления
-        draggedNestedElement2._nestedMoveHandler2 = moveHandler;
-        draggedNestedElement2._nestedEndHandler2 = endHandler;
+        draggedNestedElement._nestedMoveHandler = moveHandler;
+        draggedNestedElement._nestedEndHandler = endHandler;
     }
 
-    function handleNestedDragMove2(clientY, contentContainer) {
-        if (!draggedNestedElement2 || !draggedNestedElement2._placeholder) return;
+    function handleNestedDragMove(clientY, contentContainer) {
+        if (!draggedNestedElement || !draggedNestedElement._placeholder) return;
         
         // Вложенный элемент можно перемещать только внутри исходного content контейнера
-        const originalContainer = draggedNestedElement2._originalContainer;
+        const originalContainer = draggedNestedElement._originalContainer;
         if (!originalContainer || contentContainer !== originalContainer) {
             return; // Не позволяем перемещать в другой контейнер
         }
@@ -252,7 +212,7 @@
         // Удаляем все лишние placeholders в контейнере (кроме текущего)
         const allPlaceholders = contentContainer.querySelectorAll('.cart_category__item--placeholder');
         allPlaceholders.forEach(ph => {
-            if (ph !== draggedNestedElement2._placeholder) {
+            if (ph !== draggedNestedElement._placeholder) {
                 try {
                     ph.remove();
                 } catch (e) {
@@ -287,7 +247,7 @@
         
         // Перемещаем placeholder для визуального отображения будущей позиции
         if (targetItem) {
-            const placeholder = draggedNestedElement2._placeholder;
+            const placeholder = draggedNestedElement._placeholder;
             const currentPlaceholderNext = placeholder.nextSibling;
             
             if (insertBefore) {
@@ -306,21 +266,21 @@
             }
         } else {
             // Если не нашли позицию, перемещаем placeholder в конец
-            const placeholder = draggedNestedElement2._placeholder;
+            const placeholder = draggedNestedElement._placeholder;
             if (placeholder.nextSibling !== null) {
                 contentContainer.appendChild(placeholder);
             }
         }
     }
 
-    function endNestedDrag2() {
-        if (!draggedNestedElement2) return;
+    function endNestedDrag() {
+        if (!draggedNestedElement) return;
         
         // Убираем класс блокировки с body
         document.body.classList.remove('is-dragging');
         
         // Восстанавливаем оригинальные стили
-        const item = draggedNestedElement2;
+        const item = draggedNestedElement;
         const originalContainer = item._originalContainer || item.closest('.cart_category__item__content');
         
         item.style.position = '';
@@ -358,19 +318,19 @@
         item.classList.remove('cart_category__item--dragging');
         
         // Удаляем обработчики перемещения
-        if (item._nestedMoveHandler2) {
-            document.removeEventListener('mousemove', item._nestedMoveHandler2);
-            document.removeEventListener('touchmove', item._nestedMoveHandler2);
+        if (item._nestedMoveHandler) {
+            document.removeEventListener('mousemove', item._nestedMoveHandler);
+            document.removeEventListener('touchmove', item._nestedMoveHandler);
         }
-        if (item._nestedEndHandler2) {
-            document.removeEventListener('mouseup', item._nestedEndHandler2);
-            document.removeEventListener('touchend', item._nestedEndHandler2);
-            document.removeEventListener('touchcancel', item._nestedEndHandler2);
+        if (item._nestedEndHandler) {
+            document.removeEventListener('mouseup', item._nestedEndHandler);
+            document.removeEventListener('touchend', item._nestedEndHandler);
+            document.removeEventListener('touchcancel', item._nestedEndHandler);
         }
         
         // Очищаем ссылки на обработчики и данные
-        delete item._nestedMoveHandler2;
-        delete item._nestedEndHandler2;
+        delete item._nestedMoveHandler;
+        delete item._nestedEndHandler;
         delete item._placeholder;
         delete item._originalContainer;
         delete item._startX;
@@ -382,39 +342,39 @@
         delete item._originalWidth;
         delete item._originalHeight;
         
-        draggedNestedElement2 = null;
-        isNestedDragging2 = false;
+        draggedNestedElement = null;
+        isNestedDragging = false;
         
         // Агрессивная очистка всех placeholders во всех контейнерах
-        cleanupAllPlaceholders2();
-        cleanupAllPlaceholders2(); // Двойной вызов для гарантии
+        cleanupAllPlaceholders();
+        cleanupAllPlaceholders(); // Двойной вызов для гарантии
         
         // Дополнительная очистка с задержками для гарантии
         requestAnimationFrame(() => {
-            cleanupAllPlaceholders2();
-            cleanupEmptyContentContainers2();
+            cleanupAllPlaceholders();
+            cleanupEmptyContentContainers();
         });
         
         setTimeout(() => {
-            cleanupAllPlaceholders2();
-            cleanupEmptyContentContainers2();
+            cleanupAllPlaceholders();
+            cleanupEmptyContentContainers();
         }, 0);
         
         setTimeout(() => {
-            cleanupAllPlaceholders2();
-            cleanupEmptyContentContainers2();
+            cleanupAllPlaceholders();
+            cleanupEmptyContentContainers();
         }, 10);
         
         setTimeout(() => {
-            cleanupAllPlaceholders2();
-            cleanupEmptyContentContainers2();
+            cleanupAllPlaceholders();
+            cleanupEmptyContentContainers();
         }, 50);
     }
 
-    let draggedElement2 = null;
-    let isDragging2 = false;
+    let draggedElement = null;
+    let isDragging = false;
 
-    function startDrag2(dropdown, container, event) {
+    function startDrag(dropdown, container, event) {
         // Добавляем класс на body для блокировки всех элементов
         document.body.classList.add('is-dragging');
         
@@ -432,20 +392,20 @@
         dropdown._offsetY = clientY - rect.top;
         
         // Начинаем drag сразу при нажатии на handle
-        draggedElement2 = dropdown;
-        isDragging2 = true;
-        initDrag2(dropdown, container);
+        draggedElement = dropdown;
+        isDragging = true;
+        initDrag(dropdown, container);
     }
 
     // Функция закрытия всех раскрытых списков
-    function closeAllDropdowns2() {
+    function closeAllDropdowns() {
         const allDropdowns = document.querySelectorAll('.cart_category__item__dropdown');
         allDropdowns.forEach(dropdown => {
             dropdown.classList.remove('is-open');
         });
     }
 
-    function initDrag2(dropdown, container) {
+    function initDrag(dropdown, container) {
         // Сначала удаляем все старые placeholders в этом контейнере
         const oldPlaceholders = container.querySelectorAll('.cart_category__item--placeholder, .cart_category__item__dropdown.cart_category__item--placeholder, .cart_category_item--placeholder, .cart_category_item_dropdown.cart_category_item--placeholder');
         oldPlaceholders.forEach(ph => {
@@ -486,7 +446,7 @@
         
         // Обработчики для перемещения
         const moveHandler = (e) => {
-            if (!isDragging2) return;
+            if (!isDragging) return;
             e.preventDefault();
             e.stopPropagation();
             
@@ -498,14 +458,14 @@
             dropdown.style.top = (clientY - dropdown._offsetY) + 'px';
             
             // Определяем новую позицию
-            handleDragMove2(clientY, container, clientX);
+            handleDragMove(clientY, container, clientX);
         };
         
         const endHandler = (e) => {
-            if (!isDragging2) return;
+            if (!isDragging) return;
             e.preventDefault();
             e.stopPropagation();
-            endDrag2(container);
+            endDrag(container);
         };
         
         // Используем passive: false для предотвращения скролла во время drag
@@ -516,15 +476,15 @@
         document.addEventListener('touchcancel', endHandler);
         
         // Сохраняем обработчики для последующего удаления
-        draggedElement2._moveHandler2 = moveHandler;
-        draggedElement2._endHandler2 = endHandler;
+        draggedElement._moveHandler = moveHandler;
+        draggedElement._endHandler = endHandler;
     }
 
-    function handleDragMove2(clientY, container, clientX) {
-        if (!draggedElement2 || !draggedElement2._placeholder) return;
+    function handleDragMove(clientY, container, clientX) {
+        if (!draggedElement || !draggedElement._placeholder) return;
         
         // Элемент можно перемещать только внутри исходного контейнера категории
-        const originalContainer = draggedElement2._originalContainer;
+        const originalContainer = draggedElement._originalContainer;
         if (!originalContainer || container !== originalContainer) {
             return; // Не позволяем перемещать в другую категорию
         }
@@ -532,7 +492,7 @@
         // Удаляем все лишние placeholders в контейнере (кроме текущего)
         const allPlaceholders = container.querySelectorAll('.cart_category__item--placeholder, .cart_category__item__dropdown.cart_category__item--placeholder');
         allPlaceholders.forEach(ph => {
-            if (ph !== draggedElement2._placeholder) {
+            if (ph !== draggedElement._placeholder) {
                 try {
                     ph.remove();
                 } catch (e) {
@@ -567,7 +527,7 @@
         
         // Перемещаем placeholder для визуального отображения будущей позиции
         if (targetDropdown) {
-            const placeholder = draggedElement2._placeholder;
+            const placeholder = draggedElement._placeholder;
             const currentPlaceholderNext = placeholder.nextSibling;
             
             if (insertBefore) {
@@ -586,21 +546,21 @@
             }
         } else {
             // Если не нашли позицию, перемещаем placeholder в конец
-            const placeholder = draggedElement2._placeholder;
+            const placeholder = draggedElement._placeholder;
             if (placeholder.nextSibling !== null) {
                 container.appendChild(placeholder);
             }
         }
     }
 
-    function endDrag2(container) {
-        if (!draggedElement2) return;
+    function endDrag(container) {
+        if (!draggedElement) return;
         
         // Убираем класс блокировки с body
         document.body.classList.remove('is-dragging');
         
         // Восстанавливаем оригинальные стили
-        const dropdown = draggedElement2;
+        const dropdown = draggedElement;
         const originalContainer = dropdown._originalContainer || container;
         
         dropdown.style.position = '';
@@ -638,19 +598,19 @@
         dropdown.classList.remove('cart_category__item__dropdown--dragging');
         
         // Удаляем обработчики перемещения
-        if (dropdown._moveHandler2) {
-            document.removeEventListener('mousemove', dropdown._moveHandler2);
-            document.removeEventListener('touchmove', dropdown._moveHandler2);
+        if (dropdown._moveHandler) {
+            document.removeEventListener('mousemove', dropdown._moveHandler);
+            document.removeEventListener('touchmove', dropdown._moveHandler);
         }
-        if (dropdown._endHandler2) {
-            document.removeEventListener('mouseup', dropdown._endHandler2);
-            document.removeEventListener('touchend', dropdown._endHandler2);
-            document.removeEventListener('touchcancel', dropdown._endHandler2);
+        if (dropdown._endHandler) {
+            document.removeEventListener('mouseup', dropdown._endHandler);
+            document.removeEventListener('touchend', dropdown._endHandler);
+            document.removeEventListener('touchcancel', dropdown._endHandler);
         }
         
         // Очищаем ссылки на обработчики и данные
-        delete dropdown._moveHandler2;
-        delete dropdown._endHandler2;
+        delete dropdown._moveHandler;
+        delete dropdown._endHandler;
         delete dropdown._placeholder;
         delete dropdown._originalContainer;
         delete dropdown._startX;
@@ -662,358 +622,37 @@
         delete dropdown._originalWidth;
         delete dropdown._originalHeight;
         
-        draggedElement2 = null;
-        isDragging2 = false;
+        draggedElement = null;
+        isDragging = false;
         
         // Агрессивная очистка всех placeholders во всех контейнерах
-        cleanupAllPlaceholders2();
-        cleanupAllPlaceholders2(); // Двойной вызов для гарантии
+        cleanupAllPlaceholders();
+        cleanupAllPlaceholders(); // Двойной вызов для гарантии
         
         // Дополнительная очистка с задержками для гарантии
         requestAnimationFrame(() => {
-            cleanupAllPlaceholders2();
-            cleanupEmptyContentContainers2();
+            cleanupAllPlaceholders();
+            cleanupEmptyContentContainers();
         });
         
         setTimeout(() => {
-            cleanupAllPlaceholders2();
-            cleanupEmptyContentContainers2();
+            cleanupAllPlaceholders();
+            cleanupEmptyContentContainers();
         }, 0);
         
         setTimeout(() => {
-            cleanupAllPlaceholders2();
-            cleanupEmptyContentContainers2();
+            cleanupAllPlaceholders();
+            cleanupEmptyContentContainers();
         }, 10);
         
         setTimeout(() => {
-            cleanupAllPlaceholders2();
-            cleanupEmptyContentContainers2();
-        }, 50);
-    }
-
-    // Функции для работы с простой структурой (без dropdown) - для saved_cart_detail2.html
-    let draggedSimpleElement2 = null;
-    let isSimpleDragging2 = false;
-
-    function startSimpleDrag2(item, container, event) {
-        // Добавляем класс на body для блокировки всех элементов
-        document.body.classList.add('is-dragging');
-        
-        // Сохраняем исходный контейнер категории - элемент можно перемещать только внутри него
-        item._originalContainer = container;
-        
-        // Сохраняем начальную позицию элемента
-        const rect = item.getBoundingClientRect();
-        item._startX = event.clientX || event.clientX || 0;
-        item._startY = event.clientY || event.clientY || 0;
-        item._offsetX = (event.clientX || 0) - rect.left;
-        item._offsetY = (event.clientY || 0) - rect.top;
-        
-        draggedSimpleElement2 = item;
-        isSimpleDragging2 = true;
-        initSimpleDrag2(item, container);
-    }
-
-    function initSimpleDrag2(item, container) {
-        // Сначала удаляем все старые placeholders в этом контейнере
-        const oldPlaceholders = container.querySelectorAll('.cart_category__item--placeholder, .cart_category_item--placeholder');
-        oldPlaceholders.forEach(ph => {
-            try {
-                ph.remove();
-            } catch (e) {
-                // Игнорируем ошибки
-            }
-        });
-        
-        // Сохраняем оригинальные стили
-        const rect = item.getBoundingClientRect();
-        item._originalLeft = rect.left;
-        item._originalTop = rect.top;
-        item._originalWidth = rect.width;
-        item._originalHeight = rect.height;
-        
-        // Добавляем класс для визуального эффекта
-        item.classList.add('cart_category__item--dragging');
-        
-        // Устанавливаем фиксированную позицию для следования за курсором
-        item.style.position = 'fixed';
-        item.style.left = rect.left + 'px';
-        item.style.top = rect.top + 'px';
-        item.style.width = rect.width + 'px';
-        item.style.margin = '0';
-        item.style.zIndex = '10000';
-        
-        // Создаем placeholder для сохранения места в grid
-        const placeholder = document.createElement('div');
-        placeholder.className = 'cart_category__item cart_category__item--placeholder';
-        placeholder.style.width = rect.width + 'px';
-        placeholder.style.height = rect.height + 'px';
-        placeholder.style.visibility = 'hidden';
-        placeholder.style.pointerEvents = 'none';
-        item._placeholder = placeholder;
-        container.insertBefore(placeholder, item);
-        
-        // Обработчики для перемещения
-        const moveHandler = (e) => {
-            if (!isSimpleDragging2) return;
-            e.preventDefault();
-            e.stopPropagation();
-            
-            const clientY = e.touches ? e.touches[0].clientY : e.clientY;
-            const clientX = e.touches ? e.touches[0].clientX : e.clientX;
-            
-            // Обновляем позицию элемента для следования за курсором
-            item.style.left = (clientX - item._offsetX) + 'px';
-            item.style.top = (clientY - item._offsetY) + 'px';
-            
-            // Определяем новую позицию в grid
-            handleSimpleDragMove2(clientY, container, clientX);
-        };
-        
-        const endHandler = (e) => {
-            if (!isSimpleDragging2) return;
-            e.preventDefault();
-            e.stopPropagation();
-            endSimpleDrag2();
-        };
-        
-        // Используем passive: false для предотвращения скролла во время drag
-        document.addEventListener('mousemove', moveHandler, { passive: false });
-        document.addEventListener('mouseup', endHandler);
-        document.addEventListener('touchmove', moveHandler, { passive: false });
-        document.addEventListener('touchend', endHandler);
-        document.addEventListener('touchcancel', endHandler);
-        
-        // Сохраняем обработчики для последующего удаления
-        draggedSimpleElement2._simpleMoveHandler2 = moveHandler;
-        draggedSimpleElement2._simpleEndHandler2 = endHandler;
-    }
-
-    function handleSimpleDragMove2(clientY, container, clientX) {
-        if (!draggedSimpleElement2 || !draggedSimpleElement2._placeholder) return;
-        
-        // Элемент можно перемещать только внутри исходного контейнера категории
-        const originalContainer = draggedSimpleElement2._originalContainer;
-        if (!originalContainer || container !== originalContainer) {
-            return; // Не позволяем перемещать в другую категорию
-        }
-        
-        // Удаляем все лишние placeholders в контейнере (кроме текущего)
-        const allPlaceholders = container.querySelectorAll('.cart_category__item--placeholder');
-        allPlaceholders.forEach(ph => {
-            if (ph !== draggedSimpleElement2._placeholder) {
-                try {
-                    ph.remove();
-                } catch (e) {
-                    // Игнорируем ошибки
-                }
-            }
-        });
-        
-        // Исключаем draggedElement и placeholder из поиска
-        const items = Array.from(container.querySelectorAll('.cart_category__item:not(.cart_category__item--dragging):not(.cart_category__item--placeholder)'));
-        
-        if (items.length === 0) return;
-        
-        // Проверяем, является ли контейнер grid
-        const isGrid = container.classList.contains('cart_category__items_grid');
-        
-        let targetItem = null;
-        let insertBefore = false;
-        
-        if (isGrid && clientX !== undefined) {
-            // Для grid layout находим элемент, над которым находится курсор
-            for (let i = 0; i < items.length; i++) {
-                const item = items[i];
-                const rect = item.getBoundingClientRect();
-                
-                // Проверяем, находится ли курсор внутри границ элемента
-                if (clientX >= rect.left && clientX <= rect.right && 
-                    clientY >= rect.top && clientY <= rect.bottom) {
-                    targetItem = item;
-                    const centerY = rect.top + rect.height / 2;
-                    const centerX = rect.left + rect.width / 2;
-                    
-                    // Определяем, куда вставлять - до или после элемента
-                    if (clientY < centerY - 15) {
-                        // Верхняя часть - вставляем перед
-                        insertBefore = true;
-                    } else if (clientY > centerY + 15) {
-                        // Нижняя часть - вставляем после
-                        insertBefore = false;
-                    } else {
-                        // Средняя часть - определяем по горизонтали
-                        insertBefore = clientX < centerX;
-                    }
-                    break;
-                }
-            }
-            
-            // Если не нашли элемент под курсором, ищем ближайший по вертикали
-            if (!targetItem) {
-                let closestItem = null;
-                let minVerticalDistance = Infinity;
-                
-                for (let i = 0; i < items.length; i++) {
-                    const item = items[i];
-                    const rect = item.getBoundingClientRect();
-                    const centerY = rect.top + rect.height / 2;
-                    const verticalDistance = Math.abs(clientY - centerY);
-                    
-                    // Ищем элемент с минимальным вертикальным расстоянием
-                    if (verticalDistance < minVerticalDistance) {
-                        minVerticalDistance = verticalDistance;
-                        closestItem = item;
-                        insertBefore = clientY < centerY;
-                    }
-                }
-                targetItem = closestItem;
-            }
-        } else {
-            // Для обычного списка работаем только по вертикали
-            for (let i = 0; i < items.length; i++) {
-                const item = items[i];
-                const rect = item.getBoundingClientRect();
-                const itemMiddle = rect.top + rect.height / 2;
-                
-                if (clientY < itemMiddle) {
-                    targetItem = item;
-                    insertBefore = true;
-                    break;
-                }
-            }
-        }
-        
-        // Перемещаем placeholder для визуального отображения будущей позиции
-        if (targetItem) {
-            const placeholder = draggedSimpleElement2._placeholder;
-            const currentPlaceholderNext = placeholder.nextSibling;
-            
-            if (insertBefore) {
-                // Вставляем placeholder перед целевым элементом
-                if (currentPlaceholderNext !== targetItem) {
-                    container.insertBefore(placeholder, targetItem);
-                }
-            } else {
-                // Вставляем placeholder после целевого элемента
-                const targetNextSibling = targetItem.nextSibling;
-                if (currentPlaceholderNext !== targetNextSibling) {
-                    if (targetNextSibling) {
-                        container.insertBefore(placeholder, targetNextSibling);
-                    } else {
-                        container.appendChild(placeholder);
-                    }
-                }
-            }
-        } else {
-            // Если не нашли позицию, перемещаем placeholder в конец
-            const placeholder = draggedSimpleElement2._placeholder;
-            if (placeholder.nextSibling !== null) {
-                container.appendChild(placeholder);
-            }
-        }
-    }
-
-    function endSimpleDrag2() {
-        if (!draggedSimpleElement2) return;
-        
-        // Убираем класс блокировки с body
-        document.body.classList.remove('is-dragging');
-        
-        // Восстанавливаем оригинальные стили
-        const item = draggedSimpleElement2;
-        const originalContainer = item._originalContainer || item.closest('.cart_category__items');
-        
-        item.style.position = '';
-        item.style.left = '';
-        item.style.top = '';
-        item.style.width = '';
-        item.style.margin = '';
-        item.style.zIndex = '';
-        
-        // Перемещаем элемент на место placeholder ТОЛЬКО если он в исходном контейнере
-        const placeholder = item._placeholder;
-        if (placeholder) {
-            // Проверяем, что placeholder находится в исходном контейнере
-            if (placeholder.parentNode === originalContainer) {
-                placeholder.parentNode.insertBefore(item, placeholder);
-            } else {
-                // Если placeholder в другом контейнере, возвращаем элемент в исходный контейнер
-                // и удаляем placeholder
-                if (!originalContainer.contains(item)) {
-                    originalContainer.appendChild(item);
-                }
-            }
-            // Всегда удаляем placeholder
-            if (placeholder.parentNode) {
-                placeholder.remove();
-            }
-        }
-        
-        // Убеждаемся, что элемент находится в правильном контейнере
-        if (originalContainer && !originalContainer.contains(item)) {
-            originalContainer.appendChild(item);
-        }
-        
-        // Убираем класс для визуального эффекта
-        item.classList.remove('cart_category__item--dragging');
-        
-        // Удаляем обработчики перемещения
-        if (item._simpleMoveHandler2) {
-            document.removeEventListener('mousemove', item._simpleMoveHandler2);
-            document.removeEventListener('touchmove', item._simpleMoveHandler2);
-        }
-        if (item._simpleEndHandler2) {
-            document.removeEventListener('mouseup', item._simpleEndHandler2);
-            document.removeEventListener('touchend', item._simpleEndHandler2);
-            document.removeEventListener('touchcancel', item._simpleEndHandler2);
-        }
-        
-        // Очищаем ссылки на обработчики и данные
-        delete item._simpleMoveHandler2;
-        delete item._simpleEndHandler2;
-        delete item._placeholder;
-        delete item._originalContainer;
-        delete item._startX;
-        delete item._startY;
-        delete item._offsetX;
-        delete item._offsetY;
-        delete item._originalLeft;
-        delete item._originalTop;
-        delete item._originalWidth;
-        delete item._originalHeight;
-        
-        draggedSimpleElement2 = null;
-        isSimpleDragging2 = false;
-        
-        // Агрессивная очистка всех placeholders во всех контейнерах
-        cleanupAllPlaceholders2();
-        cleanupAllPlaceholders2(); // Двойной вызов для гарантии
-        
-        // Дополнительная очистка с задержками для гарантии
-        requestAnimationFrame(() => {
-            cleanupAllPlaceholders2();
-            cleanupEmptyContentContainers2();
-        });
-        
-        setTimeout(() => {
-            cleanupAllPlaceholders2();
-            cleanupEmptyContentContainers2();
-        }, 0);
-        
-        setTimeout(() => {
-            cleanupAllPlaceholders2();
-            cleanupEmptyContentContainers2();
-        }, 10);
-        
-        setTimeout(() => {
-            cleanupAllPlaceholders2();
-            cleanupEmptyContentContainers2();
+            cleanupAllPlaceholders();
+            cleanupEmptyContentContainers();
         }, 50);
     }
 
     // Универсальная функция для удаления всех placeholders
-    function cleanupAllPlaceholders2() {
+    function cleanupAllPlaceholders() {
         const mainContainer = document.querySelector('.cart_section-container');
         if (!mainContainer) return;
         
@@ -1092,7 +731,7 @@
     }
     
     // Функция для удаления пустых контейнеров content и dropdown
-    function cleanupEmptyContentContainers2() {
+    function cleanupEmptyContentContainers() {
         const mainContainer = document.querySelector('.cart_section-container');
         if (!mainContainer) return;
         
@@ -1199,26 +838,27 @@
     }
 
     // Работа с чекбоксами
-    function initCheckboxes2() {
+    function initCheckboxes() {
         // Обработка чекбоксов товаров (всех, включая вложенные в content)
         const itemCheckboxes = document.querySelectorAll('.cart_category__item .label_choose input[type="checkbox"]');
         itemCheckboxes.forEach(checkbox => {
-            checkbox.addEventListener('change', handleCheckboxChange2);
+            checkbox.addEventListener('change', handleCheckboxChange);
         });
         
-        // Обработка "Выбрать все"
+        // Обработка "Выбрать все" - для каждой категории отдельно
         const selectAllCheckboxes = document.querySelectorAll('.cart_choose_all input[type="checkbox"]');
         selectAllCheckboxes.forEach(checkbox => {
-            checkbox.addEventListener('change', handleSelectAll2);
+            checkbox.addEventListener('change', handleSelectAll);
         });
         
         // Инициализация счетчика и состояния родительских чекбоксов
-        updateSelectedCount2();
-        updateParentCheckboxesState2();
+        updateSelectedCount();
+        updateParentCheckboxesState();
+        updateSelectAllState();
     }
 
     // Обработка изменения чекбокса с учетом родитель-дочерних связей
-    function handleCheckboxChange2(e) {
+    function handleCheckboxChange(e) {
         const checkbox = e.target;
         const item = checkbox.closest('.cart_category__item');
         if (!item) return;
@@ -1226,11 +866,11 @@
         const dropdown = item.closest('.cart_category__item__dropdown');
         if (!dropdown) {
             // Если это обычный товар без dropdown, просто обновляем состояние
-            updateCheckboxState2();
+            updateCheckboxState();
             return;
         }
         
-        const mainItem = dropdown.querySelector('.cart_category__item');
+        const mainItem = dropdown.querySelector(':scope > .cart_category__item');
         const content = dropdown.querySelector('.cart_category__item__content');
         const isMainItem = (item === mainItem);
         
@@ -1244,15 +884,15 @@
             }
         } else {
             // Если изменен дочерний чекбокс, обновляем родительский
-            updateParentCheckboxFromNested2(dropdown);
+            updateParentCheckboxFromNested(dropdown);
         }
         
-        updateCheckboxState2();
+        updateCheckboxState();
     }
 
     // Обновление родительского чекбокса на основе дочерних
-    function updateParentCheckboxFromNested2(dropdown) {
-        const mainItem = dropdown.querySelector('.cart_category__item');
+    function updateParentCheckboxFromNested(dropdown) {
+        const mainItem = dropdown.querySelector(':scope > .cart_category__item');
         if (!mainItem) return;
         
         const parentCheckbox = mainItem.querySelector('.label_choose input[type="checkbox"]');
@@ -1281,89 +921,89 @@
     }
 
     // Обновление всех родительских чекбоксов
-    function updateParentCheckboxesState2() {
+    function updateParentCheckboxesState() {
         const container = document.querySelector('.cart_section-container');
         if (!container) return;
         
         const dropdowns = container.querySelectorAll('.cart_category__item__dropdown');
         dropdowns.forEach(dropdown => {
-            updateParentCheckboxFromNested2(dropdown);
+            updateParentCheckboxFromNested(dropdown);
         });
     }
 
     // Управление модалкой подтверждения удаления
-    let deleteCallback2 = null;
-    let modalDelete2 = null;
-    let modalDeleteMessage2 = null;
-    let modalDeleteCancel2 = null;
-    let modalDeleteConfirm2 = null;
-    let modalDeleteClose2 = null;
+    let deleteCallback = null;
+    let modalDelete = null;
+    let modalDeleteMessage = null;
+    let modalDeleteCancel = null;
+    let modalDeleteConfirm = null;
+    let modalDeleteClose = null;
 
-    function initDeleteModal2() {
-        modalDelete2 = document.querySelector('.modal_overlay[data-modal-id="modal-delete-confirm"]');
-        modalDeleteMessage2 = document.querySelector('.modal_delete-message');
-        modalDeleteCancel2 = document.querySelector('.modal_delete-cancel');
-        modalDeleteConfirm2 = document.querySelector('.modal_delete-confirm');
-        modalDeleteClose2 = modalDelete2 ? modalDelete2.querySelector('.modal_close') : null;
+    function initDeleteModal() {
+        modalDelete = document.querySelector('.modal_overlay[data-modal-id="modal-delete-confirm"]');
+        modalDeleteMessage = document.querySelector('.modal_delete-message');
+        modalDeleteCancel = document.querySelector('.modal_delete-cancel');
+        modalDeleteConfirm = document.querySelector('.modal_delete-confirm');
+        modalDeleteClose = modalDelete ? modalDelete.querySelector('.modal_close') : null;
 
         // Инициализация обработчиков модалки
-        if (modalDeleteCancel2) {
-            modalDeleteCancel2.addEventListener('click', closeDeleteModal2);
+        if (modalDeleteCancel) {
+            modalDeleteCancel.addEventListener('click', closeDeleteModal);
         }
         
-        if (modalDeleteConfirm2) {
-            modalDeleteConfirm2.addEventListener('click', () => {
-                if (deleteCallback2) {
-                    deleteCallback2();
-                    closeDeleteModal2();
+        if (modalDeleteConfirm) {
+            modalDeleteConfirm.addEventListener('click', () => {
+                if (deleteCallback) {
+                    deleteCallback();
+                    closeDeleteModal();
                 }
             });
         }
         
-        if (modalDeleteClose2) {
-            modalDeleteClose2.addEventListener('click', closeDeleteModal2);
+        if (modalDeleteClose) {
+            modalDeleteClose.addEventListener('click', closeDeleteModal);
         }
         
         // Закрытие при клике вне модалки
-        if (modalDelete2) {
+        if (modalDelete) {
             document.addEventListener('click', (e) => {
-                if (modalDelete2 && modalDelete2.classList.contains('is-open') && 
+                if (modalDelete && modalDelete.classList.contains('is-open') && 
                     !e.target.closest('.modal_content')) {
-                    closeDeleteModal2();
+                    closeDeleteModal();
                 }
             });
         }
     }
 
-    function openDeleteModal2(message, callback) {
-        if (!modalDelete2 || !modalDeleteMessage2) {
+    function openDeleteModal(message, callback) {
+        if (!modalDelete || !modalDeleteMessage) {
             console.error('Модалка удаления не найдена');
             return;
         }
         
-        deleteCallback2 = callback;
-        modalDeleteMessage2.textContent = message;
-        modalDelete2.classList.add('is-open');
+        deleteCallback = callback;
+        modalDeleteMessage.textContent = message;
+        modalDelete.classList.add('is-open');
         if (typeof lockScroll === 'function') {
             lockScroll();
         }
     }
 
-    function closeDeleteModal2() {
-        if (!modalDelete2) return;
+    function closeDeleteModal() {
+        if (!modalDelete) return;
         
-        modalDelete2.classList.remove('is-open');
-        deleteCallback2 = null;
+        modalDelete.classList.remove('is-open');
+        deleteCallback = null;
         if (typeof unlockScroll === 'function') {
             unlockScroll();
         }
     }
 
     // Удаление товаров - используем делегирование событий
-    let deleteItemsInitialized2 = false;
-    function initDeleteItems2() {
+    let deleteItemsInitialized = false;
+    function initDeleteItems() {
         const container = document.querySelector('.cart_section-container');
-        if (!container || deleteItemsInitialized2) return;
+        if (!container || deleteItemsInitialized) return;
         
         // Используем делегирование событий для удаления отдельных товаров
         container.addEventListener('click', (e) => {
@@ -1371,32 +1011,20 @@
             if (deleteButton) {
                 e.preventDefault();
                 e.stopPropagation();
-                // В cart2.html товар может быть вложен, поэтому ищем ближайший .cart_category__item
+                // В saved_cart_detail.html товар может быть вложен, поэтому ищем ближайший .cart_category__item
                 const item = deleteButton.closest('.cart_category__item');
                 if (item) {
-                    openDeleteModal2('Удалить товар из подборки?', () => {
-                        deleteItem2(item);
+                    openDeleteModal('Удалить товар из подборки?', () => {
+                        deleteItem(item);
                     });
                 }
             }
         });
         
-        // Используем делегирование событий для удаления всей подборки
-        container.addEventListener('click', (e) => {
-            const deleteCartButton = e.target.closest('.trash_cart');
-            if (deleteCartButton) {
-                e.preventDefault();
-                e.stopPropagation();
-                openDeleteModal2('Очистить всю подборку? Все товары будут удалены.', () => {
-                    clearCart2(container);
-                });
-            }
-        });
-        
-        deleteItemsInitialized2 = true;
+        deleteItemsInitialized = true;
     }
 
-    function deleteItem2(item) {
+    function deleteItem(item) {
         if (!item) return;
         
         // Если элемент находится в процессе drag, завершаем drag
@@ -1405,13 +1033,11 @@
             const container = item.closest('.cart_category__items');
             if (container) {
                 if (item.classList.contains('cart_category__item__dropdown--dragging')) {
-                    endDrag2(container);
+                    endDrag(container);
                 } else {
                     const contentContainer = item.closest('.cart_category__item__content');
                     if (contentContainer) {
-                        endNestedDrag2();
-                    } else {
-                        endSimpleDrag2();
+                        endNestedDrag();
                     }
                 }
             }
@@ -1425,22 +1051,11 @@
         // Сохраняем ссылки на категорию и dropdown до удаления
         const category = item.closest('.cart_category');
         const dropdown = item.closest('.cart_category__item__dropdown');
-        const itemsContainer = item.closest('.cart_category__items');
-        const contentContainer = item.closest('.cart_category__item__content');
         
         // Если это основной товар в dropdown, удаляем весь dropdown
         if (dropdown) {
             // Находим основной товар - первый .cart_category__item, который является прямым потомком dropdown
-            // (не вложенный в .cart_category__item__content)
-            const children = Array.from(dropdown.children);
-            let mainItem = null;
-            for (let child of children) {
-                if (child.classList.contains('cart_category__item') && 
-                    !child.classList.contains('cart_category__item__content')) {
-                    mainItem = child;
-                    break;
-                }
-            }
+            const mainItem = dropdown.querySelector(':scope > .cart_category__item');
             
             if (item === mainItem) {
                 // Это основной товар - удаляем весь dropdown
@@ -1477,12 +1092,12 @@
                 
                 // Проверяем, не стал ли dropdown пустым после удаления вложенного товара
                 const children = Array.from(dropdown.children);
-                let mainItem = null;
+                let mainItemAfter = null;
                 for (let child of children) {
                     if (child.classList.contains('cart_category__item') && 
                         !child.classList.contains('cart_category__item--placeholder') &&
                         !child.classList.contains('cart_category__item__content')) {
-                        mainItem = child;
+                        mainItemAfter = child;
                         break;
                     }
                 }
@@ -1492,7 +1107,7 @@
                 ) : [];
                 
                 // Если нет основного товара и нет вложенных товаров, удаляем dropdown
-                if (!mainItem && remainingNestedItems.length === 0) {
+                if (!mainItemAfter && remainingNestedItems.length === 0) {
                     try {
                         dropdown.remove();
                     } catch (e) {
@@ -1506,21 +1121,21 @@
         }
         
         // Удаляем все оставшиеся placeholders во всех контейнерах (на случай, если они остались)
-        cleanupAllPlaceholders2();
+        cleanupAllPlaceholders();
         
         // Удаляем пустые контейнеры content - вызываем несколько раз для гарантии
-        cleanupEmptyContentContainers2();
-        cleanupEmptyContentContainers2();
+        cleanupEmptyContentContainers();
+        cleanupEmptyContentContainers();
         
         // Обновляем счетчик и состояние чекбоксов
-        updateSelectedCount2();
-        updateSelectAllState2();
+        updateSelectedCount();
+        updateSelectAllState();
         
         // Проверяем, не осталась ли категория пустой
         if (category) {
-            // Проверяем наличие dropdown элементов (для cart2.html)
+            // Проверяем наличие dropdown элементов
             const remainingDropdowns = category.querySelectorAll('.cart_category__item__dropdown');
-            // Проверяем наличие обычных элементов товаров (для saved_cart_detail2.html и history_prices_detail.html)
+            // Проверяем наличие обычных элементов товаров
             const remainingItems = category.querySelectorAll('.cart_category__item:not(.cart_category__item--placeholder)');
             
             // Удаляем категорию только если нет ни dropdown, ни обычных товаров
@@ -1531,168 +1146,126 @@
         }
         
         // Переинициализируем drag and drop для оставшихся элементов
-        initDragAndDrop2();
-        initDropdownAccordion2();
+        initDragAndDrop();
+        initDropdownAccordion();
         
         // Агрессивная очистка с несколькими задержками для гарантии удаления всех пустых контейнеров
         requestAnimationFrame(() => {
-            cleanupAllPlaceholders2();
-            cleanupEmptyContentContainers2();
+            cleanupAllPlaceholders();
+            cleanupEmptyContentContainers();
         });
         
         setTimeout(() => {
-            cleanupAllPlaceholders2();
-            cleanupEmptyContentContainers2();
+            cleanupAllPlaceholders();
+            cleanupEmptyContentContainers();
         }, 0);
         
         setTimeout(() => {
-            cleanupAllPlaceholders2();
-            cleanupEmptyContentContainers2();
+            cleanupAllPlaceholders();
+            cleanupEmptyContentContainers();
         }, 10);
         
         setTimeout(() => {
-            cleanupAllPlaceholders2();
-            cleanupEmptyContentContainers2();
+            cleanupAllPlaceholders();
+            cleanupEmptyContentContainers();
         }, 50);
         
         setTimeout(() => {
-            cleanupAllPlaceholders2();
-            cleanupEmptyContentContainers2();
+            cleanupAllPlaceholders();
+            cleanupEmptyContentContainers();
         }, 100);
     }
 
-    function clearCart2(container) {
-        if (!container) return;
-        
-        // Завершаем drag, если он активен
-        if (draggedElement2 && isDragging2) {
-            const itemsContainer = draggedElement2.closest('.cart_category__items');
-            if (itemsContainer) {
-                endDrag2(itemsContainer);
-            }
-        }
-        if (draggedSimpleElement2 && isSimpleDragging2) {
-            endSimpleDrag2();
-        }
-        if (draggedNestedElement2 && isNestedDragging2) {
-            endNestedDrag2();
-        }
-        
-        // Удаляем все dropdown элементы (в cart2.html это основные контейнеры товаров)
-        const allDropdowns = container.querySelectorAll('.cart_category__item__dropdown');
-        allDropdowns.forEach(dropdown => {
-            // Удаляем placeholder, если он существует
-            if (dropdown._placeholder && dropdown._placeholder.parentNode) {
-                dropdown._placeholder.remove();
-            }
-            dropdown.remove();
-        });
-        
-        // Удаляем все обычные элементы товаров (исключаем placeholders из поиска)
-        const allItems = container.querySelectorAll('.cart_category__item:not(.cart_category__item--placeholder)');
-        allItems.forEach(item => {
-            // Удаляем placeholder, если он существует
-            if (item._placeholder && item._placeholder.parentNode) {
-                item._placeholder.remove();
-            }
-            item.remove();
-        });
-        
-        // Удаляем все оставшиеся placeholders
-        cleanupAllPlaceholders2();
-        cleanupEmptyContentContainers2();
-        cleanupEmptyContentContainers2(); // Двойной вызов для гарантии
-        
-        // Дополнительная очистка с задержками
-        setTimeout(() => {
-            cleanupAllPlaceholders2();
-            cleanupEmptyContentContainers2();
-        }, 0);
-        
-        setTimeout(() => {
-            cleanupAllPlaceholders2();
-            cleanupEmptyContentContainers2();
-        }, 50);
-        
-        // Удаляем все категории
-        const allCategories = container.querySelectorAll('.cart_category');
-        allCategories.forEach(category => {
-            category.remove();
-        });
-        
-        // Сбрасываем счетчик и чекбоксы
-        updateSelectedCount2();
-        updateSelectAllState2();
-        
-        // Переинициализируем drag and drop
-        initDragAndDrop2();
-        initDropdownAccordion2();
-    }
-
-    function updateCheckboxState2() {
+    function updateCheckboxState() {
         // Обновляем состояние всех родительских чекбоксов
-        updateParentCheckboxesState2();
-        updateSelectedCount2();
-        updateSelectAllState2();
+        updateParentCheckboxesState();
+        updateSelectedCount();
+        updateSelectAllState();
     }
 
-    function handleSelectAll2(e) {
+    // Обработка "Выбрать все" - работает только внутри своей категории
+    function handleSelectAll(e) {
         const isChecked = e.target.checked;
-        // Находим контейнер корзины
-        const container = e.target.closest('.cart_section-container');
-        if (!container) return;
+        // Находим категорию, в которой находится этот чекбокс "Выбрать все"
+        const category = e.target.closest('.cart_category');
+        if (!category) return;
         
-        // Синхронизируем все чекбоксы "Выбрать все" в контейнере
-        const allSelectAllCheckboxes = container.querySelectorAll('.cart_choose_all input[type="checkbox"]');
-        allSelectAllCheckboxes.forEach(checkbox => {
-            checkbox.checked = isChecked;
-            checkbox.indeterminate = false;
-        });
+        // Находим все чекбоксы товаров только в этой категории (включая вложенные)
+        const itemsContainer = category.querySelector('.cart_category__items');
+        if (!itemsContainer) return;
         
-        // Находим все чекбоксы товаров во всех категориях (включая вложенные)
-        const itemCheckboxes = container.querySelectorAll('.cart_category__item .label_choose input[type="checkbox"]');
+        const itemCheckboxes = itemsContainer.querySelectorAll('.cart_category__item .label_choose input[type="checkbox"]');
         itemCheckboxes.forEach(checkbox => {
             checkbox.checked = isChecked;
         });
         
-        updateSelectedCount2();
+        // Обновляем состояние родительских чекбоксов в dropdown
+        updateParentCheckboxesState();
+        
+        // Обновляем счетчик только для этой категории
+        updateSelectedCount();
+        
+        // Обновляем состояние чекбокса "Выбрать все" только для этой категории
+        updateSelectAllState();
     }
 
-    function updateSelectAllState2() {
+    // Обновление состояния чекбокса "Выбрать все" - для каждой категории отдельно
+    function updateSelectAllState() {
         const container = document.querySelector('.cart_section-container');
         if (!container) return;
         
-        // Находим все чекбоксы товаров во всех категориях
-        const itemCheckboxes = container.querySelectorAll('.cart_category__item .label_choose input[type="checkbox"]');
-        const checkedCount = container.querySelectorAll('.cart_category__item .label_choose input[type="checkbox"]:checked').length;
-        const totalCount = itemCheckboxes.length;
+        // Находим все категории
+        const categories = container.querySelectorAll('.cart_category');
         
-        // Синхронизируем все чекбоксы "Выбрать все" в контейнере
-        const allSelectAllCheckboxes = container.querySelectorAll('.cart_choose_all input[type="checkbox"]');
-        allSelectAllCheckboxes.forEach(selectAllCheckbox => {
+        categories.forEach(category => {
+            // Находим чекбокс "Выбрать все" в этой категории
+            const selectAllCheckbox = category.querySelector('.cart_choose_all input[type="checkbox"]');
+            if (!selectAllCheckbox) return;
+            
+            // Находим все чекбоксы товаров только в этой категории
+            const itemsContainer = category.querySelector('.cart_category__items');
+            if (!itemsContainer) return;
+            
+            const itemCheckboxes = itemsContainer.querySelectorAll('.cart_category__item .label_choose input[type="checkbox"]');
+            const checkedCount = itemsContainer.querySelectorAll('.cart_category__item .label_choose input[type="checkbox"]:checked').length;
+            const totalCount = itemCheckboxes.length;
+            
+            // Обновляем состояние чекбокса "Выбрать все" только для этой категории
             selectAllCheckbox.checked = totalCount > 0 && checkedCount === totalCount;
             selectAllCheckbox.indeterminate = checkedCount > 0 && checkedCount < totalCount;
         });
     }
 
-    function updateSelectedCount2() {
+    // Обновление счетчика выбранных товаров - для каждой категории отдельно
+    function updateSelectedCount() {
         const container = document.querySelector('.cart_section-container');
         if (!container) return;
         
-        // Подсчитываем общее количество выбранных товаров во всех категориях
-        const totalCheckedCount = container.querySelectorAll('.cart_category__item .label_choose input[type="checkbox"]:checked').length;
+        // Находим все категории
+        const categories = container.querySelectorAll('.cart_category');
         
-        // Обновляем все счетчики в контейнере (вверху и внизу)
-        const countElements = container.querySelectorAll('.choose-count');
-        countElements.forEach(countElement => {
-            countElement.textContent = totalCheckedCount;
+        categories.forEach(category => {
+            // Находим счетчик в этой категории
+            const countElement = category.querySelector('.choose-count');
+            if (!countElement) return;
+            
+            // Находим все чекбоксы товаров только в этой категории
+            const itemsContainer = category.querySelector('.cart_category__items');
+            if (!itemsContainer) return;
+            
+            // Подсчитываем количество выбранных товаров только в этой категории
+            const checkedCount = itemsContainer.querySelectorAll('.cart_category__item .label_choose input[type="checkbox"]:checked').length;
+            
+            // Обновляем счетчик только для этой категории
+            countElement.textContent = checkedCount;
         });
         
         // Показываем/скрываем кнопки внизу в зависимости от общего количества выбранных товаров
-        updateCartButtonsVisibility2(totalCheckedCount);
+        const totalCheckedCount = container.querySelectorAll('.cart_category__item .label_choose input[type="checkbox"]:checked').length;
+        updateCartButtonsVisibility(totalCheckedCount);
     }
 
-    function updateCartButtonsVisibility2(checkedCount) {
+    function updateCartButtonsVisibility(checkedCount) {
         const cartBtns = document.querySelector('.cart-btns');
         if (!cartBtns) return;
         
@@ -1712,21 +1285,21 @@
     }
 
     // Инициализация аккордеона для раскрытия/сворачивания списков
-    let accordionInitialized2 = false;
-    function initDropdownAccordion2() {
+    let accordionInitialized = false;
+    function initDropdownAccordion() {
         const container = document.querySelector('.cart_section-container');
         if (!container) return;
 
         // Используем делегирование событий для кнопок раскрытия
         // Добавляем обработчик только один раз
-        if (!accordionInitialized2) {
-            container.addEventListener('click', handleDropdownClick2);
-            accordionInitialized2 = true;
+        if (!accordionInitialized) {
+            container.addEventListener('click', handleDropdownClick);
+            accordionInitialized = true;
         }
     }
 
     // Обработчик клика для раскрытия/сворачивания dropdown
-    function handleDropdownClick2(e) {
+    function handleDropdownClick(e) {
         const dropButton = e.target.closest('.cart_category__item__drop');
         if (dropButton) {
             e.preventDefault();
@@ -1741,7 +1314,7 @@
             const isCurrentlyOpen = dropdown.classList.contains('is-open');
             
             // Закрываем все другие dropdown
-            closeAllDropdowns2();
+            closeAllDropdowns();
             
             // Если текущий был закрыт, открываем его
             if (!isCurrentlyOpen) {
@@ -1765,7 +1338,7 @@
                 if (itemsContainer) {
                     // Небольшая задержка для анимации открытия
                     setTimeout(() => {
-                        initNestedDragAndDrop2(itemsContainer);
+                        initNestedDragAndDrop(itemsContainer);
                     }, 100);
                 }
             }
@@ -1773,28 +1346,28 @@
     }
 
     // Инициализация при загрузке страницы
-    function init2() {
+    function init() {
         if (document.querySelector('.cart_section')) {
             // Очищаем все placeholders при загрузке (на случай, если они остались)
-            cleanupAllPlaceholders2();
-            cleanupEmptyContentContainers2();
-            cleanupEmptyContentContainers2(); // Двойной вызов для гарантии
+            cleanupAllPlaceholders();
+            cleanupEmptyContentContainers();
+            cleanupEmptyContentContainers(); // Двойной вызов для гарантии
             
-            initDeleteModal2();
-            initDropdownAccordion2();
-            initDragAndDrop2();
-            initCheckboxes2();
-            initDeleteItems2();
+            initDeleteModal();
+            initDropdownAccordion();
+            initDragAndDrop();
+            initCheckboxes();
+            initDeleteItems();
             // Инициализируем видимость кнопок при загрузке
-            updateSelectedCount2();
+            updateSelectedCount();
         }
     }
 
     // Запуск при загрузке DOM
     if (document.readyState === 'loading') {
-        document.addEventListener('DOMContentLoaded', init2);
+        document.addEventListener('DOMContentLoaded', init);
     } else {
-        init2();
+        init();
     }
 
 })();
