@@ -30,12 +30,12 @@
                     dropdown.classList.add('is-open');
                     list.style.display = 'flex';
                     
-                    // Убираем readonly при открытии только если есть поиск
-                    if (hasSearch && wasReadonly) {
+                    // Убираем readonly при открытии если есть поиск
+                    if (hasSearch) {
                         input.removeAttribute('readonly');
                         // Фокусируемся на input для поиска
                         setTimeout(() => input.focus(), 10);
-                    } else if (!hasSearch) {
+                    } else {
                         // Если нет поиска, убираем фокус с input
                         input.blur();
                     }
@@ -54,8 +54,8 @@
                         }
                     }
                     
-                    // Возвращаем readonly если был или если нет поиска
-                    if (wasReadonly || !hasSearch) {
+                    // Возвращаем readonly только если его не было изначально и нет поиска
+                    if (!hasSearch && wasReadonly) {
                         input.setAttribute('readonly', 'true');
                     }
                 }
@@ -105,8 +105,8 @@
                 dropdown.classList.remove('is-open');
                 list.style.display = 'none';
                 
-                // Возвращаем readonly если был или если нет поиска
-                if (wasReadonly || !hasSearch) {
+                // Возвращаем readonly только если его не было изначально и нет поиска
+                if (!hasSearch && wasReadonly) {
                     input.setAttribute('readonly', 'true');
                 }
                 
@@ -169,9 +169,7 @@
                     // Фокус работает только если список уже открыт через top
                     if (isOpen) {
                         // Убираем readonly при фокусе для поиска
-                        if (wasReadonly) {
-                            input.removeAttribute('readonly');
-                        }
+                        input.removeAttribute('readonly');
                     }
                 });
             }
@@ -191,8 +189,8 @@
                         }
                     }
                     
-                    // Возвращаем readonly если был или если нет поиска
-                    if (wasReadonly || !hasSearch) {
+                    // Возвращаем readonly только если его не было изначально и нет поиска
+                    if (!hasSearch && wasReadonly) {
                         input.setAttribute('readonly', 'true');
                     }
                 }
