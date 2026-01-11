@@ -4292,9 +4292,8 @@ body.is-dragging .cart_category__item__dropdown--dragging {
 .prices_detail__item .product-card__table {
     padding: 0;
     font-size: 14px;
-    max-width: 820px;
     min-height: 0;
-    width: 100%;
+    width: 820px;
 }
 
 .prices_detail__item .product-card__btn {
