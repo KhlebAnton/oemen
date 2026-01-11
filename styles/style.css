@@ -1743,8 +1743,8 @@ input[type="radio"]:checked+.radio-marker::after {
 }
 
 .product-card__table_doshed  {
-    text-decoration:  underline dashed;
-    text-underline-offset: 2px;
+    border-bottom: 1px dashed currentColor;
+    width: fit-content;
 }
 
 .product-card__table_bold  {
@@ -5084,6 +5084,7 @@ gap: 10px;
     [data-page-style="list-page"] .product-card__table {
         order: 1;
         padding-bottom: 0;
+        width: 100%;
     }
 
     [data-page-style="list-page"] .product_card__price__wrapper {
