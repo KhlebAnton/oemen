@@ -113,6 +113,11 @@ function initProductPageImgSwiper() {
             },
 
             speed: 400,
+            breakpoints: {
+                640: {
+                    slidesPerView:2,
+                }
+            }
         });
     }
 }
@@ -594,4 +599,69 @@ shareButtons.forEach(button => {
         }
     });
 });
+
+// Функция скрытия disabled элементов для неавторизованных пользователей
+function hideDisabledElementsForUnauthorized() {
+    // Проверяем статус авторизации
+    const dataAuth = document.body.getAttribute('data-auth');
+    let isAuth = false;
+    
+    if (dataAuth !== null) {
+        // Используем атрибут data-auth, если он установлен
+        isAuth = dataAuth === 'true';
+    } else if (typeof getCookie === 'function') {
+        // Если атрибут не установлен, проверяем cookie
+        const authPhone = getCookie('auth_user');
+        isAuth = authPhone && authPhone !== '';
+    }
+    
+    // Если пользователь неавторизован, скрываем элементы с классом --disabled
+    if (!isAuth) {
+        // Скрываем цвета с классом --disabled
+        const disabledColors = document.querySelectorAll('.color-product-item.--disabled');
+        disabledColors.forEach(item => {
+            item.style.display = 'none';
+        });
+        
+        // Скрываем размеры с классом --disabled
+        const disabledSizes = document.querySelectorAll('.product_page__size_item.--disabled');
+        disabledSizes.forEach(item => {
+            item.style.display = 'none';
+        });
+    } else {
+        // Если пользователь авторизован, показываем все элементы
+        const disabledColors = document.querySelectorAll('.color-product-item.--disabled');
+        disabledColors.forEach(item => {
+            item.style.display = '';
+        });
+        
+        const disabledSizes = document.querySelectorAll('.product_page__size_item.--disabled');
+        disabledSizes.forEach(item => {
+            item.style.display = '';
+        });
+    }
+}
+
+// Инициализация при загрузке страницы
+if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', hideDisabledElementsForUnauthorized);
+} else {
+    hideDisabledElementsForUnauthorized();
+}
+
+// Отслеживаем изменения атрибута data-auth для обновления при изменении статуса авторизации
+const authObserver = new MutationObserver(function(mutations) {
+    mutations.forEach(function(mutation) {
+        if (mutation.type === 'attributes' && mutation.attributeName === 'data-auth') {
+            hideDisabledElementsForUnauthorized();
+        }
+    });
+});
+
+if (document.body) {
+    authObserver.observe(document.body, {
+        attributes: true,
+        attributeFilter: ['data-auth']
+    });
+}
 

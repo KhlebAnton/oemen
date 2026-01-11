@@ -533,7 +533,7 @@
                                     <div class="prices_item__count" data-column="Кол-во позиций">
                                         <span>120 шт.</span>
                                     </div>
-                                    <button class="btn btn_second btn_prices_set_cart" data-btn-cart-all></button>
+                                    <button class="btn btn_second btn_prices_set_cart" data-btn-cart-all data-modal-btn="modal-add-price-in-cart"></button>
                                 </div>
                                 <div class="prices_item">
                                     <a href="#" class="prices_item__img-wrapper">
@@ -545,7 +545,7 @@
                                     <div class="prices_item__count" data-column="Кол-во позиций">
                                         <span>120 шт.</span>
                                     </div>
-                                    <button class="btn btn_second btn_prices_set_cart" data-btn-cart-all></button>
+                                    <button class="btn btn_second btn_prices_set_cart" data-btn-cart-all data-modal-btn="modal-add-price-in-cart"></button>
                                 </div>
                                 <div class="prices_item">
                                     <a href="#" class="prices_item__img-wrapper">
@@ -557,7 +557,7 @@
                                     <div class="prices_item__count" data-column="Кол-во позиций">
                                         <span>120 шт.</span>
                                     </div>
-                                    <button class="btn btn_second btn_prices_set_cart" data-btn-cart-all></button>
+                                    <button class="btn btn_second btn_prices_set_cart" data-btn-cart-all data-modal-btn="modal-add-price-in-cart"></button>
                                 </div>
                                 <div class="prices_item">
                                     <a href="#" class="prices_item__img-wrapper">
@@ -569,7 +569,7 @@
                                     <div class="prices_item__count" data-column="Кол-во позиций">
                                         <span>120 шт.</span>
                                     </div>
-                                    <button class="btn btn_second btn_prices_set_cart" data-btn-cart-all></button>
+                                    <button class="btn btn_second btn_prices_set_cart" data-btn-cart-all data-modal-btn="modal-add-price-in-cart"></button>
                                 </div>
                                 <div class="prices_item">
                                     <a href="#" class="prices_item__img-wrapper">
@@ -581,7 +581,7 @@
                                     <div class="prices_item__count" data-column="Кол-во позиций">
                                         <span>120 шт.</span>
                                     </div>
-                                    <button class="btn btn_second btn_prices_set_cart" data-btn-cart-all></button>
+                                    <button class="btn btn_second btn_prices_set_cart" data-btn-cart-all data-modal-btn="modal-add-price-in-cart"></button>
                                 </div>
                             </div>
 
@@ -611,7 +611,7 @@
                                     <div class="prices_item__count" data-column="Кол-во позиций">
                                         <span>120 шт.</span>
                                     </div>
-                                    <button class="btn btn_second btn_prices_set_cart" data-btn-cart-all></button>
+                                    <button class="btn btn_second btn_prices_set_cart" data-btn-cart-all data-modal-btn="modal-add-price-in-cart"></button>
                                 </div>
                                 <div class="prices_item">
                                     <a href="#" class="prices_item__img-wrapper">
@@ -623,7 +623,7 @@
                                     <div class="prices_item__count" data-column="Кол-во позиций">
                                         <span>120 шт.</span>
                                     </div>
-                                    <button class="btn btn_second btn_prices_set_cart" data-btn-cart-all></button>
+                                    <button class="btn btn_second btn_prices_set_cart" data-btn-cart-all data-modal-btn="modal-add-price-in-cart"></button>
                                 </div>
                                 <div class="prices_item">
                                     <a href="#" class="prices_item__img-wrapper">
@@ -635,7 +635,7 @@
                                     <div class="prices_item__count" data-column="Кол-во позиций">
                                         <span>120 шт.</span>
                                     </div>
-                                    <button class="btn btn_second btn_prices_set_cart" data-btn-cart-all></button>
+                                    <button class="btn btn_second btn_prices_set_cart" data-btn-cart-all data-modal-btn="modal-add-price-in-cart"></button>
                                 </div>
                                 <div class="prices_item">
                                     <a href="#" class="prices_item__img-wrapper">
@@ -647,7 +647,7 @@
                                     <div class="prices_item__count" data-column="Кол-во позиций">
                                         <span>120 шт.</span>
                                     </div>
-                                    <button class="btn btn_second btn_prices_set_cart" data-btn-cart-all></button>
+                                    <button class="btn btn_second btn_prices_set_cart" data-btn-cart-all data-modal-btn="modal-add-price-in-cart"></button>
                                 </div>
                                 <div class="prices_item">
                                     <a href="#" class="prices_item__img-wrapper">
@@ -659,7 +659,7 @@
                                     <div class="prices_item__count" data-column="Кол-во позиций">
                                         <span>120 шт.</span>
                                     </div>
-                                    <button class="btn btn_second btn_prices_set_cart" data-btn-cart-all></button>
+                                    <button class="btn btn_second btn_prices_set_cart" data-btn-cart-all data-modal-btn="modal-add-price-in-cart"></button>
                                 </div>
                             </div>
                         </div>
@@ -1265,6 +1265,30 @@
             </form>
         </div>
     </div>
+    <div class="modal_overlay ios-scrollbar" data-modal-id="modal-add-price-in-cart">
+        <div class="modal_content">
+            <div class="modal_close"></div>
+
+            <div class="modal_title">
+                Добавить в подборку        
+            </div>
+            <p>
+                Выберите способ добавления:
+            </p>
+            <button class="btn btn_second">Очистить текущую подборку и добавить позиции из прайса</button>
+            <button class="btn btn_primary">Добавить позиции из прайса в текущую подборку</button>
+        </div>
+    </div>
+    <div class="modal_overlay ios-scrollbar" data-modal-id="modal-add-price-in-cart-ok">
+        <div class="modal_content">
+            <div class="modal_close"></div>
+
+            <div class="modal_title">
+                Добавлено    
+            </div>
+            <a href="#" class="btn btn_primary">Перейти в подборку</a>
+        </div>
+    </div>
     <script src="./scripts/swiper-bundle.min.js"></script>
     <script src="./scripts/utils.js"></script>
     <script src="./scripts/modals/modal-client.js"></script>
@@ -1272,6 +1296,7 @@
     <script src="./scripts/modals/modal-reserv.js"></script>
     <script src="./scripts/modals/modal-ok-msg.js"></script>
     <script src="./scripts/modals/modal-set-reserv.js"></script>
+    <script src="./scripts/modals/modal-add-price-in-cart.js"></script>
     <script src="./scripts/products.js"></script>
     <script src="./scripts/filters.js"></script>
     <script src="./scripts/prices.js"></script>

@@ -107,14 +107,9 @@
         // Находим все кнопки с классом btn_prices_set_cart и атрибутом data-btn-cart-all
         const cartButtons = document.querySelectorAll('.btn_prices_set_cart[data-btn-cart-all]');
         
-        // Добавляем обработчик клика для каждой кнопки
+        // Добавляем атрибут data-modal-btn для открытия модального окна
         cartButtons.forEach(function(button) {
-            button.addEventListener('click', function(e) {
-                e.preventDefault();
-                
-                // Переключаем класс is-active
-                this.classList.toggle('is-active');
-            });
+            button.setAttribute('data-modal-btn', 'modal-add-price-in-cart');
         });
     }
 

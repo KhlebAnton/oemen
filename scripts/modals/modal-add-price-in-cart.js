@@ -9,7 +9,13 @@ const closeBtnModalAddPriceInCartOk = modalAddPriceInCartOk ? modalAddPriceInCar
 const btnClearAndAdd = modalAddPriceInCart ? modalAddPriceInCart.querySelector('.btn_second') : null;
 const btnAddToCurrent = modalAddPriceInCart ? modalAddPriceInCart.querySelector('.btn_primary') : null;
 
-function openModalAddPriceInCart() {
+// Переменная для хранения ссылки на кнопку, которая открыла модалку
+let currentButton = null;
+
+function openModalAddPriceInCart(button) {
+    // Сохраняем ссылку на кнопку
+    currentButton = button;
+    
     // Закрываем все другие модалки
     if (typeof closeAllModals === 'function') {
         closeAllModals();
@@ -23,16 +29,25 @@ function openModalAddPriceInCart() {
     }
 }
 
-function closeModalAddPriceInCart() {
+function closeModalAddPriceInCart(keepButton) {
     if (modalAddPriceInCart) {
         modalAddPriceInCart.classList.remove('is-open');
     }
     if (typeof unlockScroll === 'function') {
         unlockScroll();
     }
+    // Очищаем ссылку на кнопку только если не передали флаг keepButton
+    if (!keepButton) {
+        currentButton = null;
+    }
 }
 
 function openModalAddPriceInCartOk() {
+    // Добавляем класс is-active на кнопку, которая открыла модалку
+    if (currentButton && currentButton.classList.contains('btn_prices_set_cart')) {
+        currentButton.classList.add('is-active');
+    }
+    
     // Закрываем все другие модалки
     if (typeof closeAllModals === 'function') {
         closeAllModals();
@@ -53,20 +68,35 @@ function closeModalAddPriceInCartOk() {
     if (typeof unlockScroll === 'function') {
         unlockScroll();
     }
+    // Очищаем ссылку на кнопку после закрытия модалки подтверждения
+    currentButton = null;
 }
 
-// Инициализация
-if (btnsModalAddPriceInCart.length > 0) {
-    btnsModalAddPriceInCart.forEach(btn => {
-        btn.addEventListener('click', (e) => {
-            // Проверяем, не заблокирована ли кнопка
-            if (btn.classList.contains('btn--disabled')) {
-                e.preventDefault();
-                return;
-            }
-            openModalAddPriceInCart();
-        });
+// Функция инициализации обработчиков
+function initModalAddPriceInCartButtons() {
+    const buttons = document.querySelectorAll('[data-modal-btn="modal-add-price-in-cart"]');
+    buttons.forEach(btn => {
+        // Проверяем, не добавлен ли уже обработчик
+        if (!btn.hasAttribute('data-modal-add-price-in-cart-handler')) {
+            btn.setAttribute('data-modal-add-price-in-cart-handler', 'true');
+            btn.addEventListener('click', (e) => {
+                // Проверяем, не заблокирована ли кнопка
+                if (btn.classList.contains('btn--disabled')) {
+                    e.preventDefault();
+                    return;
+                }
+                openModalAddPriceInCart(btn);
+            });
+        }
     });
+}
+
+// Инициализация при загрузке DOM
+if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', initModalAddPriceInCartButtons);
+} else {
+    // DOM уже готов - инициализируем сразу
+    initModalAddPriceInCartButtons();
 }
 
 // Обработка закрытия первой модалки
@@ -85,8 +115,8 @@ if (btnClearAndAdd) {
         // Здесь можно добавить логику очистки подборки и добавления позиций
         console.log('Очистить текущую подборку и добавить позиции из прайса');
         
-        // Закрываем первую модалку и открываем вторую
-        closeModalAddPriceInCart();
+        // Закрываем первую модалку (сохраняя ссылку на кнопку) и открываем вторую
+        closeModalAddPriceInCart(true);
         openModalAddPriceInCartOk();
     });
 }
@@ -96,8 +126,8 @@ if (btnAddToCurrent) {
         // Здесь можно добавить логику добавления позиций в текущую подборку
         console.log('Добавить позиции из прайса в текущую подборку');
         
-        // Закрываем первую модалку и открываем вторую
-        closeModalAddPriceInCart();
+        // Закрываем первую модалку (сохраняя ссылку на кнопку) и открываем вторую
+        closeModalAddPriceInCart(true);
         openModalAddPriceInCartOk();
     });
 }
