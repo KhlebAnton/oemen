@@ -1664,7 +1664,7 @@ input[type="radio"]:checked+.radio-marker::after {
     display: none;
     grid-column: 1 / 4;
     padding-left: 10px;
-    max-width: 860px;
+    width: 860px;
     padding-bottom: 20px;
 }
 
@@ -4911,7 +4911,7 @@ gap: 10px;
 @media (max-width:1500px) {
     [data-page-style="list-page"] .product-card__info {
         display: grid;
-        grid-template-columns: 1fr auto auto;
+        grid-template-columns: auto 1fr 1fr;
         gap: 20px;
     }
 
