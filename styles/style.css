@@ -1786,7 +1786,7 @@ input[type="radio"]:checked+.radio-marker::after {
 
 }
 
-.btn_reserve_wrapper span {
+.btn_reserve_wrapper  {
     font-weight: 400;
     font-size: 16px;
     color: #B5B5B5;
