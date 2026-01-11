@@ -1704,6 +1704,12 @@ input[type="radio"]:checked+.radio-marker::after {
     display: flex;
     align-items: center;
     justify-content: center;
+    -webkit-text-size-adjust: 100%;
+    text-size-adjust: 100%;
+}
+.product-card__table__columns .table_item * {
+    -webkit-text-size-adjust: 100%;
+    text-size-adjust: 100%;
 }
 .product-card__table__columns .table_item span {
     font-size: 14px;
