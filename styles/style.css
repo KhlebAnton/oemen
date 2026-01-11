@@ -1711,8 +1711,9 @@ input[type="radio"]:checked+.radio-marker::after {
     -webkit-text-size-adjust: 100%;
     text-size-adjust: 100%;
 }
-.product-card__table__columns .table_item span {
+.product-card__table__columns .table_item {
     font-size: 14px;
+    min-height: 0;
 }
 .product-card__table__columns .table_item:first-child {
     width: 80px;
