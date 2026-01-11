@@ -105,7 +105,8 @@
     // Обработка кнопок добавления в подборку на странице прайсов (prices.html)
     function initPricesButtons() {
         // Находим все кнопки с классом btn_prices_set_cart и атрибутом data-btn-cart-all
-        const cartButtons = document.querySelectorAll('.btn_prices_set_cart[data-btn-cart-all]');
+        // Исключаем кнопки с data-modal-btn="modal-add-price-in-cart", так как для них используется модалка
+        const cartButtons = document.querySelectorAll('.btn_prices_set_cart[data-btn-cart-all]:not([data-modal-btn="modal-add-price-in-cart"])');
         
         // Добавляем обработчик клика для каждой кнопки
         cartButtons.forEach(function(button) {

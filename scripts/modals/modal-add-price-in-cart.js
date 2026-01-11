@@ -43,7 +43,7 @@ function closeModalAddPriceInCart(keepButton) {
 }
 
 function openModalAddPriceInCartOk() {
-    // Добавляем класс is-active на кнопку, которая открыла модалку
+    // Добавляем класс is-active на кнопку, которая открыла модалку, если это кнопка btn_prices_set_cart
     if (currentButton && currentButton.classList.contains('btn_prices_set_cart')) {
         currentButton.classList.add('is-active');
     }
@@ -80,11 +80,20 @@ function initModalAddPriceInCartButtons() {
         if (!btn.hasAttribute('data-modal-add-price-in-cart-handler')) {
             btn.setAttribute('data-modal-add-price-in-cart-handler', 'true');
             btn.addEventListener('click', (e) => {
+                // Останавливаем всплытие события, чтобы другие обработчики не сработали
+                e.stopPropagation();
+                
                 // Проверяем, не заблокирована ли кнопка
                 if (btn.classList.contains('btn--disabled')) {
                     e.preventDefault();
                     return;
                 }
+                // Если у кнопки есть класс is-active, не открываем модалку
+                if (btn.classList.contains('is-active')) {
+                    e.preventDefault();
+                    return;
+                }
+                e.preventDefault();
                 openModalAddPriceInCart(btn);
             });
         }
