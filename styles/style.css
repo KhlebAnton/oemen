@@ -3056,7 +3056,7 @@ input[type="radio"]:checked+.radio-marker::after {
     width: 40px;
     margin-left: 10px;
 }
-
+.product_page .product-card__table-row .table_item,
 .product_page .btn_reserve_wrapper span,
 .product_page .btn_reserve {
     font-size: 14px;
@@ -3084,6 +3084,11 @@ input[type="radio"]:checked+.radio-marker::after {
     padding: 20px 0;
     border-top: 1px solid #B5B5B5;
     margin: 0;
+}
+.product_page .product-card__table .product-card__table-row {
+    gap: 0;
+    grid-template-columns: 5fr 5fr 4fr 4fr 4fr 4fr 10fr;
+    padding-right: 0;
 }
 
 .product_page .product-card__table__top .product-card__table__first-column {
@@ -6024,6 +6029,7 @@ gap: 10px;
         display: grid;
         grid-template-columns: 1fr;
         padding: 10px;
+        gap: 20px;
     }
 
     .product_page .product-card__table__content .table_item__input {
