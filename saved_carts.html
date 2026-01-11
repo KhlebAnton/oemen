@@ -517,7 +517,7 @@
                                 Продолжая использование сайта, вы соглашаетесь с условиями использования. 
                             </div>
                             <div class="saved_carts__btns">
-                                <button class="btn btn_second btn_prices_set_cart" data-btn-cart-all=""></button>
+                                <button class="btn btn_second btn_prices_set_cart" data-modal-btn="modal-add-price-in-cart" data-btn-cart-all=""></button>
                                 <div class="saved_cart_del"></div>
                             </div>
                         </div>
@@ -535,7 +535,7 @@
                                 Продолжая использование сайта, вы соглашаетесь с условиями использования. 
                             </div>
                             <div class="saved_carts__btns">
-                                <button class="btn btn_second btn_prices_set_cart" data-btn-cart-all=""></button>
+                                <button class="btn btn_second btn_prices_set_cart" data-modal-btn="modal-add-price-in-cart" data-btn-cart-all=""></button>
                                 <div class="saved_cart_del"></div>
                             </div>
                         </div>
@@ -553,7 +553,7 @@
                                 Продолжая использование сайта, вы соглашаетесь с условиями использования. 
                             </div>
                             <div class="saved_carts__btns">
-                                <button class="btn btn_second btn_prices_set_cart" data-btn-cart-all=""></button>
+                                <button class="btn btn_second btn_prices_set_cart" data-modal-btn="modal-add-price-in-cart" data-btn-cart-all=""></button>
                                 <div class="saved_cart_del"></div>
                             </div>
                         </div>
@@ -570,25 +570,7 @@
                             <div class="lk_table__column" data-column="Комментарий">
                             </div>
                             <div class="saved_carts__btns">
-                                <button class="btn btn_second btn_prices_set_cart" data-btn-cart-all=""></button>
-                                <div class="saved_cart_del"></div>
-                            </div>
-                        </div>
-                        <div class="lk_table-row">
-                            <a href="#" class="lk_table__column" data-column="Название">
-                                ТЕРМОБЕЛЬЕ ЖЕНСКОЕ OEMEN
-                            </a>
-                            <div class="lk_table__column" data-column="Кол-во позиций">
-                                120 шт.
-                            </div>
-                            <div class="lk_table__column" data-column="Дата сохранения подборки">
-                                29.07.2025
-                            </div>
-                            <div class="lk_table__column" data-column="Комментарий">
-                                Продолжая использование сайта, вы соглашаетесь с условиями использования. 
-                            </div>
-                            <div class="saved_carts__btns">
-                                <button class="btn btn_second btn_prices_set_cart" data-btn-cart-all=""></button>
+                                <button class="btn btn_second btn_prices_set_cart" data-modal-btn="modal-add-price-in-cart" data-btn-cart-all=""></button>
                                 <div class="saved_cart_del"></div>
                             </div>
                         </div>
@@ -606,7 +588,25 @@
                                 Продолжая использование сайта, вы соглашаетесь с условиями использования. 
                             </div>
                             <div class="saved_carts__btns">
-                                <button class="btn btn_second btn_prices_set_cart" data-btn-cart-all=""></button>
+                                <button class="btn btn_second btn_prices_set_cart" data-modal-btn="modal-add-price-in-cart" data-btn-cart-all=""></button>
+                                <div class="saved_cart_del"></div>
+                            </div>
+                        </div>
+                        <div class="lk_table-row">
+                            <a href="#" class="lk_table__column" data-column="Название">
+                                ТЕРМОБЕЛЬЕ ЖЕНСКОЕ OEMEN
+                            </a>
+                            <div class="lk_table__column" data-column="Кол-во позиций">
+                                120 шт.
+                            </div>
+                            <div class="lk_table__column" data-column="Дата сохранения подборки">
+                                29.07.2025
+                            </div>
+                            <div class="lk_table__column" data-column="Комментарий">
+                                Продолжая использование сайта, вы соглашаетесь с условиями использования. 
+                            </div>
+                            <div class="saved_carts__btns">
+                                <button class="btn btn_second btn_prices_set_cart" data-modal-btn="modal-add-price-in-cart" data-btn-cart-all=""></button>
                                 <div class="saved_cart_del"></div>
                             </div>
                         </div>
@@ -623,7 +623,7 @@
                             <div class="lk_table__column" data-column="Комментарий">
                             </div>
                             <div class="saved_carts__btns">
-                                <button class="btn btn_second btn_prices_set_cart" data-btn-cart-all=""></button>
+                                <button class="btn btn_second btn_prices_set_cart" data-modal-btn="modal-add-price-in-cart" data-btn-cart-all=""></button>
                                 <div class="saved_cart_del"></div>
                             </div>
                         </div>
@@ -640,7 +640,7 @@
                             <div class="lk_table__column" data-column="Комментарий">
                             </div>
                             <div class="saved_carts__btns">
-                                <button class="btn btn_second btn_prices_set_cart" data-btn-cart-all=""></button>
+                                <button class="btn btn_second btn_prices_set_cart" data-modal-btn="modal-add-price-in-cart" data-btn-cart-all=""></button>
                                 <div class="saved_cart_del"></div>
                             </div>
                         </div>
@@ -1281,6 +1281,30 @@
             </div>
         </div>
     </div>
+    <div class="modal_overlay ios-scrollbar" data-modal-id="modal-add-price-in-cart">
+        <div class="modal_content">
+            <div class="modal_close"></div>
+
+            <div class="modal_title">
+                Добавить в подборку        
+            </div>
+            <p>
+                Выберите способ добавления:
+            </p>
+            <button class="btn btn_second">Очистить текущую подборку и добавить позиции из прайса</button>
+            <button class="btn btn_primary">Добавить позиции из прайса в текущую подборку</button>
+        </div>
+    </div>
+    <div class="modal_overlay ios-scrollbar" data-modal-id="modal-add-price-in-cart-ok">
+        <div class="modal_content">
+            <div class="modal_close"></div>
+
+            <div class="modal_title">
+                Добавлено    
+            </div>
+            <a href="#" class="btn btn_primary">Перейти в подборку</a>
+        </div>
+    </div>
     <script src="./scripts/swiper-bundle.min.js"></script>
     <script src="./scripts/utils.js"></script>
     <script src="./scripts/modals/modal-client.js"></script>
@@ -1288,6 +1312,7 @@
     <script src="./scripts/modals/modal-reserv.js"></script>
     <script src="./scripts/modals/modal-ok-msg.js"></script>
     <script src="./scripts/modals/modal-set-reserv.js"></script>
+    <script src="./scripts/modals/modal-add-price-in-cart.js"></script>
     <script src="./scripts/products.js"></script>
     <script src="./scripts/filters.js"></script>
     <script src="./scripts/main.js"></script>

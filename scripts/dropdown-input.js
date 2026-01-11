@@ -10,6 +10,7 @@
             const input = dropdown.querySelector('input');
             const list = dropdown.querySelector('.dropdown_input__list');
             const items = dropdown.querySelectorAll('.dropdown_input__list_item');
+            const clearBtn = dropdown.querySelector('.dropdown_input__clear');
             
             if (!top || !input || !list || items.length === 0) return;
             
@@ -20,6 +21,46 @@
             // Если нет класса dropdown-search, делаем input readonly
             if (!hasSearch && !wasReadonly) {
                 input.setAttribute('readonly', 'true');
+            }
+            
+            // Функция показа/скрытия кнопки очистки
+            function toggleClearButton() {
+                if (clearBtn) {
+                    if (input.value.trim() !== '') {
+                        clearBtn.style.display = 'block';
+                    } else {
+                        clearBtn.style.display = 'none';
+                    }
+                }
+            }
+            
+            // Функция сброса значения
+            function clearValue() {
+                input.value = '';
+                
+                // Убираем активный элемент
+                items.forEach(i => i.classList.remove('is-active'));
+                
+                // Скрываем кнопку очистки
+                toggleClearButton();
+                
+                // Закрываем список если открыт
+                if (isOpen) {
+                    isOpen = false;
+                    dropdown.classList.remove('is-open');
+                    list.style.display = 'none';
+                }
+                
+                // Возвращаем readonly только если его не было изначально и нет поиска
+                if (!hasSearch && wasReadonly) {
+                    input.setAttribute('readonly', 'true');
+                }
+                
+                // Триггерим событие изменения
+                input.dispatchEvent(new Event('change', { bubbles: true }));
+                
+                // Убираем фокус с input
+                input.blur();
             }
             
             // Функция открытия/закрытия списка
@@ -53,6 +94,9 @@
                             input.value = activeItem.textContent.trim();
                         }
                     }
+                    
+                    // Обновляем состояние кнопки очистки
+                    toggleClearButton();
                     
                     // Возвращаем readonly только если его не было изначально и нет поиска
                     if (!hasSearch && wasReadonly) {
@@ -100,6 +144,9 @@
                 items.forEach(i => i.classList.remove('is-active'));
                 item.classList.add('is-active');
                 
+                // Показываем кнопку очистки
+                toggleClearButton();
+                
                 // Закрываем список
                 isOpen = false;
                 dropdown.classList.remove('is-open');
@@ -120,9 +167,21 @@
             // Флаг для предотвращения повторного открытия после выбора
             let isSelecting = false;
             
+            // Обработчик клика на кнопку очистки
+            if (clearBtn) {
+                clearBtn.addEventListener('click', (e) => {
+                    e.stopPropagation();
+                    clearValue();
+                });
+            }
+            
             // Обработчик клика на верхнюю часть
             top.addEventListener('click', (e) => {
                 e.stopPropagation();
+                // Не открываем если кликнули на кнопку очистки
+                if (clearBtn && e.target === clearBtn) {
+                    return;
+                }
                 // Не открываем если только что выбрали элемент
                 if (!isSelecting) {
                     toggleList();
@@ -147,6 +206,8 @@
                     if (isOpen) {
                         filterItems(e.target.value);
                     }
+                    // Показываем/скрываем кнопку очистки
+                    toggleClearButton();
                 });
             }
             
@@ -188,6 +249,9 @@
                             input.value = activeItem.textContent.trim();
                         }
                     }
+                    
+                    // Обновляем состояние кнопки очистки
+                    toggleClearButton();
                     
                     // Возвращаем readonly только если его не было изначально и нет поиска
                     if (!hasSearch && wasReadonly) {
@@ -234,6 +298,9 @@
             
             // Инициализация: скрываем список по умолчанию
             list.style.display = 'none';
+            
+            // Инициализация: проверяем начальное состояние кнопки очистки
+            toggleClearButton();
         });
     }
     

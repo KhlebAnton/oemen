@@ -102,10 +102,13 @@ function initModalAddPriceInCartButtons() {
 
 // Инициализация при загрузке DOM
 if (document.readyState === 'loading') {
-    document.addEventListener('DOMContentLoaded', initModalAddPriceInCartButtons);
+    document.addEventListener('DOMContentLoaded', () => {
+        // Небольшая задержка для гарантии, что все элементы загружены
+        setTimeout(initModalAddPriceInCartButtons, 50);
+    });
 } else {
-    // DOM уже готов - инициализируем сразу
-    initModalAddPriceInCartButtons();
+    // DOM уже готов - инициализируем сразу с небольшой задержкой
+    setTimeout(initModalAddPriceInCartButtons, 50);
 }
 
 // Обработка закрытия первой модалки
