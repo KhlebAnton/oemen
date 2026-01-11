@@ -1664,7 +1664,7 @@ input[type="radio"]:checked+.radio-marker::after {
     display: none;
     grid-column: 1 / 4;
     padding-left: 10px;
-    width: 860px;
+    width: 100%;
     padding-bottom: 20px;
 }
 
@@ -1744,7 +1744,6 @@ input[type="radio"]:checked+.radio-marker::after {
 
 .product-card__table_doshed  {
     border-bottom: 1px dashed currentColor;
-    width: fit-content;
 }
 
 .product-card__table_bold  {
