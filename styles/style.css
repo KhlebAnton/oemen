@@ -1664,7 +1664,7 @@ input[type="radio"]:checked+.radio-marker::after {
     display: none;
     grid-column: 1 / 4;
     padding-left: 10px;
-    width: 100%;
+    width: fit-content;
     padding-bottom: 20px;
 }
 
