@@ -1743,11 +1743,12 @@ input[type="radio"]:checked+.radio-marker::after {
     transform: translate(-50%, -50%) rotate(90deg);
 }
 
-.product-card__table_doshed span {
-    border-bottom: 1px dashed var(--color-black);
+.product-card__table_doshed  {
+    text-decoration:  underline dashed;
+    text-underline-offset: 2px;
 }
 
-.product-card__table_bold span {
+.product-card__table_bold  {
     font-weight: 500;
 }
 
@@ -4235,7 +4236,6 @@ body.is-dragging .cart_category__item__dropdown--dragging {
 .btn_prices_set_cart.is-active {
     background-color: var(--color-black);
     color: var(--color-bg);
-    pointer-events: none;
 }
 
 .btn_prices_set_cart {
