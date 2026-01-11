@@ -1965,7 +1965,7 @@ input[type="radio"]:checked+.radio-marker::after {
     padding-top: 0;
 }
 [data-page-style="list-page"] .product-card:first-child .product-card__btn-like  {
-    top: 10px;
+    top: 6px;
 }
 [data-page-style="list-page"] .product-card:last-child {
     border: 0;
