@@ -135,7 +135,22 @@ function initClientSelection() {
                 updateClientValues(savedClient);
                 popupClient.style.display = 'none';
             } else {
-                popupClient.style.display = 'flex';
+                // Проверяем, был ли popup уже показан в этой сессии
+                const popupShown = sessionStorage.getItem('client-popup-shown');
+                if (!popupShown) {
+                    popupClient.style.display = 'flex';
+                    // Сохраняем в sessionStorage, что popup был показан
+                    sessionStorage.setItem('client-popup-shown', 'true');
+                    // Автоматически скрываем popup через 5 секунд
+                    setTimeout(() => {
+                        if (popupClient) {
+                            popupClient.style.display = 'none';
+                        }
+                    }, 5000);
+                } else {
+                    // Если popup уже был показан в этой сессии, не показываем его
+                    popupClient.style.display = 'none';
+                }
             }
         }
     }
