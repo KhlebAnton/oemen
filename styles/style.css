@@ -3139,6 +3139,24 @@ input[type="radio"]:checked+.radio-marker::after {
     font-size: 12px;
     z-index: 10;
 }
+.product-card__count {
+    position: relative;
+    width: fit-content;
+}
+.product-card__count:hover::after {
+    content: 'Кратность товара';
+    position: absolute;
+    top: 100%;
+    left: 0;
+    white-space: nowrap;
+    margin-top: 5px;
+    padding: 5px 10px;
+    background: rgba(0, 0, 0, 0.8);
+    color: #fff;
+    border-radius: 4px;
+    font-size: 12px;
+    z-index: 10;
+}
 
 .product_page__price {
     display: flex;
