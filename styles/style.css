@@ -1570,9 +1570,9 @@ input[type="radio"]:checked+.radio-marker::after {
     gap: 0 2px;
     grid-template-columns: 206px auto;
 }
-[data-page-style="list-page"] .product-card__custom-nav {
+/* [data-page-style="list-page"] .product-card__custom-nav {
     display: none;
-}
+} */
 [data-page-style="list-page"] .product-card__custom-nav .product-card__custom_nav-next {
     right: 0;
 }
@@ -5474,7 +5474,9 @@ gap: 10px;
     .catalog__list-container {
         grid-template-columns: 1fr 1fr;
     }
-
+[data-page-style="list-page"] .product-card__custom-nav {
+    display: none;
+}
     .swiper__our-products__nav {
         gap: 10px;
     }
