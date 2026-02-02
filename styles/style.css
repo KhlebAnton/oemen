@@ -2926,7 +2926,7 @@ input[type="radio"]:checked+.radio-marker::after {
 
 
 .product_page__info {
-    max-width: 732px;
+    max-width: 750px;
     width: 100%;
     padding: 0 16px;
     margin: 0 auto;
@@ -3251,7 +3251,7 @@ input[type="radio"]:checked+.radio-marker::after {
 }
 .product_page .product-card__table .product-card__table-row {
     gap: 0;
-    grid-template-columns: 5fr 5fr 4fr 4fr 4fr 4fr 10fr;
+    grid-template-columns: 4fr 5fr 5fr 5fr 5fr 5fr 9fr;
     padding-right: 0;
 }
 
