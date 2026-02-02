@@ -68,20 +68,19 @@ if (bookingsFilterForm) {
                 }
             }
 
-            // Фильтрация по товару (название или артикул)
+            // Фильтрация по заказу (название или артикул)
             if (productValue) {
-                const productColumn = row.querySelector('[data-column="Товар"]');
-                if (productColumn) {
-                    // Получаем название товара
-                    const productNameEl = productColumn.querySelector('.lk_table__product-name');
-                    const productName = productNameEl ? productNameEl.textContent.trim().toLowerCase() : '';
+                const orderColumn = row.querySelector('[data-column="Заказ"]');
+                if (orderColumn) {
+                    // Получаем название заказа (теперь это просто текст)
+                    const orderName = orderColumn.textContent.trim().toLowerCase();
                     
                     // Получаем артикул из data-article
-                    const article = productColumn.getAttribute('data-article') || '';
+                    const article = orderColumn.getAttribute('data-article') || '';
                     const articleLower = article.toLowerCase();
                     
                     // Проверяем совпадение по названию или артикулу
-                    matchesProduct = productName.includes(productValue) || articleLower.includes(productValue);
+                    matchesProduct = orderName.includes(productValue) || articleLower.includes(productValue);
                 } else {
                     matchesProduct = false;
                 }

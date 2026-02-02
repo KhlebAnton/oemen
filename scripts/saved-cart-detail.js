@@ -1190,13 +1190,31 @@
         const category = e.target.closest('.cart_category');
         if (!category) return;
         
-        // Находим все чекбоксы товаров только в этой категории (включая вложенные)
+        // Находим все чекбоксы товаров верхнего уровня только в этой категории
         const itemsContainer = category.querySelector('.cart_category__items');
         if (!itemsContainer) return;
         
-        const itemCheckboxes = itemsContainer.querySelectorAll('.cart_category__item .label_choose input[type="checkbox"]');
+        const itemCheckboxes = getTopLevelCheckboxes(itemsContainer);
         itemCheckboxes.forEach(checkbox => {
             checkbox.checked = isChecked;
+            // Если это основной товар в dropdown, обновляем и вложенные товары
+            const item = checkbox.closest('.cart_category__item');
+            if (item) {
+                const dropdown = item.closest('.cart_category__item__dropdown');
+                if (dropdown) {
+                    const mainItem = dropdown.querySelector(':scope > .cart_category__item');
+                    if (item === mainItem) {
+                        // Это основной товар - обновляем вложенные
+                        const content = dropdown.querySelector('.cart_category__item__content');
+                        if (content) {
+                            const nestedCheckboxes = content.querySelectorAll('.cart_category__item .label_choose input[type="checkbox"]');
+                            nestedCheckboxes.forEach(nestedCheckbox => {
+                                nestedCheckbox.checked = isChecked;
+                            });
+                        }
+                    }
+                }
+            }
         });
         
         // Обновляем состояние родительских чекбоксов в dropdown
@@ -1207,6 +1225,18 @@
         
         // Обновляем состояние чекбокса "Выбрать все" только для этой категории
         updateSelectAllState();
+    }
+
+    // Вспомогательная функция для фильтрации чекбоксов верхнего уровня
+    function getTopLevelCheckboxes(container) {
+        const allCheckboxes = container.querySelectorAll('.cart_category__item .label_choose input[type="checkbox"]');
+        return Array.from(allCheckboxes).filter(checkbox => {
+            const item = checkbox.closest('.cart_category__item');
+            if (!item) return false;
+            // Исключаем товары, которые находятся внутри .cart_category__item__content (подкатегории)
+            const content = item.closest('.cart_category__item__content');
+            return !content; // Возвращаем true только если товар НЕ в content
+        });
     }
 
     // Обновление состояния чекбокса "Выбрать все" - для каждой категории отдельно
@@ -1222,12 +1252,12 @@
             const selectAllCheckbox = category.querySelector('.cart_choose_all input[type="checkbox"]');
             if (!selectAllCheckbox) return;
             
-            // Находим все чекбоксы товаров только в этой категории
+            // Находим все чекбоксы товаров верхнего уровня только в этой категории
             const itemsContainer = category.querySelector('.cart_category__items');
             if (!itemsContainer) return;
             
-            const itemCheckboxes = itemsContainer.querySelectorAll('.cart_category__item .label_choose input[type="checkbox"]');
-            const checkedCount = itemsContainer.querySelectorAll('.cart_category__item .label_choose input[type="checkbox"]:checked').length;
+            const itemCheckboxes = getTopLevelCheckboxes(itemsContainer);
+            const checkedCount = itemCheckboxes.filter(cb => cb.checked).length;
             const totalCount = itemCheckboxes.length;
             
             // Обновляем состояние чекбокса "Выбрать все" только для этой категории
@@ -1249,19 +1279,21 @@
             const countElement = category.querySelector('.choose-count');
             if (!countElement) return;
             
-            // Находим все чекбоксы товаров только в этой категории
+            // Находим все чекбоксы товаров верхнего уровня только в этой категории
             const itemsContainer = category.querySelector('.cart_category__items');
             if (!itemsContainer) return;
             
-            // Подсчитываем количество выбранных товаров только в этой категории
-            const checkedCount = itemsContainer.querySelectorAll('.cart_category__item .label_choose input[type="checkbox"]:checked').length;
+            // Подсчитываем количество выбранных товаров верхнего уровня только в этой категории
+            const topLevelCheckboxes = getTopLevelCheckboxes(itemsContainer);
+            const checkedCount = topLevelCheckboxes.filter(cb => cb.checked).length;
             
             // Обновляем счетчик только для этой категории
             countElement.textContent = checkedCount;
         });
         
-        // Показываем/скрываем кнопки внизу в зависимости от общего количества выбранных товаров
-        const totalCheckedCount = container.querySelectorAll('.cart_category__item .label_choose input[type="checkbox"]:checked').length;
+        // Показываем/скрываем кнопки внизу в зависимости от общего количества выбранных товаров верхнего уровня
+        const allTopLevelCheckboxes = getTopLevelCheckboxes(container);
+        const totalCheckedCount = allTopLevelCheckboxes.filter(cb => cb.checked).length;
         updateCartButtonsVisibility(totalCheckedCount);
     }
 

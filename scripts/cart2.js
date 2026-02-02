@@ -1649,22 +1649,52 @@
             checkbox.indeterminate = false;
         });
         
-        // Находим все чекбоксы товаров во всех категориях (включая вложенные)
-        const itemCheckboxes = container.querySelectorAll('.cart_category__item .label_choose input[type="checkbox"]');
+        // Находим все чекбоксы товаров верхнего уровня (без подкатегорий)
+        const itemCheckboxes = getTopLevelCheckboxes(container);
         itemCheckboxes.forEach(checkbox => {
             checkbox.checked = isChecked;
+            // Если это основной товар в dropdown, обновляем и вложенные товары
+            const item = checkbox.closest('.cart_category__item');
+            if (item) {
+                const dropdown = item.closest('.cart_category__item__dropdown');
+                if (dropdown) {
+                    const mainItem = dropdown.querySelector('.cart_category__item');
+                    if (item === mainItem) {
+                        // Это основной товар - обновляем вложенные
+                        const content = dropdown.querySelector('.cart_category__item__content');
+                        if (content) {
+                            const nestedCheckboxes = content.querySelectorAll('.cart_category__item .label_choose input[type="checkbox"]');
+                            nestedCheckboxes.forEach(nestedCheckbox => {
+                                nestedCheckbox.checked = isChecked;
+                            });
+                        }
+                    }
+                }
+            }
         });
         
         updateSelectedCount2();
+    }
+
+    // Вспомогательная функция для фильтрации чекбоксов верхнего уровня
+    function getTopLevelCheckboxes(container) {
+        const allCheckboxes = container.querySelectorAll('.cart_category__item .label_choose input[type="checkbox"]');
+        return Array.from(allCheckboxes).filter(checkbox => {
+            const item = checkbox.closest('.cart_category__item');
+            if (!item) return false;
+            // Исключаем товары, которые находятся внутри .cart_category__item__content (подкатегории)
+            const content = item.closest('.cart_category__item__content');
+            return !content; // Возвращаем true только если товар НЕ в content
+        });
     }
 
     function updateSelectAllState2() {
         const container = document.querySelector('.cart_section-container');
         if (!container) return;
         
-        // Находим все чекбоксы товаров во всех категориях
-        const itemCheckboxes = container.querySelectorAll('.cart_category__item .label_choose input[type="checkbox"]');
-        const checkedCount = container.querySelectorAll('.cart_category__item .label_choose input[type="checkbox"]:checked').length;
+        // Находим все чекбоксы товаров верхнего уровня (без подкатегорий)
+        const itemCheckboxes = getTopLevelCheckboxes(container);
+        const checkedCount = itemCheckboxes.filter(cb => cb.checked).length;
         const totalCount = itemCheckboxes.length;
         
         // Синхронизируем все чекбоксы "Выбрать все" в контейнере
@@ -1679,8 +1709,9 @@
         const container = document.querySelector('.cart_section-container');
         if (!container) return;
         
-        // Подсчитываем общее количество выбранных товаров во всех категориях
-        const totalCheckedCount = container.querySelectorAll('.cart_category__item .label_choose input[type="checkbox"]:checked').length;
+        // Подсчитываем общее количество выбранных товаров верхнего уровня (без подкатегорий)
+        const topLevelCheckboxes = getTopLevelCheckboxes(container);
+        const totalCheckedCount = topLevelCheckboxes.filter(cb => cb.checked).length;
         
         // Обновляем все счетчики в контейнере (вверху и внизу)
         const countElements = container.querySelectorAll('.choose-count');

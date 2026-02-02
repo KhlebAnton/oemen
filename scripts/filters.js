@@ -60,6 +60,11 @@ const filterModalBtns = filterModal ? filterModal.querySelector('.modal-filter-b
 const btnApply = filterModalBtns ? filterModalBtns.querySelector('.btn_primary') : null;
 const btnReset = filterModalBtns ? filterModalBtns.querySelector('.btn_second') : null;
 
+// Функция форматирования чисел с разделителями тысяч
+function formatNumber(num) {
+    return num.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ' ');
+}
+
 // Функция сброса фильтров
 function resetFilters() {
     // Сброс всех чекбоксов
@@ -83,8 +88,8 @@ function resetFilters() {
 
         if (sliderMin) sliderMin.value = defaultMin;
         if (sliderMax) sliderMax.value = defaultMax;
-        if (inputMin) inputMin.value = defaultMin + ' ₽';
-        if (inputMax) inputMax.value = defaultMax + ' ₽';
+        if (inputMin) inputMin.value = formatNumber(defaultMin) + ' ₽';
+        if (inputMax) inputMax.value = formatNumber(defaultMax) + ' ₽';
         if (hiddenMin) hiddenMin.value = defaultMin;
         if (hiddenMax) hiddenMax.value = defaultMax;
 
@@ -161,12 +166,16 @@ function initPriceSlider() {
         track.style.width = (maxPercent - minPercent) + '%';
     }
 
+    function formatNumber(num) {
+        return num.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ' ');
+    }
+
     function updateInputs() {
         const min = parseInt(sliderMin.value) || minValue;
         const max = parseInt(sliderMax.value) || maxValue;
 
-        inputMin.value = min + ' ₽';
-        inputMax.value = max + ' ₽';
+        inputMin.value = formatNumber(min) + ' ₽';
+        inputMax.value = formatNumber(max) + ' ₽';
 
         if (hiddenMin) hiddenMin.value = min;
         if (hiddenMax) hiddenMax.value = max;
@@ -267,8 +276,8 @@ function initPriceSlider() {
         if (value > maxVal) value = maxVal;
 
         sliderMin.value = value;
-        // Добавляем знак рубля при потере фокуса
-        this.value = value + ' ₽';
+        // Добавляем форматирование и знак рубля при потере фокуса
+        this.value = formatNumber(value) + ' ₽';
         updateZIndex('min');
         updateInputs();
     });
@@ -294,8 +303,8 @@ function initPriceSlider() {
         if (value > maxVal) value = maxVal;
 
         sliderMax.value = value;
-        // Добавляем знак рубля при потере фокуса
-        this.value = value + ' ₽';
+        // Добавляем форматирование и знак рубля при потере фокуса
+        this.value = formatNumber(value) + ' ₽';
         updateZIndex('max');
         updateInputs();
     });

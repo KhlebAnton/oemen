@@ -16,39 +16,23 @@ function getBookingDataFromRow(row) {
     if (!row) return null;
 
     const clientColumn = row.querySelector('[data-column="Клиент"]');
-    const productColumn = row.querySelector('[data-column="Товар"]');
-    const countColumn = row.querySelector('[data-column="Кол-во"]');
+    const orderColumn = row.querySelector('[data-column="Заказ"]');
+    const countColumn = row.querySelector('[data-column="Кол-во позиций"]');
     const priceColumn = row.querySelector('[data-column="Сумма"]');
 
     const client = clientColumn ? clientColumn.textContent.trim() : '';
     
-    const productNameEl = productColumn ? productColumn.querySelector('.lk_table__product-name') : null;
-    const productName = productNameEl ? productNameEl.textContent.trim() : '';
-    
-    const productStatEl = productColumn ? productColumn.querySelector('.lk_table__product-stat') : null;
-    let color = '';
-    let size = '';
-    
-    if (productStatEl) {
-        const spans = productStatEl.querySelectorAll('span');
-        spans.forEach(span => {
-            const text = span.textContent.trim();
-            if (text.includes('Цвет:')) {
-                color = text.replace('Цвет:', '').trim();
-            } else if (text.includes('Размер:')) {
-                size = text.replace('Размер:', '').trim();
-            }
-        });
-    }
+    // Теперь заказ - это просто текст в колонке
+    const order = orderColumn ? orderColumn.textContent.trim() : '';
     
     const count = countColumn ? countColumn.textContent.trim() : '';
     const price = priceColumn ? priceColumn.textContent.trim() : '';
 
     return {
         client,
-        product: productName,
-        color,
-        size,
+        product: order, // Используем order как product для совместимости
+        color: '', // Убрано из новой структуры
+        size: '', // Убрано из новой структуры
         count,
         price
     };
@@ -67,8 +51,9 @@ function fillBookingModal(modal, data) {
 
     if (clientEl) clientEl.textContent = data.client;
     if (productEl) productEl.textContent = data.product;
-    if (colorEl) colorEl.textContent = data.color;
-    if (sizeEl) sizeEl.textContent = data.size;
+    // Цвет и размер больше не используются в новой структуре
+    // if (colorEl) colorEl.textContent = data.color;
+    // if (sizeEl) sizeEl.textContent = data.size;
     if (countEl) countEl.textContent = data.count;
     if (priceEl) priceEl.textContent = data.price;
 }

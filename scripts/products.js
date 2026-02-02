@@ -159,9 +159,10 @@ if (productPageInfo) {
             return;
         }
         
-        const isStickyNow = productPageInfo.getBoundingClientRect().top <= 0;
+        const stickyTop = 100; // Отступ для sticky элемента
+        const isStickyNow = productPageInfo.getBoundingClientRect().top <= stickyTop;
         const contentHeight = contentWrapper.scrollHeight;
-        const viewportHeight = window.innerHeight;
+        const viewportHeight = window.innerHeight - stickyTop; // Учитываем отступ хедера
         const canScroll = contentHeight > viewportHeight;
         
         if (isStickyNow && canScroll) {
@@ -279,9 +280,10 @@ if (productPageInfo) {
                     // Проверяем еще раз на случай изменения размера окна
                     if (window.innerWidth < 1100) return;
                     
-                    const isStickyNow = productPageInfo.getBoundingClientRect().top <= 0;
+                    const stickyTop = 100; // Отступ для sticky элемента
+                    const isStickyNow = productPageInfo.getBoundingClientRect().top <= stickyTop;
                     const contentHeight = contentWrapper.scrollHeight;
-                    const viewportHeight = window.innerHeight;
+                    const viewportHeight = window.innerHeight - stickyTop; // Учитываем отступ хедера
                     
                     if (isStickyNow && contentHeight > viewportHeight) {
                         const maxScroll = contentHeight - viewportHeight;
@@ -323,9 +325,9 @@ const colorTitleSpan = document.querySelector('.product_page__colors_title .colo
 colorProductItems.forEach(item => {
     item.addEventListener('click', function() {
         // Проверяем, не disabled ли элемент
-        if (this.classList.contains('--disabled')) {
-            return;
-        }
+        // if (this.classList.contains('--disabled')) {
+        //     return;
+        // }
 
         // Убираем активный класс со всех элементов
         colorProductItems.forEach(el => el.classList.remove('--is-active'));
@@ -347,9 +349,9 @@ const sizeProductItems = document.querySelectorAll('.product_page__size_item');
 sizeProductItems.forEach(item => {
     item.addEventListener('click', function() {
         // Проверяем, не disabled ли элемент
-        if (this.classList.contains('--disabled')) {
-            return;
-        }
+        // if (this.classList.contains('--disabled')) {
+        //     return;
+        // }
 
         // Убираем активный класс со всех элементов
         sizeProductItems.forEach(el => el.classList.remove('--is-active'));
@@ -499,9 +501,10 @@ productTableTwoArray.forEach(table => {
 const productTableArray = document.querySelectorAll('.product-card__table');
 
 productTableArray.forEach(table => {
-    const tableBtn = table.querySelector('.product-card__table__top');
-    if (tableBtn) {
-        tableBtn.addEventListener('click', () => {
+    const tablePlus = table.querySelector('.product-card__table__plus');
+    if (tablePlus) {
+        tablePlus.addEventListener('click', (e) => {
+            e.stopPropagation(); // Предотвращаем всплытие события
             if (!table.classList.contains('is-open')) {
                 productTableArray.forEach(table => table.classList.remove('is-open'));
                 table.classList.add('is-open');
@@ -509,6 +512,46 @@ productTableArray.forEach(table => {
                 productTableArray.forEach(table => table.classList.remove('is-open'));
                 table.classList.remove('is-open');
             }
+        });
+    }
+    
+    // Добавляем обработчик клика на заголовок таблицы (first-column)
+    const tableTop = table.querySelector('.product-card__table__top');
+    if (tableTop) {
+        const firstColumn = tableTop.querySelector('.product-card__table__first-column');
+        if (firstColumn) {
+            firstColumn.addEventListener('click', (e) => {
+                e.stopPropagation(); // Предотвращаем всплытие события
+                if (!table.classList.contains('is-open')) {
+                    productTableArray.forEach(table => table.classList.remove('is-open'));
+                    table.classList.add('is-open');
+                } else {
+                    productTableArray.forEach(table => table.classList.remove('is-open'));
+                    table.classList.remove('is-open');
+                }
+            });
+        }
+    }
+});
+
+// Переключение табов в таблице продуктов
+productTableArray.forEach(table => {
+    const tableTop = table.querySelector('.product-card__table__top');
+    if (tableTop) {
+        const tabItems = tableTop.querySelectorAll('.table_item.product-card__table_bold, .table_item.product-card__table_doshed');
+        
+        tabItems.forEach(tab => {
+            tab.addEventListener('click', function() {
+                // Убираем активный класс у всех табов в этой таблице
+                tabItems.forEach(item => {
+                    item.classList.remove('product-card__table_bold');
+                    item.classList.add('product-card__table_doshed');
+                });
+                
+                // Добавляем активный класс кликнутому табу
+                this.classList.remove('product-card__table_doshed');
+                this.classList.add('product-card__table_bold');
+            });
         });
     }
 });
@@ -615,31 +658,31 @@ function hideDisabledElementsForUnauthorized() {
         isAuth = authPhone && authPhone !== '';
     }
     
-    // Если пользователь неавторизован, скрываем элементы с классом --disabled
-    if (!isAuth) {
-        // Скрываем цвета с классом --disabled
-        const disabledColors = document.querySelectorAll('.color-product-item.--disabled');
-        disabledColors.forEach(item => {
-            item.style.display = 'none';
-        });
+    // // Если пользователь неавторизован, скрываем элементы с классом --disabled
+    // if (!isAuth) {
+    //     // Скрываем цвета с классом --disabled
+    //     const disabledColors = document.querySelectorAll('.color-product-item.--disabled');
+    //     disabledColors.forEach(item => {
+    //         item.style.display = 'none';
+    //     });
         
-        // Скрываем размеры с классом --disabled
-        const disabledSizes = document.querySelectorAll('.product_page__size_item.--disabled');
-        disabledSizes.forEach(item => {
-            item.style.display = 'none';
-        });
-    } else {
-        // Если пользователь авторизован, показываем все элементы
-        const disabledColors = document.querySelectorAll('.color-product-item.--disabled');
-        disabledColors.forEach(item => {
-            item.style.display = '';
-        });
+    //     // Скрываем размеры с классом --disabled
+    //     const disabledSizes = document.querySelectorAll('.product_page__size_item.--disabled');
+    //     disabledSizes.forEach(item => {
+    //         item.style.display = 'none';
+    //     });
+    // } else {
+    //     // Если пользователь авторизован, показываем все элементы
+    //     const disabledColors = document.querySelectorAll('.color-product-item.--disabled');
+    //     disabledColors.forEach(item => {
+    //         item.style.display = '';
+    //     });
         
-        const disabledSizes = document.querySelectorAll('.product_page__size_item.--disabled');
-        disabledSizes.forEach(item => {
-            item.style.display = '';
-        });
-    }
+    //     const disabledSizes = document.querySelectorAll('.product_page__size_item.--disabled');
+    //     disabledSizes.forEach(item => {
+    //         item.style.display = '';
+    //     });
+    // }
 }
 
 // Инициализация при загрузке страницы
