@@ -1156,8 +1156,11 @@ input[type="search"]:not(.search-input) {
     right: 0;
     bottom: 0;
     z-index: 1;
-    background-color: #484848;
+    background-color: #757575;
     mask-image: url('../images/icons/sort.svg');
+    mask-position: center;
+    mask-size: contain;
+    transition:background-color .3s ease ;
 }
 
 .sort_content {
