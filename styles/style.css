@@ -6184,8 +6184,8 @@ gap: 10px;
         top: 8px;
         right: 4px;
     }
-    [data-page-style="small-page"] .catalog-container,
-    [data-page-style="big-page"] .catalog-container {
+    body[data-page-style="small-page"] .catalog-container,
+    body[data-page-style="big-page"] .catalog-container {
         margin: 0;
         gap: 21px 0;
     }
