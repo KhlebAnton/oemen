@@ -292,7 +292,7 @@ main {
 .header {
     background-color: var(--color-bg);
     position: sticky;
-    top:-56px;
+    top:-58px;
     z-index: 10;
 }
 
@@ -5287,7 +5287,9 @@ gap: 10px;
         gap: 20px;
     }
 
-
+    .header {
+        top: 0;
+    }
     .header__middle--search .header-btn-container {
         width: 100%;
     }
@@ -5495,10 +5497,10 @@ gap: 10px;
     }
 
     .mobile_product .header:not(.--menu-open) {
-        position: absolute;
-        top: 0;
-        left: 0;
-        width: 100%;
+       position: fixed;
+       top: 0;
+       left: 0;
+       width: 100%;
         background: #00000033;
         border-bottom: none;
     }
