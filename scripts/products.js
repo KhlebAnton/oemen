@@ -374,17 +374,37 @@ btnsAddProduct.forEach(btn => {
     });
 });
 
-// Кнопки лайков
-const btnsLikeProduct = document.querySelectorAll('.product-card__btn-like');
+// Функция проверки авторизации
+function isUserAuthorized() {
+    const authAttr = document.body.getAttribute('data-auth');
+    return authAttr === 'true';
+}
 
-btnsLikeProduct.forEach(btn => {
-    btn.addEventListener('click', () => {
-        if (btn.classList.contains('is-active')) {
-            btn.classList.remove('is-active');
-        } else {
-            btn.classList.add('is-active');
+// Обработчик кликов на кнопки лайков (делегирование событий для динамически добавленных элементов)
+document.addEventListener('click', function(e) {
+    const likeBtn = e.target.closest('.product-card__btn-like');
+    if (!likeBtn) return;
+    
+    e.preventDefault();
+    e.stopPropagation();
+    
+    // Проверяем авторизацию
+    if (!isUserAuthorized()) {
+        // Если не авторизован, открываем модалку авторизации
+        if (typeof window.openModalAuth === 'function') {
+            window.openModalAuth();
+        } else if (typeof openModalAuth === 'function') {
+            openModalAuth();
         }
-    });
+        return;
+    }
+    
+    // Если авторизован, выполняем обычное действие
+    if (likeBtn.classList.contains('is-active')) {
+        likeBtn.classList.remove('is-active');
+    } else {
+        likeBtn.classList.add('is-active');
+    }
 });
 
 // Табы продуктов
