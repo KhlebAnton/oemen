@@ -1068,7 +1068,7 @@ input[type="search"]:not(.search-input) {
     display: flex;
     flex-wrap: wrap;
     align-items: center;
-    gap: 2px 0;
+    gap: 10px 0;
     width: 100%;
 }
 

@@ -164,9 +164,16 @@ function initPageStyle(pageBtns, sectionFilter) {
             
             // Если кнопка есть, устанавливаем стиль из куки
             if (hasButtonForStyle) {
-                document.body.setAttribute('data-page-style', savedStyle);
+                let pageStyle = savedStyle;
+                
+                // Если ширина <= 1100px и выбран small-page, переключаем на big-page
+                if (window.innerWidth <= 1100 && pageStyle === 'small-page') {
+                    pageStyle = 'big-page';
+                }
+                
+                document.body.setAttribute('data-page-style', pageStyle);
                 pageBtns.forEach(btn => {
-                    if (btn.getAttribute('data-page') === savedStyle) {
+                    if (btn.getAttribute('data-page') === pageStyle) {
                         pageBtns.forEach(btn => btn.classList.remove('is-active'));
                         btn.classList.add('is-active');
                     }
