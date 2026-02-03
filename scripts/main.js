@@ -154,6 +154,9 @@ function initPageStyle(pageBtns, sectionFilter) {
     // Проверяем наличие section-filter перед установкой стиля из куки
     if (!sectionFilter) return;
     
+    const currentPageStyle = document.body.getAttribute('data-page-style');
+    let pageStyle = null;
+    
     if (typeof getCookie === 'function') {
         const savedStyle = getCookie('page-style') || '';
         if (savedStyle) {
@@ -164,23 +167,33 @@ function initPageStyle(pageBtns, sectionFilter) {
             
             // Если кнопка есть, устанавливаем стиль из куки
             if (hasButtonForStyle) {
-                let pageStyle = savedStyle;
-                
-                // Если ширина <= 1100px и выбран small-page, переключаем на big-page
-                if (window.innerWidth <= 1100 && pageStyle === 'small-page') {
-                    pageStyle = 'big-page';
-                }
-                
-                document.body.setAttribute('data-page-style', pageStyle);
-                pageBtns.forEach(btn => {
-                    if (btn.getAttribute('data-page') === pageStyle) {
-                        pageBtns.forEach(btn => btn.classList.remove('is-active'));
-                        btn.classList.add('is-active');
-                    }
-                });
+                pageStyle = savedStyle;
             }
-            // Если кнопки нет, оставляем изначальное значение в body без изменений
         }
+    }
+    
+    // Если нет куки и нет атрибута data-page-style, устанавливаем big-page по умолчанию
+    if (!pageStyle && !currentPageStyle) {
+        pageStyle = 'big-page';
+    } else if (!pageStyle && currentPageStyle) {
+        // Если есть атрибут, но нет куки, используем текущий атрибут
+        pageStyle = currentPageStyle;
+    }
+    
+    // Если стиль определён, применяем его
+    if (pageStyle) {
+        // Если ширина <= 1100px и выбран small-page, переключаем на big-page
+        if (window.innerWidth <= 1100 && pageStyle === 'small-page') {
+            pageStyle = 'big-page';
+        }
+        
+        document.body.setAttribute('data-page-style', pageStyle);
+        pageBtns.forEach(btn => {
+            if (btn.getAttribute('data-page') === pageStyle) {
+                pageBtns.forEach(btn => btn.classList.remove('is-active'));
+                btn.classList.add('is-active');
+            }
+        });
     }
 }
 
