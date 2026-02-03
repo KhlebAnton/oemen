@@ -1619,7 +1619,7 @@ body[data-page-style="list-page"] .catalog .product-card__btn-like {
 
 body[data-page-style="list-page"] .product-card__info {
     display: grid;
-    grid-template-columns: 530px auto auto;
+    grid-template-columns: 1fr auto auto;
     gap: 20px 111px;
 }
 
