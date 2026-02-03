@@ -6396,7 +6396,8 @@ body[data-page-style="small-page"] .prices_items_container[data-grid="2-3"] .pri
     .product-card__table__content .table_item {
         display: grid;
         grid-template-columns: 1fr 1fr;
-        width: 100%;
+        width: auto;
+        min-height: 0;
         text-align: start;
         /* grid-column: 1 / 3; */
     }
@@ -6447,6 +6448,8 @@ body[data-page-style="small-page"] .prices_items_container[data-grid="2-3"] .pri
     .product-card__table .product-card__table-row .table__inputs {
         display: grid;
         grid-template-columns: 1fr 1fr;
+        gap: 0;
+        min-height: 0;
     }
 
     .product-card__table__content .table_item__input {
@@ -6486,7 +6489,8 @@ body[data-page-style="small-page"] .prices_items_container[data-grid="2-3"] .pri
     }
 
     .product-card__table__img {
-        width: fit-content;
+        width: auto;
+        margin-right: auto;
     }
 
     [data-column-color="red"]::before {
