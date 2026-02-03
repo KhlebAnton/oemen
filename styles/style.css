@@ -1774,8 +1774,8 @@ body[data-page-style="list-page"] .product_card__price_new {
 .product-card__table .product-card__table-row {
     display: grid;
     padding-right: 20px;
-    gap: 2px;
-    grid-template-columns: 3fr 4fr 4fr 4fr 4fr 4fr 8fr;
+    gap: 0;
+    grid-template-columns: 3fr 5fr 4fr 4fr 4fr 4fr 6fr;
 }
 
 .product-card__table .product-card__table-row .table_item {
@@ -1789,7 +1789,7 @@ body[data-page-style="list-page"] .product_card__price_new {
 .product-card__table .product-card__table-row .table__inputs {
     display: flex;
     align-items: center;
-    gap: 20px;
+    gap: 8px;
 }
 
 .product-card__table .product-card__table-row .table_item__input {
@@ -1935,7 +1935,7 @@ body[data-page-style="list-page"] .product_card__price_new {
 
 .btn_reserve_wrapper {
     font-weight: 400;
-    font-size: 16px;
+    font-size: 14px;
     color: #B5B5B5;
 }
 
@@ -2052,7 +2052,7 @@ body[data-page-style="list-page"] .product_card__price_new {
 
 .btn_reserve {
     border-bottom: 1px dashed #11A871;
-    font-size: 16px;
+    font-size: 14px;
     color: #146F4E;
     cursor: pointer;
 }
