@@ -4685,7 +4685,9 @@ body[data-page-style="small-page"] .prices_items_container[data-grid="2-3"] .pri
 .btn_prices_set_cart.is-active::after {
     content: 'Добавлено в подборку';
 }
-
+.btn_prices_set_cart.is-active:not([data-modal-btn="modal-add-price-in-cart"]).is-active:hover::after {
+    content: 'Убрать из подборки';
+}
 
 .prices_detail__item {
     display: grid;
