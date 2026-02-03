@@ -6620,8 +6620,8 @@ body[data-page-style="small-page"] .prices_items_container[data-grid="2-3"] .pri
     }
 
     .product_page .product-card__table__product-content .product-card__table__product-row {
-        display: grid;
-        grid-template-columns: 1fr;
+        display: flex;
+        flex-direction: column;
         padding: 10px;
         gap: 20px;
     }
