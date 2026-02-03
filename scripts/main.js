@@ -82,20 +82,8 @@ if (typeof window !== 'undefined') {
     window.closeAllModals = closeAllModals;
 }
 
-// Поиск
-const searchContainer = document.querySelector('.btn-search-container');
-const headerMiddle = document.querySelector('.header__middle');
-const searchInput = document.getElementById('search-input');
-const searchModal = document.querySelector('.search_modal');
-const searchBtnClose = document.querySelector('.search-btn-close');
-const header = document.querySelector('.header');
-
-// Меню
-const menuModal = document.querySelector('.menu_modal');
-const btnMenuModal = document.querySelector('.btn-burger');
-
 // Функция для обновления класса --menu-open на хедере
-function updateHeaderMenuOpenClass() {
+function updateHeaderMenuOpenClass(header, menuModal, searchModal, headerMiddle) {
     if (!header) return;
     
     const isMenuOpen = menuModal && menuModal.classList.contains('is-open');
@@ -109,15 +97,7 @@ function updateHeaderMenuOpenClass() {
     }
 }
 
-if (searchBtnClose && headerMiddle) {
-    searchBtnClose.addEventListener('click', () => {
-        closeSearchModal();
-        headerMiddle.classList.remove('header__middle--search');
-        updateHeaderMenuOpenClass();
-    });
-}
-
-function openSearchModal() {
+function openSearchModal(searchModal, lockScroll, updateHeaderMenuOpenClass) {
     if (searchModal) {
         searchModal.classList.add('is-open');
         lockScroll();
@@ -125,7 +105,7 @@ function openSearchModal() {
     }
 }
 
-function closeSearchModal() {
+function closeSearchModal(searchModal, searchInput, unlockScroll, updateHeaderMenuOpenClass) {
     if (searchModal) {
         searchModal.classList.remove('is-open');
     }
@@ -136,47 +116,7 @@ function closeSearchModal() {
     updateHeaderMenuOpenClass();
 }
 
-if (searchContainer && headerMiddle && searchInput) {
-    searchContainer.addEventListener('click', () => {
-        if (!headerMiddle.classList.contains('header__middle--search')) {
-            headerMiddle.classList.add('header__middle--search');
-            searchInput.focus();
-            updateHeaderMenuOpenClass();
-        }
-    });
-
-    document.addEventListener('click', (e) => {
-        if (window.innerWidth > 1100 && searchModal && headerMiddle) {
-            if (searchModal.classList.contains('is-open') && !e.target.closest('.btn-search-container') && !e.target.closest('.search-input')) {
-                if (!e.target.closest('.search__content')) {
-                    headerMiddle.classList.remove('header__middle--search');
-                    closeSearchModal();
-                }
-            }
-        }
-    });
-
-    searchInput.addEventListener('input', (e) => {
-        if (searchModal && !searchModal.classList.contains('is-open')) {
-            openSearchModal();
-        }
-    });
-
-    searchInput.addEventListener('focus', () => {
-        if (window.innerWidth <= 1100) {
-            openSearchModal();
-        }
-    });
-
-    searchInput.addEventListener('blur', () => {
-        if (searchModal && headerMiddle && !searchModal.classList.contains('is-open')) {
-            headerMiddle.classList.remove('header__middle--search');
-            updateHeaderMenuOpenClass();
-        }
-    });
-}
-
-function openMenuModal() {
+function openMenuModal(menuModal, btnMenuModal, lockScroll, updateHeaderMenuOpenClass) {
     if (menuModal && btnMenuModal) {
         menuModal.classList.add('is-open');
         btnMenuModal.classList.add('btn-close');
@@ -185,7 +125,7 @@ function openMenuModal() {
     }
 }
 
-function closeMenuModal() {
+function closeMenuModal(menuModal, btnMenuModal, unlockScroll, updateHeaderMenuOpenClass) {
     if (menuModal && btnMenuModal) {
         menuModal.classList.remove('is-open');
         btnMenuModal.classList.remove('btn-close');
@@ -196,91 +136,21 @@ function closeMenuModal() {
 
 // Экспорт функций меню
 if (typeof window !== 'undefined') {
-    window.closeMenuModal = closeMenuModal;
+    window.closeMenuModal = function() {
+        const menuModal = document.querySelector('.menu_modal');
+        const btnMenuModal = document.querySelector('.btn-burger');
+        const header = document.querySelector('.header');
+        const searchModal = document.querySelector('.search_modal');
+        const headerMiddle = document.querySelector('.header__middle');
+        
+        if (menuModal && btnMenuModal) {
+            const updateFn = () => updateHeaderMenuOpenClass(header, menuModal, searchModal, headerMiddle);
+            closeMenuModal(menuModal, btnMenuModal, unlockScroll, updateFn);
+        }
+    };
 }
 
-if (btnMenuModal) {
-    btnMenuModal.addEventListener('click', () => {
-        if (!btnMenuModal.classList.contains('btn-close')) {
-            openMenuModal();
-        } else {
-            closeMenuModal();
-        }
-    });
-}
-
-document.addEventListener('click', (e) => {
-    if (menuModal && menuModal.classList.contains('is-open') && !e.target.closest('.menu__content') && !e.target.closest('.btn-burger')) {
-        closeMenuModal();
-    }
-});
-
-// Dropdown меню
-const dropdownItems = document.querySelectorAll('.mobile_menu_dropdown');
-
-dropdownItems.forEach(dropdown => {
-    dropdown.addEventListener('click', () => {
-        if (!dropdown.classList.contains('is-open')) {
-            dropdownItems.forEach(dropdown => dropdown.classList.remove('is-open'));
-            dropdown.classList.add('is-open');
-        } else {
-            dropdown.classList.remove('is-open');
-        }
-    });
-});
-
-// Сортировка фильтров
-const filterSortBtn = document.querySelector('.filter-btn-sort');
-const filterSortContent = document.querySelector('.sort_content');
-
-if (filterSortBtn && filterSortContent) {
-    filterSortBtn.addEventListener('click', () => {
-        filterSortContent.classList.add('is-open');
-    });
-
-    document.addEventListener('click', (e) => {
-        if (filterSortContent.classList.contains('is-open') && !e.target.closest('.filter-btn-sort')) {
-            filterSortContent.classList.remove('is-open');
-        }
-    });
-}
-
-// Стиль страницы
-const pageBtns = document.querySelectorAll('[data-page]');
-const sectionFilter = document.querySelector('.section-filter');
-
-pageBtns.forEach(btn => {
-    btn.addEventListener('click', () => {
-        // Проверяем наличие section-filter перед изменением стиля
-        if (!sectionFilter) return;
-        
-        pageBtns.forEach(btn => btn.classList.remove('is-active'));
-        btn.classList.add('is-active');
-        let pageStyle = btn.getAttribute('data-page');
-        
-        // Если ширина <= 1100px и выбран small-page, переключаем на big-page
-        if (window.innerWidth <= 1100 && pageStyle === 'small-page') {
-            pageStyle = 'big-page';
-            // Обновляем активную кнопку на big-page
-            pageBtns.forEach(btn => btn.classList.remove('is-active'));
-            const bigPageBtn = Array.from(pageBtns).find(btn => 
-                btn.getAttribute('data-page') === 'big-page'
-            );
-            if (bigPageBtn) {
-                bigPageBtn.classList.add('is-active');
-            }
-        }
-        
-        if (pageStyle) {
-            document.body.setAttribute('data-page-style', pageStyle);
-            if (typeof setCookie === 'function') {
-                setCookie('page-style', pageStyle);
-            }
-        }
-    });
-});
-
-function initPageStyle() {
+function initPageStyle(pageBtns, sectionFilter) {
     // Проверяем наличие section-filter перед установкой стиля из куки
     if (!sectionFilter) return;
     
@@ -308,7 +178,7 @@ function initPageStyle() {
 }
 
 // Автоматическое переключение small-page на big-page при ширине <= 1100px
-function checkPageStyleForMobile() {
+function checkPageStyleForMobile(pageBtns) {
     const currentPageStyle = document.body.getAttribute('data-page-style');
     
     // Если ширина экрана <= 1100px и текущий стиль small-page, переключаем на big-page
@@ -328,36 +198,186 @@ function checkPageStyleForMobile() {
     }
 }
 
-// Футер
-const footerItems = document.querySelectorAll('.footer_nav__column');
+// Инициализация при загрузке страницы
+document.addEventListener('DOMContentLoaded', function () {
+    // Поиск элементов
+    const searchContainer = document.querySelector('.btn-search-container');
+    const headerMiddle = document.querySelector('.header__middle');
+    const searchInput = document.getElementById('search-input');
+    const searchModal = document.querySelector('.search_modal');
+    const searchBtnClose = document.querySelector('.search-btn-close');
+    const header = document.querySelector('.header');
 
-footerItems.forEach(el => {
-    const title = el.querySelector('.footer_nav__column-title');
-    if (title) {
-        title.addEventListener('click', () => {
-            if (el.classList.contains('is-open')) {
-                footerItems.forEach(el => el.classList.remove('is-open'));
-                el.classList.remove('is-open');
-            } else {
-                footerItems.forEach(el => el.classList.remove('is-open'));
-                el.classList.add('is-open');
+    // Меню
+    const menuModal = document.querySelector('.menu_modal');
+    const btnMenuModal = document.querySelector('.btn-burger');
+
+    // Создаем обёртки для функций с текущими элементами
+    const updateHeaderMenuOpenClassWrapper = () => updateHeaderMenuOpenClass(header, menuModal, searchModal, headerMiddle);
+    const openSearchModalWrapper = () => openSearchModal(searchModal, lockScroll, updateHeaderMenuOpenClassWrapper);
+    const closeSearchModalWrapper = () => closeSearchModal(searchModal, searchInput, unlockScroll, updateHeaderMenuOpenClassWrapper);
+    const openMenuModalWrapper = () => openMenuModal(menuModal, btnMenuModal, lockScroll, updateHeaderMenuOpenClassWrapper);
+    const closeMenuModalWrapper = () => closeMenuModal(menuModal, btnMenuModal, unlockScroll, updateHeaderMenuOpenClassWrapper);
+
+    // Поиск
+    if (searchBtnClose && headerMiddle) {
+        searchBtnClose.addEventListener('click', () => {
+            closeSearchModalWrapper();
+            headerMiddle.classList.remove('header__middle--search');
+            updateHeaderMenuOpenClassWrapper();
+        });
+    }
+
+    if (searchContainer && headerMiddle && searchInput) {
+        searchContainer.addEventListener('click', () => {
+            if (!headerMiddle.classList.contains('header__middle--search')) {
+                headerMiddle.classList.add('header__middle--search');
+                searchInput.focus();
+                updateHeaderMenuOpenClassWrapper();
+            }
+        });
+
+        document.addEventListener('click', (e) => {
+            if (window.innerWidth > 1100 && searchModal && headerMiddle) {
+                if (searchModal.classList.contains('is-open') && !e.target.closest('.btn-search-container') && !e.target.closest('.search-input')) {
+                    if (!e.target.closest('.search__content')) {
+                        headerMiddle.classList.remove('header__middle--search');
+                        closeSearchModalWrapper();
+                    }
+                }
+            }
+        });
+
+        searchInput.addEventListener('input', (e) => {
+            if (searchModal && !searchModal.classList.contains('is-open')) {
+                openSearchModalWrapper();
+            }
+        });
+
+        searchInput.addEventListener('focus', () => {
+            if (window.innerWidth <= 1100) {
+                openSearchModalWrapper();
+            }
+        });
+
+        searchInput.addEventListener('blur', () => {
+            if (searchModal && headerMiddle && !searchModal.classList.contains('is-open')) {
+                headerMiddle.classList.remove('header__middle--search');
+                updateHeaderMenuOpenClassWrapper();
             }
         });
     }
-});
 
-// Инициализация при загрузке страницы
-document.addEventListener('DOMContentLoaded', function () {
+    // Меню
+    if (btnMenuModal) {
+        btnMenuModal.addEventListener('click', () => {
+            if (!btnMenuModal.classList.contains('btn-close')) {
+                openMenuModalWrapper();
+            } else {
+                closeMenuModalWrapper();
+            }
+        });
+    }
+
+    document.addEventListener('click', (e) => {
+        if (menuModal && menuModal.classList.contains('is-open') && !e.target.closest('.menu__content') && !e.target.closest('.btn-burger')) {
+            closeMenuModalWrapper();
+        }
+    });
+
+    // Dropdown меню
+    const dropdownItems = document.querySelectorAll('.mobile_menu_dropdown');
+
+    dropdownItems.forEach(dropdown => {
+        dropdown.addEventListener('click', () => {
+            if (!dropdown.classList.contains('is-open')) {
+                dropdownItems.forEach(dropdown => dropdown.classList.remove('is-open'));
+                dropdown.classList.add('is-open');
+            } else {
+                dropdown.classList.remove('is-open');
+            }
+        });
+    });
+
+    // Сортировка фильтров
+    const filterSortBtn = document.querySelector('.filter-btn-sort');
+    const filterSortContent = document.querySelector('.sort_content');
+
+    if (filterSortBtn && filterSortContent) {
+        filterSortBtn.addEventListener('click', () => {
+            filterSortContent.classList.add('is-open');
+        });
+
+        document.addEventListener('click', (e) => {
+            if (filterSortContent.classList.contains('is-open') && !e.target.closest('.filter-btn-sort')) {
+                filterSortContent.classList.remove('is-open');
+            }
+        });
+    }
+
+    // Стиль страницы
+    const pageBtns = document.querySelectorAll('[data-page]');
+    const sectionFilter = document.querySelector('.section-filter');
+
+    pageBtns.forEach(btn => {
+        btn.addEventListener('click', () => {
+            // Проверяем наличие section-filter перед изменением стиля
+            if (!sectionFilter) return;
+            
+            pageBtns.forEach(btn => btn.classList.remove('is-active'));
+            btn.classList.add('is-active');
+            let pageStyle = btn.getAttribute('data-page');
+            
+            // Если ширина <= 1100px и выбран small-page, переключаем на big-page
+            if (window.innerWidth <= 1100 && pageStyle === 'small-page') {
+                pageStyle = 'big-page';
+                // Обновляем активную кнопку на big-page
+                pageBtns.forEach(btn => btn.classList.remove('is-active'));
+                const bigPageBtn = Array.from(pageBtns).find(btn => 
+                    btn.getAttribute('data-page') === 'big-page'
+                );
+                if (bigPageBtn) {
+                    bigPageBtn.classList.add('is-active');
+                }
+            }
+            
+            if (pageStyle) {
+                document.body.setAttribute('data-page-style', pageStyle);
+                if (typeof setCookie === 'function') {
+                    setCookie('page-style', pageStyle);
+                }
+            }
+        });
+    });
+
+    // Футер
+    const footerItems = document.querySelectorAll('.footer_nav__column');
+
+    footerItems.forEach(el => {
+        const title = el.querySelector('.footer_nav__column-title');
+        if (title) {
+            title.addEventListener('click', () => {
+                if (el.classList.contains('is-open')) {
+                    footerItems.forEach(el => el.classList.remove('is-open'));
+                    el.classList.remove('is-open');
+                } else {
+                    footerItems.forEach(el => el.classList.remove('is-open'));
+                    el.classList.add('is-open');
+                }
+            });
+        }
+    });
+
     // Инициализация выбора клиента
     if (typeof initClientSelection === 'function') {
         initClientSelection();
     }
     
     // Инициализация стиля страницы
-    initPageStyle();
+    initPageStyle(pageBtns, sectionFilter);
     
     // Проверка стиля страницы для мобильных устройств
-    checkPageStyleForMobile();
+    checkPageStyleForMobile(pageBtns);
     
     // Инициализация слайдера цены
     if (typeof initPriceSlider === 'function') {
@@ -375,6 +395,7 @@ let resizeTimeout;
 window.addEventListener('resize', function() {
     clearTimeout(resizeTimeout);
     resizeTimeout = setTimeout(function() {
-        checkPageStyleForMobile();
+        const pageBtns = document.querySelectorAll('[data-page]');
+        checkPageStyleForMobile(pageBtns);
     }, 100);
 });
