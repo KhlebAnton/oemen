@@ -674,9 +674,12 @@ body[data-page-style="small-page"] .header-modal-container {
 .btn_product-card.btn_product-card__no-aviab::before {
     content: 'Нет в наличии';
     position: absolute;
-    top: calc(100% + 5px);
+    top: calc(100% + 10px);
     left: 0;
+    right: 0;
+    text-align: center;
     color: var(--color-black);
+    pointer-events: none;
 }
 
 
@@ -1675,6 +1678,7 @@ body[data-page-style="list-page"] .product-card__article {
     gap: 6px;
     margin-top: 14px;
     display: none;
+    cursor: pointer;
 
 }
 
@@ -3001,7 +3005,7 @@ body[data-page-style="list-page"] .product-card__list_visible {
 
 
 .product_page__info {
-    max-width: 750px;
+    max-width: 850px;
     width: 100%;
     padding: 0 16px;
     margin: 0 auto;
@@ -3062,7 +3066,7 @@ body[data-page-style="list-page"] .product-card__list_visible {
 }
 
 [data-btn="copy-span"].copy-ok::before {
-    content: 'Ссылка скопирована';
+    content: 'Скопировано';
     position: absolute;
     top: 100%;
     left: 0;
@@ -3196,6 +3200,7 @@ body[data-page-style="list-page"] .product-card__list_visible {
     gap: 6px;
     position: relative;
     width: fit-content;
+    cursor: pointer;
 }
 
 .product_page__count::before {
@@ -3310,7 +3315,7 @@ body[data-page-style="list-page"] .product-card__list_visible {
 .product_page .product-card__table-row .table_item,
 .product_page .btn_reserve_wrapper span,
 .product_page .btn_reserve {
-    font-size: 14px;
+    font-size: 13px;
 }
 
 .product_page .product-card__table__content .product-card__table_btn_add {
@@ -3339,7 +3344,7 @@ body[data-page-style="list-page"] .product-card__list_visible {
 
 .product_page .product-card__table .product-card__table-row {
     gap: 0;
-    grid-template-columns: 4fr 5fr 5fr 5fr 5fr 5fr 9fr;
+    grid-template-columns: 3fr 5fr 4fr 4fr 4fr 5fr 8fr;
     padding-right: 0;
 }
 
@@ -4496,9 +4501,9 @@ body.is-dragging .cart_category__item__dropdown--dragging {
     margin-top: 10px;
 }
 
-@media (min-width: 1800px) {
+@media (min-width: 1450px) {
     .cart_category__item__content {
-        max-width: 80%;
+        max-width: 90%;
     }
 }
 
