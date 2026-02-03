@@ -2122,8 +2122,16 @@ body[data-page-style="list-page"] .product-card:last-child {
 }
 
 .product-card__info .client-wrapper .client-value {
-    text-decoration: underline dashed 1px;
-    text-underline-offset: 3px;
+    position: relative;
+    display: inline-block;
+}
+.product-card__info .client-wrapper .client-value::after {
+    content: '';
+    position: absolute;
+    left: 0;
+    bottom: -1px;
+    width: 100%;
+    border-bottom: 1px dashed currentColor;
 }
 
 
