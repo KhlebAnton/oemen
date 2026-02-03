@@ -256,7 +256,21 @@ pageBtns.forEach(btn => {
         
         pageBtns.forEach(btn => btn.classList.remove('is-active'));
         btn.classList.add('is-active');
-        const pageStyle = btn.getAttribute('data-page');
+        let pageStyle = btn.getAttribute('data-page');
+        
+        // Если ширина <= 1100px и выбран small-page, переключаем на big-page
+        if (window.innerWidth <= 1100 && pageStyle === 'small-page') {
+            pageStyle = 'big-page';
+            // Обновляем активную кнопку на big-page
+            pageBtns.forEach(btn => btn.classList.remove('is-active'));
+            const bigPageBtn = Array.from(pageBtns).find(btn => 
+                btn.getAttribute('data-page') === 'big-page'
+            );
+            if (bigPageBtn) {
+                bigPageBtn.classList.add('is-active');
+            }
+        }
+        
         if (pageStyle) {
             document.body.setAttribute('data-page-style', pageStyle);
             if (typeof setCookie === 'function') {
@@ -293,6 +307,27 @@ function initPageStyle() {
     }
 }
 
+// Автоматическое переключение small-page на big-page при ширине <= 1100px
+function checkPageStyleForMobile() {
+    const currentPageStyle = document.body.getAttribute('data-page-style');
+    
+    // Если ширина экрана <= 1100px и текущий стиль small-page, переключаем на big-page
+    if (window.innerWidth <= 1100 && currentPageStyle === 'small-page') {
+        document.body.setAttribute('data-page-style', 'big-page');
+        
+        // Обновляем активную кнопку, если кнопки есть на странице
+        if (pageBtns.length > 0) {
+            pageBtns.forEach(btn => btn.classList.remove('is-active'));
+            const bigPageBtn = Array.from(pageBtns).find(btn => 
+                btn.getAttribute('data-page') === 'big-page'
+            );
+            if (bigPageBtn) {
+                bigPageBtn.classList.add('is-active');
+            }
+        }
+    }
+}
+
 // Футер
 const footerItems = document.querySelectorAll('.footer_nav__column');
 
@@ -321,6 +356,9 @@ document.addEventListener('DOMContentLoaded', function () {
     // Инициализация стиля страницы
     initPageStyle();
     
+    // Проверка стиля страницы для мобильных устройств
+    checkPageStyleForMobile();
+    
     // Инициализация слайдера цены
     if (typeof initPriceSlider === 'function') {
         initPriceSlider();
@@ -330,4 +368,13 @@ document.addEventListener('DOMContentLoaded', function () {
     if (typeof updateAuthAttribute === 'function') {
         updateAuthAttribute();
     }
+});
+
+// Обработчик изменения размера окна для автоматического переключения стиля
+let resizeTimeout;
+window.addEventListener('resize', function() {
+    clearTimeout(resizeTimeout);
+    resizeTimeout = setTimeout(function() {
+        checkPageStyleForMobile();
+    }, 100);
 });
