@@ -4686,9 +4686,6 @@ body[data-page-style="small-page"] .prices_items_container[data-grid="2-3"] .pri
     content: 'Добавлено в подборку';
 }
 
-.btn_prices_set_cart.is-active:hover::after {
-    content: 'Убрать из подборки';
-}
 
 .prices_detail__item {
     display: grid;
@@ -5168,7 +5165,7 @@ body[data-page-style="small-page"] .prices_items_container[data-grid="2-3"] .pri
 }
 
 [data-table="reserv__btn"] .lk_table-row {
-    grid-template-columns: 12fr 11fr 11fr 9fr 9fr 12fr;
+    grid-template-columns: 5fr 8fr 6fr 6fr 6fr 16fr;
 }
 
 [data-table="reserv__btn"] .btn {
