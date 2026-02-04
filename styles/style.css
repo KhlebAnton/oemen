@@ -1622,7 +1622,7 @@ body[data-page-style="list-page"] .catalog .product-card__btn-like {
 
 body[data-page-style="list-page"] .product-card__info {
     display: grid;
-    grid-template-columns: 1fr auto auto;
+    grid-template-columns: 1fr 205px auto;
     gap: 20px 111px;
 }
 
@@ -5425,6 +5425,7 @@ body[data-page-style="small-page"] .prices_items_container[data-grid="2-3"] .pri
 
 .bookings__filter__btn {
     display: flex;
+    justify-content: end;
     gap: 20px;
 
 }
